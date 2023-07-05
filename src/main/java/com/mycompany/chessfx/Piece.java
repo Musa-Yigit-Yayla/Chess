@@ -8,7 +8,7 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
-public class Piece {
+public abstract class Piece {
     private String color;
     private PiecePane piecePane;
     private double points; //value of the piece
@@ -37,4 +37,10 @@ public class Piece {
     public double getPoints(){
         return this.points;
     }
+    //Set the value of piece, careful for color representation -, + signs
+    public void setPoints(double points){
+        this.points = points;
+    }
+    public abstract void move();
+    
 }

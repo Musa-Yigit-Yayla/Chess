@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
@@ -19,9 +20,13 @@ import javafx.event.Event;
  * JavaFX App
  */
 public class App extends Application {
-
+    //public constants
+    public static final double BP_WIDTH = 1000.0;
+    public static final double BP_HEIGHT = 1000.0;
+    
     private static Scene scene;
-    private StackPane stackPane = new StackPane();//high level container, set scene's container to this stackpane
+    private BorderPane bp = new BorderPane(); //highest level container, set scene's pane to this
+    private StackPane stackPane = new StackPane();//high level container, set this into borderPane's center container to this stackpane
     private double[][] gameGrid = new double[8][8]; // a grid for representing the current game status, - value for black pieces, + for white
     private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
     private GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
@@ -29,7 +34,9 @@ public class App extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("primary"), 1000, 1000);
+        this.setStackPane();
+        this.setBorderPane();
         this.setGameGrid();
         this.setCheckerBoard();
         this.setPieceHolder();
@@ -113,4 +120,12 @@ public class App extends Application {
         launch();
     }
 
+    private void setStackPane() {
+        
+    }
+
+    private void setBorderPane() {
+        this.bp.setCenter(this.stackPane);
+        this.bp.setPrefSize(BP_WIDTH, BP_HEIGHT);
+    }
 }
