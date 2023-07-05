@@ -9,5 +9,7 @@ package com.mycompany.chessfx;
  * @author yigit
  */
 public class Pawn {
-    
+   public Pawn(String color){
+       
+   }
 }

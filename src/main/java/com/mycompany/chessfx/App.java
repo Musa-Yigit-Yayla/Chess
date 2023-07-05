@@ -54,7 +54,7 @@ public class App extends Application {
                     else if(j == 3){ //queen
                         this.gameGrid[i][j] = -9.0;
                     }
-                    else{a
+                    else{
                         this.gameGrid[i][j] = -90.0; // king
                     }
                 }
