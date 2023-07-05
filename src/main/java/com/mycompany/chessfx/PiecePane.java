@@ -8,6 +8,10 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
-public class PiecePane {
-    
+import javafx.scene.layout.StackPane;
+
+public class PiecePane extends StackPane{
+    public PiecePane(Piece piece){
+        
+    }
 }
