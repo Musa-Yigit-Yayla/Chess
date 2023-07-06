@@ -8,6 +8,11 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
-public class Queen {
+public class Queen extends Piece{
+
+    @Override
+    public void move() {
+       
+    }
     
 }

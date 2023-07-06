@@ -8,6 +8,20 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
-public class Rook {
+public class Rook extends Piece{
+    private boolean isMoved = false;
     
+    public Rook(char color){
+        super(color);
+        if(this.getColor().equals(WHITE_COLOR)){
+            this.setPoints(WHITE_ROOK_POINTS);
+        }
+        else{
+            this.setPoints(BLACK_ROOK_POINTS);
+        }
+    }
+    @Override
+    public void move() {
+        
+    }
 }

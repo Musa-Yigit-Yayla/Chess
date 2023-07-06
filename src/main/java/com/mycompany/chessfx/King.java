@@ -8,6 +8,20 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
-public class King {
+public class King extends Piece{
+    private boolean isMoved = false;
     
+    public King(char color){
+        super(color);
+        if(super.getColor().equals(Piece.WHITE_COLOR)){
+            this.setPoints(WHITE_KING_POINTS);
+        }
+        else{
+            this.setPoints(BLACK_KING_POINTS);
+        }
+    }
+    @Override
+    public void move() {
+    
+    }
 }

@@ -8,6 +8,6 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
-public class Knight {
+public class Knight extends Piece{
     
 }
