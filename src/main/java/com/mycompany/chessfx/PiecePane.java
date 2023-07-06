@@ -8,14 +8,15 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
+import java.io.File;
 import javafx.scene.layout.StackPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 //Holds individual pieces
 public class PiecePane extends StackPane{
-    public final double PANE_WIDTH = 100.0;
-    public final double PANE_HEIGHT = 100.0;
+    public final double PANE_WIDTH = 80.0;
+    public final double PANE_HEIGHT = 80.0;
     
     private Piece piece;
     private Image image;
@@ -30,10 +31,53 @@ public class PiecePane extends StackPane{
     //Must be invoked when a pawn is about to be promoted, notice that first you must update the pawn's point data field
     public void setImage(){
         double p = this.piece.getPoints();
-        if(p == 1){
+        String filePath = "";
+        if(p == Piece.WHITE_PAWN_POINTS){
             //white pawn
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Pawn-white.png";
         }
+        else if(p == Piece.BLACK_PAWN_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Pawn-black.png";
+        }
+        else if(p == Piece.WHITE_KNIGHT_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Knight-white.png";
+        }
+        else if(p == Piece.BLACK_KNIGHT_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Knight-black.png";
+        }
+        else if(p == Piece.WHITE_BISHOP_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Bishop-white.png";
+        }
+        else if(p == Piece.BLACK_BISHOP_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Bishop-black.png";
+        }
+        else if(p == Piece.WHITE_ROOK_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Rook-white.png";
+        }
+        else if(p == Piece.BLACK_ROOK_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Rook-black.png";
+        }
+        else if(p == Piece.WHITE_QUEEN_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-white.png";
+        }
+        else if(p == Piece.BLACK_QUEEN_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-black.png";
+        }
+        else if(p == Piece.WHITE_KING_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\King-white.png";
+        }
+        else if(p == Piece.BLACK_KING_POINTS){
+            filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\King-black.png";
+        }
+        this.image = new Image(new File(filePath).toURI().toString());
+        this.imgView.setImage(image);
+        
+        this.imgView.setFitHeight(this.PANE_HEIGHT);
+        this.imgView.setFitHeight(this.PANE_WIDTH);
+        this.getChildren().add(this.imgView);
     }
     
 }
 
+//This comment is for converting File objects into respective images or media
+//Media media = new Media(new File(filePath).toURI().toString());
