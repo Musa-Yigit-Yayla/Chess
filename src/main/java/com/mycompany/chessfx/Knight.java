@@ -10,4 +10,18 @@ package com.mycompany.chessfx;
  */
 public class Knight extends Piece{
     
+    public Knight(char color){
+        super(color);
+        if(this.getColor().equals(WHITE_COLOR)){
+            this.setPoints(WHITE_KNIGHT_POINTS);
+        }
+        else{
+            this.setPoints(BLACK_KNIGHT_POINTS);
+        }
+    }
+    @Override
+    public void move() {
+        
+    }
+    
 }

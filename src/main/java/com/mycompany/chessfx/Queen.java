@@ -10,9 +10,21 @@ package com.mycompany.chessfx;
  */
 public class Queen extends Piece{
 
+    public Queen(char color) {
+        super(color);
+        if(this.getColor().equals(WHITE_COLOR)){
+            this.setPoints(WHITE_QUEEN_POINTS);
+        }
+        else{
+            this.setPoints(BLACK_QUEEN_POINTS);
+        }
+    }
+
     @Override
     public void move() {
        
     }
-    
+    public void castle(){
+        
+    }
 }
