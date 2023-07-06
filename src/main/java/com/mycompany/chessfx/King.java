@@ -24,4 +24,10 @@ public class King extends Piece{
     public void move() {
     
     }
+    public void castle(){
+        
+    }
+    public boolean isChecked(){
+        return true;
+    }
 }
