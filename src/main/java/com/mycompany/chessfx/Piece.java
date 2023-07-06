@@ -15,6 +15,18 @@ public abstract class Piece {
     
     public static final String BLACK_COLOR = "black";
     public static final String WHITE_COLOR = "white";
+    public static final double WHITE_PAWN_POINTS = 1.0;
+    public static final double WHITE_ROOK_POINTS = 5.0;
+    public static final double WHITE_KNIGHT_POINTS = 3.0;
+    public static final double WHITE_BISHOP_POINTS = 3.15;
+    public static final double WHITE_QUEEN_POINTS = 9.0;
+    public static final double WHITE_KING_POINTS = 90.0;
+    public static final double BLACK_PAWN_POINTS = -1.0;
+    public static final double BLACK_ROOK_POINTS = -5.0;
+    public static final double BLACK_KNIGHT_POINTS = -3.0;
+    public static final double BLACK_BISHOP_POINTS = -3.15;
+    public static final double BLACK_QUEEN_POINTS = -9.0;
+    public static final double BLACKKING_POINTS = -90.0;
     
     //W or B, or w or b for color, respective points for pieces, bishop is 3.15
     public Piece(char color, double points){
