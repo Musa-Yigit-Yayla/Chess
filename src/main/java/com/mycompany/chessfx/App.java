@@ -166,7 +166,25 @@ public class App extends Application {
     }
     //Called in the very first initialization process
     private void setPieceHolder(){
-        
+        Piece currPiece = null;
+        for(int i = 0; i < 8; i++){
+            if(i > 1 && i < 6)
+                continue;
+            else if(i == 0){
+                //set high tier black pieces starting from left
+                for(int j = 0; j < 8; j++){
+                    switch(j){
+                        case 0: currPiece = new Rook('b'); break;
+                        case 1: currPiece = new Knight('b'); break;
+                        case 2: currPiece = new Bishop('b'); break;
+                        case 3: currPiece = new Queen('b'); break;
+                        case 4: currPiece = new King('b'); break;
+                        
+                    }
+                    currPiece.setPosition(i, j);
+                }
+            }
+        }
     }
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
