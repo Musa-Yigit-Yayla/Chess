@@ -16,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 
 /**
  * JavaFX App
@@ -24,7 +26,7 @@ public class App extends Application {
     //public constants
     public static final double BP_WIDTH = 1000.0;
     public static final double BP_HEIGHT = 1000.0;
-    public static final double SQUARE_LENGTH = 100.0; // 100 pixels
+    public static final double SQUARE_LENGTH = 90.0; // 100 pixels
     public static final Color WHITE_SQUARE = Color.BURLYWOOD;
     public static final Color BLACK_SQUARE = Color.SADDLEBROWN;
     
@@ -143,6 +145,20 @@ public class App extends Application {
                 this.checkerBoard.add(rect, i, j);
             }
         }
+        int i = 8, j;
+        int charValue = 104; // starts from 'a'
+        Label lbl = null;
+        for(j = 0; j < 8; j++){
+            char ch = (char)(charValue - j);
+            String curr =  "" + ch;
+            lbl = new Label(curr);
+            this.checkerBoard.add(lbl , i, j);
+        }
+        for(i = 7, j = 8; i >= 0; i--){
+            String curr = "" + (i + 1);
+            lbl = new Label(curr);
+            this.checkerBoard.add(lbl, i, j);
+        }
         this.checkerBoard.setHgap(0);
         this.checkerBoard.setVgap(0);
         //add the checker board into the stack pane
@@ -164,7 +180,7 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
+    //Checker board is already added into our stackPane, set other properties if necessary and set the pieceHolder
     private void setStackPane() {
         
     }

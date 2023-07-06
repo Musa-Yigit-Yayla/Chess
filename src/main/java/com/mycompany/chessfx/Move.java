@@ -10,6 +10,9 @@ package com.mycompany.chessfx;
  * Class for representing chess moves
  */
 public class Move {
-    private static Move lastMove; // last valid move that has been made
+    public static final int WHITE_TURN = 1;
+    public static final int BLACK_TURN = -1;
     
+    private static Move lastMove; // last valid move that has been made
+    private static int turn = WHITE_TURN;// white's turn
 }
