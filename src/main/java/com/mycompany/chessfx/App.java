@@ -18,6 +18,7 @@ import javafx.event.Event;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import java.util.ArrayList;
 
 /**
  * JavaFX App
@@ -29,6 +30,9 @@ public class App extends Application {
     public static final double SQUARE_LENGTH = 90.0; // 100 pixels
     public static final Color WHITE_SQUARE = Color.BURLYWOOD;
     public static final Color BLACK_SQUARE = Color.SADDLEBROWN;
+    
+    public ArrayList<Piece> currentPieces = new ArrayList<>(); // pieces that are alive and displayed
+    public ArrayList<Piece> takenPieces = new ArrayList<>(); // taken pieces
     
     private static Scene scene;
     private BorderPane bp = new BorderPane(); //highest level container, set scene's pane to this
@@ -179,9 +183,50 @@ public class App extends Application {
                         case 2: currPiece = new Bishop('b'); break;
                         case 3: currPiece = new Queen('b'); break;
                         case 4: currPiece = new King('b'); break;
-                        
+                        case 5: currPiece = new Bishop('b'); break;
+                        case 6: currPiece = new Knight('b'); break;
+                        case 7: currPiece = new Rook('b'); break;
                     }
+                    this.currentPieces.add(currPiece);
                     currPiece.setPosition(i, j);
+                    currPiece.getPiecePane().setContainer(this.pieceHolder);
+                }
+            }
+            else if(i == 1){
+                for(int j = 0; j < 8; j++){
+                    //black pawns
+                    currPiece = new Pawn('b');
+                    this.currentPieces.add(currPiece);
+                    currPiece.setPosition(i, j);
+                    currPiece.getPiecePane().setContainer(this.pieceHolder);
+                }
+            }
+            else if(i == 6){
+                //add white pawns
+                for(int j = 0; j < 8; j++){
+                    //black pawns
+                    currPiece = new Pawn('w');
+                    this.currentPieces.add(currPiece);
+                    currPiece.setPosition(i, j);
+                    currPiece.getPiecePane().setContainer(this.pieceHolder);
+                }
+            }
+            else if(i == 7){
+                //set high tier white pieces starting from left
+                for(int j = 0; j < 8; j++){
+                    switch(j){
+                        case 0: currPiece = new Rook('w'); break;
+                        case 1: currPiece = new Knight('w'); break;
+                        case 2: currPiece = new Bishop('w'); break;
+                        case 3: currPiece = new Queen('w'); break;
+                        case 4: currPiece = new King('w'); break;
+                        case 5: currPiece = new Bishop('w'); break;
+                        case 6: currPiece = new Knight('w'); break;
+                        case 7: currPiece = new Rook('w'); break;
+                    }
+                    this.currentPieces.add(currPiece);
+                    currPiece.setPosition(i, j);
+                    currPiece.getPiecePane().setContainer(this.pieceHolder);
                 }
             }
         }
@@ -206,5 +251,8 @@ public class App extends Application {
     private void setBorderPane() {
         this.bp.setCenter(this.stackPane);
         this.bp.setPrefSize(BP_WIDTH, BP_HEIGHT);
+    }
+    public GridPane getPieceHolder(){
+        return this.pieceHolder;
     }
 }

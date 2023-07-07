@@ -12,6 +12,7 @@ import java.io.File;
 import javafx.scene.layout.StackPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 //Holds individual pieces
 public class PiecePane extends StackPane{
@@ -21,6 +22,7 @@ public class PiecePane extends StackPane{
     private Piece piece;
     private Image image;
     private ImageView imgView = new ImageView();
+    private GridPane pieceHolder; // retrieve from App.java
     public PiecePane(Piece piece){
         this.piece = piece;
         this.setPrefSize(PANE_WIDTH, PANE_HEIGHT);
@@ -77,6 +79,20 @@ public class PiecePane extends StackPane{
         this.getChildren().add(this.imgView);
     }
     
+    //Invoke for once and only during the creation of the pieces
+    public void setContainer(GridPane pieceHolder){
+        this.pieceHolder = pieceHolder;
+        String pos = this.piece.getPosition();
+        int i, j = 0;
+        for(i = 0; i < 8; i++){
+            for(j = 0; j < 8; j++){
+                if(Piece.positions[i][j].equals(pos)){
+                    break;
+                }
+            }
+        }
+        this.pieceHolder.add(this, i, j);
+    }
 }
 
 //This comment is for converting File objects into respective images or media
