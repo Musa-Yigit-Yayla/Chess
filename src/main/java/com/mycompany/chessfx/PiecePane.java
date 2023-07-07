@@ -13,6 +13,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.control.Label;
 
 //Holds individual pieces
 public class PiecePane extends StackPane{
@@ -25,13 +27,15 @@ public class PiecePane extends StackPane{
     private GridPane pieceHolder; // retrieve from App.java
     public PiecePane(Piece piece){
         this.piece = piece;
-        this.setPrefSize(PANE_WIDTH, PANE_HEIGHT);
+        this.pieceHolder = App.getPieceHolder();
+        this.setPrefSize(App.SQUARE_LENGTH, App.SQUARE_LENGTH);
         this.setImage();
-        this.getChildren().add(imgView);
+        //this.getChildren().add(imgView);
     }
     //Sets the image with respect to color and type of the piece
     //Must be invoked when a pawn is about to be promoted, notice that first you must update the pawn's point data field
     public void setImage(){
+        //this.getChildren().remove(this.imgView);// first delete the current image if exists
         double p = this.piece.getPoints();
         String filePath = "";
         if(p == Piece.WHITE_PAWN_POINTS){
@@ -74,24 +78,34 @@ public class PiecePane extends StackPane{
         this.image = new Image(new File(filePath).toURI().toString());
         this.imgView.setImage(image);
         
-        this.imgView.setFitHeight(this.PANE_HEIGHT);
-        this.imgView.setFitHeight(this.PANE_WIDTH);
+        //this.imgView.setFitHeight(this.PANE_HEIGHT);
+        //this.imgView.setFitWidth(this.PANE_WIDTH);
         this.getChildren().add(this.imgView);
+        this.getChildren().add(new Circle(45));
+        
+        //add the PiecePane to the pieceHolder 
+        //this.pieceHolder.add(this, 0, 0);
     }
     
-    //Invoke for once and only during the creation of the pieces
+    //Invoke for once and only for each piece during the creation of the pieces
     public void setContainer(GridPane pieceHolder){
         this.pieceHolder = pieceHolder;
         String pos = this.piece.getPosition();
         int i, j = 0;
         for(i = 0; i < 8; i++){
+            boolean broken = false;
             for(j = 0; j < 8; j++){
                 if(Piece.positions[i][j].equals(pos)){
+                    broken = true;
                     break;
                 }
             }
+            if(broken){
+                break;
+            }
         }
-        this.pieceHolder.add(this.imgView, i, j);
+        //revert i and j since we have column then row on add function
+        this.pieceHolder.add(this, j, i);
     }
 }
 

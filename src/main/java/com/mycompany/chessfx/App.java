@@ -1,5 +1,6 @@
 package com.mycompany.chessfx;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
+import javafx.scene.shape.Circle;
 
 /**
  * JavaFX App
@@ -39,7 +41,7 @@ public class App extends Application {
     private StackPane stackPane = new StackPane();//high level container, set this into borderPane's center container to this stackpane
     private double[][] gameGrid = new double[8][8]; // a grid for representing the current game status, - value for black pieces, + for white
     private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
-    private GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
+    private static GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
     //1 point for pawn, 3 for knight, 3.15 for bishop, 5 for rook, 9 for queen, 90 for king
     
     @Override
@@ -54,6 +56,22 @@ public class App extends Application {
         this.scene = new Scene(this.bp, 1000, 1000);// !!!CHANGE THIS LATER ON!!!
         stage.setScene(scene);
         stage.show();
+        
+        //Debugging stage
+        Stage stage2 = new Stage();
+        StackPane pane = new StackPane();
+        Scene scene2 = new Scene(pane);
+        
+        Piece debugPiece = new King('w');
+        //pane.getChildren().add(debugPiece.getPiecePane());
+        String fp = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\King-black.png";
+        ImageView newImg = new ImageView(new Image(new File(fp).toURI().toString()));
+        pane.getChildren().add(newImg);
+        scene2.setRoot(pane);
+        
+        stage2.setScene(scene2);
+        stage2.show();
+        
     }
     //For setting the gameGrid data field, called only during initialization process
     private void setGameGrid(){
@@ -170,10 +188,18 @@ public class App extends Application {
     }
     //Called in the very first initialization process
     private void setPieceHolder(){
+        pieceHolder.setHgap(0);
+        pieceHolder.setVgap(0);
         Piece currPiece = null;
         for(int i = 0; i < 8; i++){
-            if(i > 1 && i < 6)
-                continue;
+            if(i > 1 && i < 6){
+                for(int j = 0; j < 8; j++){
+                    //add empty stackpanes so we can have gaps in the pieceHolder
+                    StackPane emptyPane = new StackPane();
+                    emptyPane.setPrefSize(SQUARE_LENGTH, SQUARE_LENGTH);
+                    pieceHolder.add(emptyPane, j, i);
+                }
+            }
             else if(i == 0){
                 //set high tier black pieces starting from left
                 for(int j = 0; j < 8; j++){
@@ -187,8 +213,9 @@ public class App extends Application {
                         case 6: currPiece = new Knight('b'); break;
                         case 7: currPiece = new Rook('b'); break;
                     }
-                    this.currentPieces.add(currPiece);
                     currPiece.setPosition(i, j);
+                    this.currentPieces.add(currPiece);
+                    
                     currPiece.getPiecePane().setContainer(this.pieceHolder);
                 }
             }
@@ -224,12 +251,13 @@ public class App extends Application {
                         case 6: currPiece = new Knight('w'); break;
                         case 7: currPiece = new Rook('w'); break;
                     }
-                    this.currentPieces.add(currPiece);
                     currPiece.setPosition(i, j);
+                    this.currentPieces.add(currPiece);
                     currPiece.getPiecePane().setContainer(this.pieceHolder);
                 }
             }
         }
+        //pieceHolder.add(new Circle(50), 8, 8); // for debugging purposes
     }
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
@@ -253,7 +281,7 @@ public class App extends Application {
         this.bp.setCenter(this.stackPane);
         this.bp.setPrefSize(BP_WIDTH, BP_HEIGHT);
     }
-    public GridPane getPieceHolder(){
-        return this.pieceHolder;
+    public static GridPane getPieceHolder(){
+        return pieceHolder;
     }
 }
