@@ -35,6 +35,7 @@ public class App extends Application {
     
     public ArrayList<Piece> currentPieces = new ArrayList<>(); // pieces that are alive and displayed
     public ArrayList<Piece> takenPieces = new ArrayList<>(); // taken pieces
+    public Piece selectedPiece; // currently selected piece, will be used to paint the selected square to green
     
     private static Scene scene;
     private BorderPane bp = new BorderPane(); //highest level container, set scene's pane to this

@@ -4,6 +4,7 @@
  */
 package com.mycompany.chessfx;
 
+import java.util.ArrayList;
 /**
  *
  * @author yigit
@@ -21,6 +22,14 @@ public class Knight extends Piece{
     }
     @Override
     public void move() {
+        
+    }
+    
+    //Get the moveable squares into a local arraylist of strings, no need to show the moveable squares on screen
+    @Override
+    public void showMoveables() {
+        ArrayList<String> moveables = new ArrayList<String>();
+        //check the current state of the board
         
     }
     

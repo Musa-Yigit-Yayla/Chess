@@ -14,5 +14,7 @@ public class Move {
     public static final int BLACK_TURN = -1;
     
     private static Move lastMove; // last valid move that has been made
-    private static int turn = WHITE_TURN;// white's turn
+    private static int turn = WHITE_TURN;// white's turn initially
+    
+    
 }

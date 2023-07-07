@@ -26,4 +26,9 @@ public class Pawn extends Piece {
    public void move(){
        
    }
+
+    @Override
+    public void showMoveables() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
