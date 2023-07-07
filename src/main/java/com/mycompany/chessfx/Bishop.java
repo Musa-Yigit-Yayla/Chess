@@ -11,7 +11,7 @@ package com.mycompany.chessfx;
 public class Bishop extends Piece{
 
     public Bishop(char color) {
-        super(color);
+        super(color, 3.15);
         if(this.getColor().equals(Piece.WHITE_COLOR)){
             this.setPoints(WHITE_BISHOP_POINTS);
         }

@@ -12,7 +12,7 @@ public class Rook extends Piece{
     private boolean isMoved = false;
     
     public Rook(char color){
-        super(color);
+        super(color, 5);
         if(this.getColor().equals(WHITE_COLOR)){
             this.setPoints(WHITE_ROOK_POINTS);
         }

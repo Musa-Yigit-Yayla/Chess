@@ -11,7 +11,7 @@ package com.mycompany.chessfx;
 public class Pawn extends Piece {
    private boolean isMoved = false;
    public Pawn(char color){
-       super(color);
+       super(color, 1);
        if(this.getColor().equals(Piece.WHITE_COLOR)){
            this.setPoints(WHITE_PAWN_POINTS);
        }

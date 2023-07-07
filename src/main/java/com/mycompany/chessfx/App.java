@@ -66,7 +66,10 @@ public class App extends Application {
         //pane.getChildren().add(debugPiece.getPiecePane());
         String fp = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\King-black.png";
         ImageView newImg = new ImageView(new Image(new File(fp).toURI().toString()));
+        newImg.setFitHeight(80.0);
+        newImg.setFitWidth(80.0);
         pane.getChildren().add(newImg);
+        pane.setPrefSize(90, 90);
         scene2.setRoot(pane);
         
         stage2.setScene(scene2);
@@ -105,7 +108,7 @@ public class App extends Application {
         //set the white pieces to the bottom
         for(int i = 7; i >= 6; i--){
             for(int j = 0; j < 8; j++){
-                if(i == 0){
+                if(i == 7){
                     if(j == 0 || j == 7){
                         this.gameGrid[i][j] = 5.0;
                     }

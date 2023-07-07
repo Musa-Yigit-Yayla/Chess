@@ -75,13 +75,16 @@ public class PiecePane extends StackPane{
         else if(p == Piece.BLACK_KING_POINTS){
             filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\King-black.png";
         }
+        //else{
+            //ilePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\King-black.png";
+        //}
         this.image = new Image(new File(filePath).toURI().toString());
         this.imgView.setImage(image);
         
-        //this.imgView.setFitHeight(this.PANE_HEIGHT);
-        //this.imgView.setFitWidth(this.PANE_WIDTH);
+        this.imgView.setFitHeight(this.PANE_HEIGHT);
+        this.imgView.setFitWidth(this.PANE_WIDTH);
         this.getChildren().add(this.imgView);
-        this.getChildren().add(new Circle(45));
+        //this.getChildren().add(new Circle(45));
         
         //add the PiecePane to the pieceHolder 
         //this.pieceHolder.add(this, 0, 0);
@@ -104,6 +107,8 @@ public class PiecePane extends StackPane{
                 break;
             }
         }
+        i = 7 - i; // THIS LINE IS VERY CRUCIAL SINCE IT ALLOWS US TO HAVE WHITE PIECES AT BOTTOM AND BLACK AT THE TOP, NOTICE
+        //WE DON'T ALTERNATE THE DATA FIELD OF POSITION AT OBJECT LEVEL
         //revert i and j since we have column then row on add function
         this.pieceHolder.add(this, j, i);
     }

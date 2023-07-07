@@ -41,15 +41,16 @@ public abstract class Piece {
                                                 {"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"},};
     
     //W or B, or w or b for color, respective points for pieces, bishop is 3.15
-    public Piece(char color){
+    public Piece(char color, double points){
         color = Character.toUpperCase(color);
         if(color == 'W'){
             this.color = WHITE_COLOR;
+            points *= -1; //passed points is assumed to be positive
         }
         else{
             this.color = BLACK_COLOR;
         }
-        //this.points = points;
+        this.points = points;
         this.piecePane = new PiecePane(this);
     }
     public String getColor(){

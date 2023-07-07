@@ -11,7 +11,7 @@ package com.mycompany.chessfx;
 public class Queen extends Piece{
 
     public Queen(char color) {
-        super(color);
+        super(color, 9);
         if(this.getColor().equals(WHITE_COLOR)){
             this.setPoints(WHITE_QUEEN_POINTS);
         }

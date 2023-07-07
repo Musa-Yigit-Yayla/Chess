@@ -12,7 +12,7 @@ public class King extends Piece{
     private boolean isMoved = false;
     
     public King(char color){
-        super(color);
+        super(color, 90);
         if(super.getColor().equals(Piece.WHITE_COLOR)){
             this.setPoints(WHITE_KING_POINTS);
         }
