@@ -91,7 +91,7 @@ public class PiecePane extends StackPane{
                 }
             }
         }
-        this.pieceHolder.add(this, i, j);
+        this.pieceHolder.add(this.imgView, i, j);
     }
 }
 

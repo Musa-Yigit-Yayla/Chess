@@ -45,11 +45,11 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //scene = new Scene(loadFXML("primary"), 1000, 1000);
-        this.setStackPane();
-        this.setBorderPane();
         this.setGameGrid();
         this.setCheckerBoard();
         this.setPieceHolder();
+        this.setStackPane();
+        this.setBorderPane();
         //scene.setRoot(); 
         this.scene = new Scene(this.bp, 1000, 1000);// !!!CHANGE THIS LATER ON!!!
         stage.setScene(scene);
@@ -245,7 +245,8 @@ public class App extends Application {
     }
     //Checker board is already added into our stackPane, set other properties if necessary and set the pieceHolder
     private void setStackPane() {
-        
+        //add the piece holder, it already must have been set
+        this.stackPane.getChildren().add(this.pieceHolder);
     }
 
     private void setBorderPane() {
