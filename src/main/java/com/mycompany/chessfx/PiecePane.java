@@ -112,6 +112,19 @@ public class PiecePane extends StackPane{
         //revert i and j since we have column then row on add function
         this.pieceHolder.add(this, j, i);
     }
+    //Currently sets on clicked, setOnDragged and drag exit could be implemented in future
+    public void setEventHandlers(){
+        //set on click
+        this.setOnMouseClicked(e->{
+            if(App.selectedPiece == null){
+                //Select the current piece that this piecePane holds
+                App.selectedPiece = this.piece;
+            }
+            else{
+                //We already have a selected piece
+            }
+        });
+    }
 }
 
 //This comment is for converting File objects into respective images or media

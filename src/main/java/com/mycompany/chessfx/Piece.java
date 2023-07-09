@@ -67,7 +67,7 @@ public abstract class Piece {
         this.points = points;
     }
     public abstract void move();
-    public abstract void showMoveables(); // show all moveable square once a piece object is clicked
+    public abstract Object[] showMoveables(); // return all moveable squares, as a string array once a piece object is clicked
     //Call this after the Piece instance is either successfuly has been moved or during initialization process
     //No bounds checking performed
     public void setPosition(int row, int column){

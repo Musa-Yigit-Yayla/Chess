@@ -26,11 +26,57 @@ public class Knight extends Piece{
     }
     
     //Get the moveable squares into a local arraylist of strings, no need to show the moveable squares on screen
+    //We only check for bounds validation here, other validations such as check status must be done during the event handling process
     @Override
-    public void showMoveables() {
+    public Object[] showMoveables() {
         ArrayList<String> moveables = new ArrayList<String>();
-        //check the current state of the board
-        
+        String pos = super.getPosition();
+        int row = 0, column = 0;
+        boolean broken = false;
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(positions[i][j].equals(pos)){
+                    row = i;
+                    column = j;
+                    broken = true;
+                    break;
+                }
+            }
+            if(broken){
+                break;
+            }
+        }
+        if(row + 2 < 8 && column + 1 < 8){
+            moveables.add(positions[row + 2][column + 1]);
+        }
+        //1 right 2 up
+        if(row + 1 < 8 && column + 2 < 8){
+            moveables.add(positions[row + 1][column + 2]);
+        }
+        //1 left 2 up
+        if(row - 1 >= 0 && column + 2 < 8){
+            moveables.add(positions[row -1][column + 2]);
+        }
+        //2 left 1 up
+        if(row - 2 >= 0 && column + 1 < 8){
+            moveables.add(positions[row - 2][column + 1]);
+        }//2 left 1 down
+        if(row - 2 >= 0 && column - 1 >= 0){
+            moveables.add(positions[row - 2][column - 1]);
+        }
+        //1 left 2 down
+        if(row - 1 >= 0 && column - 2 >= 0 ){
+            moveables.add(positions[row - 1][column - 2]);
+        }
+        //1 right 2 down
+        if(row + 1 < 8 && column - 2 >= 0 ){
+            moveables.add(positions[row + 1][column - 2]);
+        }
+        //2 right 1 down
+        if(row + 2  < 8 && column - 1 >= 0 ){
+            moveables.add(positions[row + 2][column - 1]);
+        }
+        return moveables.toArray();
     }
     
 }
