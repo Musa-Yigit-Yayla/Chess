@@ -20,6 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 
 /**
@@ -287,5 +289,18 @@ public class App extends Application {
     }
     public static GridPane getPieceHolder(){
         return pieceHolder;
+    }
+    public static StackPane getPieceHolderNode(int row, int column){
+        Node result = null;
+        ObservableList<Node> children = pieceHolder.getChildren();
+
+        for (Node node : children){
+            if(pieceHolder.getRowIndex(node) == row && pieceHolder.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return (StackPane)result;
     }
 }

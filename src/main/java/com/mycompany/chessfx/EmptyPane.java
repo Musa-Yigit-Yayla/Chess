@@ -8,6 +8,7 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
+import java.util.ArrayList;
 import javafx.scene.layout.StackPane;
 public class EmptyPane extends StackPane{
     public EmptyPane(){
@@ -32,6 +33,34 @@ public class EmptyPane extends StackPane{
         else{
             enemyColor = Piece.WHITE_COLOR;
         }
+        //Get all enemy colored pieces
+        ArrayList<Piece> enemyPieces = new ArrayList<>();
+        for(Piece e: App.currentPieces){
+            //traverse each and every alive piece and obtain the ones that are considered as enemy
+            if(e.getColor().equals(enemyColor)){
+                enemyPieces.add(e);
+            }
+        }
+        boolean result = false;
         
+        
+        
+        for(int i = 0; i < enemyPieces.size(); i++){
+            Piece currPiece = enemyPieces.get(i);
+            //int currRow = currPiece.getRow();
+            //int currColumn = currPiece.getColumn();
+            String[] currMoveables;
+            //if(currPiece instanceof Knight){
+                currMoveables = (String[])currPiece.showMoveables();
+                for(int j = 0; j < currMoveables.length; i++){
+                    if(currMoveables[j].equals(pos)){
+                        return true;
+                    }
+                }
+            //}
+            //else if(currPiece instanceof Bishop){
+                
+            //}
+        }
     }
 }

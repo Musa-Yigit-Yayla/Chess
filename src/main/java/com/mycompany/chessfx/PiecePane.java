@@ -112,6 +112,12 @@ public class PiecePane extends StackPane{
         //revert i and j since we have column then row on add function
         this.pieceHolder.add(this, j, i);
     }
+    public void setPiece(Piece piece){
+        this.piece = piece;
+    }
+    public Piece getPiece(){
+        return this.piece;
+    }
     //Currently sets on clicked, setOnDragged and drag exit could be implemented in future
     public void setEventHandlers(){
         //set on click
