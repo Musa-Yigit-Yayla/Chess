@@ -81,4 +81,50 @@ public abstract class Piece {
     public String getPosition(){
         return this.currPosition;
     }
+    //Returns the column based on the position of the current piece instance
+    //0 based indexing
+    public int getColumn(){
+        int result = -1;
+        if(this.currPosition != null){
+            char ch = this.currPosition.charAt(0);
+            switch(ch){
+                case 'a': result = 0; break;
+                case 'b': result = 1; break;
+                case 'c': result = 2; break;
+                case 'd': result = 3; break;
+                case 'e': result = 4; break;
+                case 'f': result = 5; break;
+                case 'g': result = 6; break;
+                case 'h': result = 7; break;
+            }
+        }
+        return result;
+    }
+    //Returns the row based on the position of the current piece instance
+    //0 based indexing
+    public int getRow(){
+        int result = -1;
+        if(this.currPosition != null){
+            char ch = this.currPosition.charAt(1);
+            switch(ch){
+                case '8': result = 0; break;
+                case '7': result = 1; break;
+                case '6': result = 2; break;
+                case '5': result = 3; break;
+                case '4': result = 4; break;
+                case '3': result = 5; break;
+                case '2': result = 6; break;
+                case '1': result = 7; break;
+            }
+        }
+        return result;
+    }
+    public String getEnemyColor(){
+        if(this.color.equals(WHITE_COLOR)){
+            return BLACK_COLOR;
+        }
+        else{
+            return WHITE_COLOR;
+        }
+    }
 }

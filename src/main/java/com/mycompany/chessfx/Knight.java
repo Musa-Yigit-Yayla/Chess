@@ -33,7 +33,7 @@ public class Knight extends Piece{
         String pos = super.getPosition();
         int row = 0, column = 0;
         boolean broken = false;
-        for(int i = 0; i < 8; i++){
+        /*for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 if(positions[i][j].equals(pos)){
                     row = i;
@@ -45,7 +45,9 @@ public class Knight extends Piece{
             if(broken){
                 break;
             }
-        }
+        }*/
+        row = this.getRow();
+        column = this.getColumn();
         if(row + 2 < 8 && column + 1 < 8){
             moveables.add(positions[row + 2][column + 1]);
         }

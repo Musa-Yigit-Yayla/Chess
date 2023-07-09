@@ -4,6 +4,8 @@
  */
 package com.mycompany.chessfx;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author yigit
@@ -25,9 +27,25 @@ public class Bishop extends Piece{
         
     }
 
+    //Logic is to traverse squares that we can go diagonally, and we will finish that diagonal direction as soon as we encounter
+    //a friendly piece (we exclude that), or an enemy piece(we incorporate that)
+    //also bounds checking is done
+    //@return Object[] holding individual String objects
     @Override
     public Object[] showMoveables() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        final int row = this.getRow();
+        final int column = this.getColumn();
+        
+        String friendlyColor = super.getColor();
+        
+        
+        ArrayList<String> moveables = new ArrayList<>();
+        
+        //start from upper left move with clockwise direction
+        //going towards upper left
+        int currRow = row - 1;
+        int currColumn = column - 1;
+        
     }
     
 }
