@@ -303,4 +303,11 @@ public class App extends Application {
 
         return (StackPane)result;
     }
+    //Utility functions for checking game status
+    public boolean isMated(){
+        return false;
+    }
+    public boolean isStaleMate(){
+        return false;
+    }
 }

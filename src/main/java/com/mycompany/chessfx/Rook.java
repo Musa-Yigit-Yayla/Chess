@@ -23,6 +23,9 @@ public class Rook extends Piece{
             this.setPoints(BLACK_ROOK_POINTS);
         }
     }
+    public boolean getIsMoved(){
+        return this.isMoved;
+    }
     @Override
     public void move(){
         
