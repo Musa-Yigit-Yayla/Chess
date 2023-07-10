@@ -62,5 +62,8 @@ public class EmptyPane extends StackPane{
                 
             //}
         }
+        //after having checked each and every enemy piece for whether it threatens our square, if we haven't returned yet
+        //we can return the result which is a boolean false
+        return result;
     }
 }
