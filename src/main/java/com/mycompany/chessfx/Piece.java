@@ -68,6 +68,7 @@ public abstract class Piece {
     }
     public abstract void move();
     public abstract Object[] showMoveables(); // return all moveable squares, as a string array once a piece object is clicked
+    public abstract void take(); // will be used when an enemy piece takes a piece instance. We will have empty method stub in King subclass
     //Call this after the Piece instance is either successfuly has been moved or during initialization process
     //No bounds checking performed
     public void setPosition(int row, int column){

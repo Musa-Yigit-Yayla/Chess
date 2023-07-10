@@ -308,6 +308,19 @@ public class App extends Application {
         return false;
     }
     public boolean isStaleMate(){
-        return false;
+        String friendlyColor;
+        if(Move.getTurn() == 1){
+            friendlyColor = Piece.WHITE_COLOR;
+        }
+        else{
+            friendlyColor = Piece.BLACK_COLOR;
+        }
+        King friendlyKing;
+        for(Piece p: App.currentPieces){
+            if(p instanceof King && p.getColor().equals(friendlyColor)){
+                friendlyKing = (King)p;
+                break;
+            }
+        }
     }
 }

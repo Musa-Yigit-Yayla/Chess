@@ -225,4 +225,9 @@ public class King extends Piece{
         }
         return moveables.toArray();
     }
+
+    @Override
+    public void take() {
+        
+    }
 }

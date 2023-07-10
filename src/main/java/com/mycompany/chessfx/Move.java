@@ -20,6 +20,7 @@ public class Move {
     private String prevPos;
     private String newPos;
     
+    //No need to alter the turn data field, that is automatically reversed in here.
     public Move(Piece piece, String prevPos, String newPos){
         this.piece = piece;
         this.prevPos = prevPos;
@@ -34,7 +35,7 @@ public class Move {
         return lastMove;
     }
     //1 for white turn, -1 for black turn
-    public int getTurn(){
+    public static int getTurn(){
         return turn;
     }
     //Notice we are returning a direct reference to our piece data field
