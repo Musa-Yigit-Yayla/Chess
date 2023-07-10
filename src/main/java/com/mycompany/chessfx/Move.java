@@ -30,11 +30,21 @@ public class Move {
         //set the lastMove to this object
         lastMove = this;
     }
-    public Move getLastMove(){
+    public static Move getLastMove(){
         return lastMove;
     }
     //1 for white turn, -1 for black turn
     public int getTurn(){
         return turn;
+    }
+    //Notice we are returning a direct reference to our piece data field
+    public Piece getPiece(){
+        return this.piece;
+    }
+    public String getPrevPos(){
+        return this.prevPos;
+    }
+    public String getNewPos(){
+        return this.newPos;
     }
 }
