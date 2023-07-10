@@ -50,14 +50,18 @@ public class EmptyPane extends StackPane{
             //int currRow = currPiece.getRow();
             //int currColumn = currPiece.getColumn();
             String[] currMoveables;
-            //if(currPiece instanceof Knight){
-                currMoveables = (String[])currPiece.showMoveables();
+            if(!(currPiece instanceof King)){
+                currMoveables = (String[])currPiece.showMoveables(); // !! CAREFUL, THIS LINE MAY LEAD TO INFINITE RECURSION DUE TO KING'S METHOD
                 for(int j = 0; j < currMoveables.length; i++){
                     if(currMoveables[j].equals(pos)){
                         return true;
                     }
                 }
-            //}
+            }
+            else{
+                //check manually so as to avoid infinite recursion
+                
+            }
             //else if(currPiece instanceof Bishop){
                 
             //}
