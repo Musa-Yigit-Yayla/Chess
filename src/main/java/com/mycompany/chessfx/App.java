@@ -425,15 +425,19 @@ public class App extends Application {
                     }
                     else if(p.getPosition().equals(takenPos)){
                         //Retrieve the taker piece 
-                        int t
-                        Piece takerPiece = 
-                        result[i][j];
+                        int[] takerPositions = Piece.getNumericPosition(takerPos);
+                        int takerRow = takerPositions[0];
+                        int takerColumn = takerPositions[1];
+                        Piece takerPiece = ((PiecePane)getGridNode(pieceHolder, takerRow, takerColumn)).getPiece();
+                        result[i][j] = takerPiece.getColumn();
                     }
-                    result[i][j] = p.getPoints();
-                    
+                    else{
+                        result[i][j] = p.getPoints();
+                    }
                 }
             }
         }
+        return result;
     }
     /*
     *Use for retrieving a node from gridpane by specifying the positions and passing GridPane reference
