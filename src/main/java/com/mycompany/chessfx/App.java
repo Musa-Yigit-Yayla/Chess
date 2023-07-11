@@ -305,7 +305,7 @@ public class App extends Application {
     }
     //Utility functions for checking game status
     public boolean isMated(){
-        return false;
+        return false; //ToDo
     }
     public boolean isStaleMate(){
         String friendlyColor;
@@ -315,12 +315,29 @@ public class App extends Application {
         else{
             friendlyColor = Piece.BLACK_COLOR;
         }
-        King friendlyKing;
+        King friendlyKing = null;
+        ArrayList<Piece> friendlyPieces = new ArrayList<>(); // list of alive friendly pieces except the king
         for(Piece p: App.currentPieces){
-            if(p instanceof King && p.getColor().equals(friendlyColor)){
-                friendlyKing = (King)p;
-                break;
+            if(p.getColor().equals(friendlyColor)){
+                if(p instanceof King){
+                    friendlyKing = (King)p;
+                    continue;
+                }
+                friendlyPieces.add(p);
             }
         }
+        //initially ensure that our king is not checked and whether it has any possible moves
+        String[] kingMoveables = (String[])(friendlyKing.showMoveables());
+        if(!friendlyKing.isChecked() && kingMoveables.length != 0){//
+            return false;
+        }
+        //ensure that we cannot move any other piece
+        for(int i = 0; i < friendlyPieces.size(); i++){
+            String[] currMoveables = (String[])(friendlyPieces.get(i).showMoveables());
+            if(currMoveables.length != 0){
+                return false;
+            }
+        }
+        return true;
     }
 }
