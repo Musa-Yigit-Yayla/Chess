@@ -304,8 +304,73 @@ public class App extends Application {
         return (StackPane)result;
     }
     //Utility functions for checking game status
+    //Invoke when check status changes to true for a king
     public boolean isMated(){
-        return false; //ToDo
+        boolean result = true;
+        
+        King checkedKing = null;
+        String friendlyColor = null;
+        String enemyColor = null;
+        
+        //Retrieve the checked king
+        for(Piece p: currentPieces){
+            if(p instanceof King){
+                King currKing = (King)(p);
+                if(currKing.isChecked()){
+                    checkedKing = currKing;
+                    friendlyColor = checkedKing.getColor();
+                    enemyColor = checkedKing.getEnemyColor();
+                    break;
+                }
+            }
+        }
+        String[] kingMoveables = (String[])checkedKing.showMoveables(); // squares that our king can move
+        if(kingMoveables != null && kingMoveables.length > 0){
+            return false;
+        }
+        //Retrieve all of the alive enemy pieces
+        ArrayList<Piece> enemies = new ArrayList<>(); //all alive enemies except the enemy king
+        for(Piece p: currentPieces){
+            if(p.getColor().equals(enemyColor) && !(p instanceof King)){
+                enemies.add(p);
+            }
+        }
+        //Retrieve the enemies that check our king
+        ArrayList<Piece> checkingEnemies = new ArrayList<>();// enemies that check our king
+        for(Piece p: enemies){
+            String[] currMoveables = (String[])(p.showMoveables());
+            for(int i = 0; i < currMoveables.length; i++){
+                String currKingPos = checkedKing.getPosition();
+                if(currMoveables[i].equals(currKingPos)){
+                    checkingEnemies.add(p);
+                    break;
+                }
+            }
+        }
+        ArrayList<Piece> friendlyPieces = new ArrayList<>();
+        //retrieve each and every alive friendly piece except from our king
+        for(Piece p: currentPieces){
+            if(p.getColor().equals(friendlyColor) && !(p instanceof King)){
+                friendlyPieces.add(p);
+            }
+        }
+        if(checkingEnemies.size() == 1){
+            String enemyPos = checkingEnemies.get(0).getPosition();
+            
+            //check if we can take the checking enemy by a piece except from our king, without exposing the king
+            for(Piece p: friendlyPieces){
+                String[] friendlyMoveables = (String[])(p.showMoveables());
+                
+                for(int i = 0; i < friendlyMoveables.length; i++){
+                    String currMoveable = friendlyMoveables[i];
+                    if(currMoveable.equals(enemyPos)){
+                        
+                    }
+                }
+            }
+            
+        }
+        
     }
     public boolean isStaleMate(){
         String friendlyColor;
@@ -339,5 +404,44 @@ public class App extends Application {
             }
         }
         return true;
+    }
+    //Static utility method for checking whether if a move is valid, instantiate game state representing aftermath of a possible move and check
+    //Whether our friendly king is not checked after that move
+    public static boolean isChecked(double[][] state, String kingColor){
+        //ToDo
+    }
+    //Method to retrieve gamestate representation subsequent to a move that could be made
+    public double[][] retrieveGameState(String takerPos, String takenPos){
+        double[][] result = new double[8][8];
+        
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                StackPane currPane = (StackPane)(getGridNode(pieceHolder, i, j));
+                if(currPane instanceof PiecePane){
+                    PiecePane currPiecePane = (PiecePane)(currPane);
+                    Piece p = currPiecePane.getPiece();
+                    if(p.getPosition().equals(takerPos)){
+                        continue;
+                    }
+                    else if(p.getPosition().equals(takenPos)){
+                        //Retrieve the taker piece 
+                        int t
+                        Piece takerPiece = 
+                        result[i][j];
+                    }
+                    result[i][j] = p.getPoints();
+                    
+                }
+            }
+        }
+    }
+    /*
+    *Use for retrieving a node from gridpane by specifying the positions and passing GridPane reference
+    *No index validation
+    *User is liable of type casting the node they have been returned if necessary, in the caller
+    *@return desired Node
+    */
+    public static Node getGridNode(GridPane pane, int row, int column){
+        
     }
 }

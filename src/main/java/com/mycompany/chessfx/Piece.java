@@ -128,4 +128,39 @@ public abstract class Piece {
             return WHITE_COLOR;
         }
     }
+    //same implementations with getRow and getColumn combined in a static method
+    //returns an array of length 2, first element is row second is column
+    public static int[] getNumericPosition(String pos){
+        int[] resultArr = new int[2];
+        int result = -1;
+        //Row
+            char ch = pos.charAt(1);
+            switch(ch){
+                case '8': result = 0; break;
+                case '7': result = 1; break;
+                case '6': result = 2; break;
+                case '5': result = 3; break;
+                case '4': result = 4; break;
+                case '3': result = 5; break;
+                case '2': result = 6; break;
+                case '1': result = 7; break;
+            }
+            resultArr[0] = result;
+        result = -1;
+        //Column
+        ch = pos.charAt(0);
+        switch(ch){
+               case 'a': result = 0; break;
+               case 'b': result = 1; break;
+               case 'c': result = 2; break;
+               case 'd': result = 3; break;
+               case 'e': result = 4; break;
+               case 'f': result = 5; break;
+               case 'g': result = 6; break;
+               case 'h': result = 7; break;
+        }
+        resultArr[1] = result; 
+         
+        return resultArr;
+    }
 }

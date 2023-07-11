@@ -31,7 +31,7 @@ public class King extends Piece{
         
     }
     public boolean isChecked(){
-        return true;
+        return true; //ToDo
     }
 
     @Override
