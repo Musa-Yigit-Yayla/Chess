@@ -490,4 +490,33 @@ public class App extends Application {
     public static Node getGridNode(GridPane pane, int row, int column){
         
     }
+    //Method for retrieving a path from given friendly king to given enemy piece which is an instance of queen or rook or bishop
+    //Returns null if there is no path in between two pieces (If they are next to each other vertically, horizontally, or diagonally)
+    public static String[] getPath(King friendlyKing, Piece enemyPiece){
+        Bishop bishop = null;
+        Rook rook = null;
+        Queen queen = null;
+        
+        if(enemyPiece instanceof Bishop){
+            bishop = (Bishop)(enemyPiece);
+        }
+        else if(enemyPiece instanceof Rook){
+            rook = (Rook)(enemyPiece);
+        }
+        else if(enemyPiece instanceof Queen){
+            queen = (Queen)(enemyPiece);
+        }
+        
+        int kingRow = friendlyKing.getRow();
+        int kingColumn = friendlyKing.getColumn();
+        
+        int enemyRow = enemyPiece.getRow();
+        int enemyColumn = enemyPiece.getColumn();
+        
+        
+        ArrayList<String> path = new ArrayList<>();
+        if(bishop != null && Math.abs((kingRow - enemyRow)) == Math.abs(kingColumn - enemyColumn)){
+            
+        }
+    }
 }
