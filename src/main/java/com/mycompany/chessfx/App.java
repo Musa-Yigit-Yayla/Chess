@@ -648,7 +648,117 @@ public class App extends Application {
             }
         }
         else if(queen != null){
+            //perform either bishop or rook operations based on king's position
+            //initially check for rook operations
+            if(enemyRow == kingRow || enemyColumn == kingColumn){
+                //perform rook operation
+                if(enemyRow == kingRow){
+                //same row but columns differ
+                int biggerColumn = kingColumn;
+                char biggerColumnPiece = 'k';
+                
+                if(enemyColumn > kingColumn){
+                    biggerColumn = enemyColumn;
+                    biggerColumnPiece = 'r'; //'r' for rook 'k' for king
+                }
+                if(biggerColumnPiece == 'k'){
+                    //go towards left
+                    int currColumn = kingColumn - 1;
+                    
+                    while(currColumn > enemyColumn){
+                        String currPos = Piece.positions[kingRow][currColumn];
+                        resultList.add(currPos);
+                        currColumn--;
+                    }
+                }
+                else{
+                    //go towards right from our king
+                    int currColumn = kingColumn + 1;
+                    while(currColumn < enemyColumn){
+                        String currPos = Piece.positions[kingRow][currColumn];
+                        resultList.add(currPos);
+                        currColumn++;
+                    }
+                }
+            }
+            else{
+                //perform bishop operation
+                int biggerRow = kingRow;
+            int biggerColumn = kingColumn;
             
+            char biggerRowPiece = 'k';
+            char biggerColumnPiece = 'k'; //'k' for king, 'b' for bishop
+            
+            if(kingRow < enemyRow){
+                biggerRow = enemyRow;
+                biggerRowPiece = 'b';
+            }
+            if(kingColumn < enemyColumn){
+                biggerColumn = enemyColumn;
+                biggerColumnPiece = 'b';
+            }
+            
+            if(biggerRowPiece == 'k'){
+                //king is lower than bishop
+                if(biggerColumnPiece == 'k'){
+                    //enemy bishop is northwest location
+                    int currRow =  kingRow - 1;
+                    int currColumn = kingColumn - 1;
+                    
+                    while(currRow > enemyRow && currColumn > enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow--;
+                        currColumn--;
+                    }
+                }
+                else{
+                    //north east
+                    int currRow = kingRow - 1;
+                    int currColumn = kingRow + 1;
+                    
+                    while(currRow > enemyRow && currColumn < enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow--;
+                        currColumn++;
+                    }
+                }
+            }
+            else{
+                if(biggerColumnPiece == 'k'){
+                    //southwest direction is towards enemy bishop
+                    int currRow = kingRow + 1;
+                    int currColumn = kingColumn - 1;
+                    
+                    while(currRow < enemyRow && currColumn > enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow++;
+                        currColumn--;
+                    }
+                }
+                else{
+                    //southeast direction is towards enemy bishop
+                    int currRow = kingRow + 1;
+                    int currColumn = kingColumn + 1;
+                    
+                    while(currRow < enemyRow && currColumn < enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow++;
+                        currColumn++;
+                    }
+                }
+            }
+        
+            }
         }
     }
+    if(resultList.isEmpty()){
+        return null;
+    }
+        return (String[])(resultList.toArray());
+    }
 }
+    
