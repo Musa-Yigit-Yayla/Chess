@@ -469,8 +469,62 @@ public class App extends Application {
     //Static utility method for checking whether if a move is valid, instantiate game state representing aftermath of a possible move and check
     //Whether our friendly king is not checked after that move
     public static boolean isChecked(double[][] state, String kingColor){
-        //ToDo
+        //retrieve each and every alive enemy piece positions except for enemy king
+        ArrayList<Integer> enemyRows = new ArrayList<>();
+        ArrayList<Integer> enemyColumns = new ArrayList<>();
+        
+        String friendlyColor;
+        String enemyColor;
+        boolean isWhiteFriendly = kingColor.equals(Piece.WHITE_COLOR);
+        if(isWhiteFriendly){
+            friendlyColor = Piece.WHITE_COLOR;
+            enemyColor = Piece.BLACK_COLOR;
+        }
+        else{
+            friendlyColor = Piece.BLACK_COLOR;
+            enemyColor = Piece.WHITE_COLOR;
+        }
+        for(int i = 0; i < state.length; i++){
+            for(int j = 0; j < state[i].length; j++){
+                double curr = state[i][j];
+                if(curr != 0 && Math.abs(curr) != 90){
+                    enemyRows.add(i);
+                    enemyColumns.add(j);
+                }
+                
+            }
+        }
+        for(int i = 0; i < enemyRows.size(); i++){
+            int currRow = enemyRows.get(i);
+            int currColumn = enemyColumns.get(i);
+            
+            double currValue = state[currRow][currColumn];
+            double currValueAbs = Math.abs(currValue);
+            
+            char enemyCharColor = 'w';
+            if(enemyColor.equals(Piece.BLACK_COLOR)){
+                enemyCharColor = 'b';
+            }
+            Piece currEnemy = null;
+            if(currValueAbs == 1.0){
+                currEnemy = new Pawn(enemyCharColor, currValue, currRow, currColumn);
+            }
+            else if(currValueAbs == 3.0){
+                currEnemy = new Knight(enemyCharColor, currValue, currRow, currColumn);
+            }
+            else if(currValueAbs == 3.15){
+                currEnemy = new Bishop(enemyCharColor, currValue, currRow, currColumn);
+            }
+            else if(currValueAbs == 5.0){
+                currEnemy = new Rook(enemyCharColor, currValue, currRow, currColumn);
+            }
+            else if(currValueAbs == 9.0){
+                currEnemy = new Queen(enemyCharColor, currValue, currRow, currColumn);
+            }
+            
+        }
     }
+    
     //Method to retrieve gamestate representation subsequent to a move that could be made
     public double[][] retrieveGameState(String takerPos, String takenPos){
         double[][] result = new double[8][8];
@@ -507,7 +561,17 @@ public class App extends Application {
     *@return desired Node
     */
     public static Node getGridNode(GridPane pane, int row, int column){
-        
+        Node result = null;
+        ObservableList<Node> children = pane.getChildren();
+
+        for (Node node : children) {
+            if(pane.getRowIndex(node) == row && pane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
     }
     //Method for retrieving a path from given friendly king to given checking enemy piece which is an instance of queen or rook or bishop
     //Returns null if there is no path in between two pieces (If they are next to each other vertically, horizontally, or diagonally)

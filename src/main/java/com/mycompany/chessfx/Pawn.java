@@ -22,6 +22,9 @@ public class Pawn extends Piece {
            this.setPoints(BLACK_PAWN_POINTS);
        }
    }
+   public Pawn(char color, double value, int row, int column){
+        super(color, value, row, column);
+    }
    public void promote(){
            
    }
@@ -117,9 +120,12 @@ public class Pawn extends Piece {
         }
         return moveables.toArray();
     }
-
+    
     @Override
     public void take() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public static String[] showMoveables(double[][] state, int row, int column){
+        
     }
 }

@@ -53,6 +53,19 @@ public abstract class Piece {
         this.points = points;
         this.piecePane = new PiecePane(this);
     }
+    //When this constructor is invoked we don't instantiate peicePane, it is for instantiating temporary representations of an existent piece 
+    public Piece(char color, double points, int row, int column){
+        color = Character.toUpperCase(color);
+        if(color == 'W'){
+            this.color = WHITE_COLOR;
+            points *= -1; //passed points is assumed to be positive
+        }
+        else{
+            this.color = BLACK_COLOR;
+        }
+        this.points = points;
+        this.setPosition(row, column);
+    }
     public String getColor(){
         return this.color;
     }

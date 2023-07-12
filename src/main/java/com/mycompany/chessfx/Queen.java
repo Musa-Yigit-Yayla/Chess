@@ -20,7 +20,9 @@ public class Queen extends Piece{
             this.setPoints(BLACK_QUEEN_POINTS);
         }
     }
-
+    public Queen(char color, double value, int row, int column){
+        super(color, value, row, column);
+    }
     @Override
     public void move() {
        

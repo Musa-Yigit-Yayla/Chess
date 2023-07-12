@@ -23,6 +23,9 @@ public class King extends Piece{
             this.setPoints(BLACK_KING_POINTS);
         }
     }
+    public King(char color, double value, int row, int column){
+        super(color, value, row, column);
+    }
     @Override
     public void move() {
     

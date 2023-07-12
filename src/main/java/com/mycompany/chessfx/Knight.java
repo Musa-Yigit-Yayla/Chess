@@ -20,6 +20,9 @@ public class Knight extends Piece{
             this.setPoints(BLACK_KNIGHT_POINTS);
         }
     }
+    public Knight(char color, double value, int row, int column){
+        super(color, value, row, column);
+    }
     @Override
     public void move() {
         

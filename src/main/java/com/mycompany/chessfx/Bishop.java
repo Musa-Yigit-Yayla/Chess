@@ -23,7 +23,9 @@ public class Bishop extends Piece{
             this.setPoints(BLACK_BISHOP_POINTS);
         }
     }
-
+    public Bishop(char color, double value, int row, int column){
+        super(color, value, row, column);
+    }
     @Override
     public void move() {
         

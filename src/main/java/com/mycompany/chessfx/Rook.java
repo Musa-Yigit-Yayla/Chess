@@ -23,6 +23,9 @@ public class Rook extends Piece{
             this.setPoints(BLACK_ROOK_POINTS);
         }
     }
+    public Rook(char color, double value, int row, int column){
+        super(color, value, row, column);
+    }
     public boolean getIsMoved(){
         return this.isMoved;
     }
