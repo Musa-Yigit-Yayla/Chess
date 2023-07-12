@@ -410,9 +410,28 @@ public class App extends Application {
                 }
                 //If not, we should finally check whether we can obstruct the path from the enemy piece to our king with a friendly piece
                 
+                for(Piece enemyPiece: checkingEnemies){
+                  String[] path = getPath(checkedKing, enemyPiece);
+                  //check whether after obstructing this path the game state turns into an unchecked position
+                  for(int i = 0; i < path.length; i++){
+                      String currSquare = path[i];
+                      for(int j = 0; j < friendlyPieces.size(); j++){
+                          Piece currFriendly = friendlyPieces.get(i);
+                          String[] currMoveables = (String[])currFriendly.showMoveables();
+                          if(contains(currMoveables, currFriendly)){
+                              //check whether we can obstruct the path by moving our currFriendly into that pos
+                              double[][] nextState = this.retrieveGameState(currFriendly.getPosition(), currSquare);
+                              if(!isChecked(nextState, friendlyColor)){
+                                  return false;
+                              }
+                          }
+                      }
+                  }
+                }
+                
             }
         }
-        
+        return true;
     }
     public boolean isStaleMate(){
         String friendlyColor;
@@ -759,6 +778,14 @@ public class App extends Application {
         return null;
     }
         return (String[])(resultList.toArray());
+    }
+    public static boolean  contains(Object[] arr, Object elt){
+        for(int i = 0; i < arr.length; i++){
+            if(arr[i].equals(elt)){
+                return true;
+            }
+        }
+        return false;
     }
 }
     
