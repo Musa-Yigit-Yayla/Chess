@@ -490,13 +490,15 @@ public class App extends Application {
     public static Node getGridNode(GridPane pane, int row, int column){
         
     }
-    //Method for retrieving a path from given friendly king to given enemy piece which is an instance of queen or rook or bishop
+    //Method for retrieving a path from given friendly king to given checking enemy piece which is an instance of queen or rook or bishop
     //Returns null if there is no path in between two pieces (If they are next to each other vertically, horizontally, or diagonally)
     public static String[] getPath(King friendlyKing, Piece enemyPiece){
         Bishop bishop = null;
         Rook rook = null;
         Queen queen = null;
         
+        String[] result = null;
+        ArrayList<String> resultList = new ArrayList<>();
         if(enemyPiece instanceof Bishop){
             bishop = (Bishop)(enemyPiece);
         }
@@ -514,8 +516,138 @@ public class App extends Application {
         int enemyColumn = enemyPiece.getColumn();
         
         
-        ArrayList<String> path = new ArrayList<>();
+        //ArrayList<String> path = new ArrayList<>();
         if(bishop != null && Math.abs((kingRow - enemyRow)) == Math.abs(kingColumn - enemyColumn)){
+            int biggerRow = kingRow;
+            int biggerColumn = kingColumn;
+            
+            char biggerRowPiece = 'k';
+            char biggerColumnPiece = 'k'; //'k' for king, 'b' for bishop
+            
+            if(kingRow < enemyRow){
+                biggerRow = enemyRow;
+                biggerRowPiece = 'b';
+            }
+            if(kingColumn < enemyColumn){
+                biggerColumn = enemyColumn;
+                biggerColumnPiece = 'b';
+            }
+            
+            if(biggerRowPiece == 'k'){
+                //king is lower than bishop
+                if(biggerColumnPiece == 'k'){
+                    //enemy bishop is northwest location
+                    int currRow =  kingRow - 1;
+                    int currColumn = kingColumn - 1;
+                    
+                    while(currRow > enemyRow && currColumn > enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow--;
+                        currColumn--;
+                    }
+                }
+                else{
+                    //north east
+                    int currRow = kingRow - 1;
+                    int currColumn = kingRow + 1;
+                    
+                    while(currRow > enemyRow && currColumn < enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow--;
+                        currColumn++;
+                    }
+                }
+            }
+            else{
+                if(biggerColumnPiece == 'k'){
+                    //southwest direction is towards enemy bishop
+                    int currRow = kingRow + 1;
+                    int currColumn = kingColumn - 1;
+                    
+                    while(currRow < enemyRow && currColumn > enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow++;
+                        currColumn--;
+                    }
+                }
+                else{
+                    //southeast direction is towards enemy bishop
+                    int currRow = kingRow + 1;
+                    int currColumn = kingColumn + 1;
+                    
+                    while(currRow < enemyRow && currColumn < enemyColumn){
+                        String currPos = Piece.positions[currRow][currColumn];
+                        resultList.add(currPos);
+                        currRow++;
+                        currColumn++;
+                    }
+                }
+            }
+        }
+        else if(rook != null && ((enemyRow == kingRow) ^ (enemyColumn == kingColumn))){
+            if(enemyRow == kingRow){
+                //same row but columns differ
+                int biggerColumn = kingColumn;
+                char biggerColumnPiece = 'k';
+                
+                if(enemyColumn > kingColumn){
+                    biggerColumn = enemyColumn;
+                    biggerColumnPiece = 'r'; //'r' for rook 'k' for king
+                }
+                if(biggerColumnPiece == 'k'){
+                    //go towards left
+                    int currColumn = kingColumn - 1;
+                    
+                    while(currColumn > enemyColumn){
+                        String currPos = Piece.positions[kingRow][currColumn];
+                        resultList.add(currPos);
+                        currColumn--;
+                    }
+                }
+                else{
+                    //go towards right from our king
+                    int currColumn = kingColumn + 1;
+                    while(currColumn < enemyColumn){
+                        String currPos = Piece.positions[kingRow][currColumn];
+                        resultList.add(currPos);
+                        currColumn++;
+                    }
+                }
+            }
+            else{
+                //columns are same nevertheless rows differ
+                int biggerRow = kingRow;
+                char biggerRowPiece = 'k';
+                
+                if(enemyRow > kingRow){
+                    biggerRow = enemyColumn;
+                    biggerRowPiece = 'r'; //'r' for rook 'k' for king
+                }
+                if(biggerRowPiece == 'k'){
+                    //go towards left
+                    int currRow = kingRow - 1;
+                    
+                    while(currRow > enemyRow){
+                        String currPos = Piece.positions[currRow][kingColumn];
+                        resultList.add(currPos);
+                        currRow--;
+                    }
+                }
+                else{
+                    //go towards right from our king
+                    int currRow = kingRow + 1;
+                    while(currRow < enemyColumn){
+                        String currPos = Piece.positions[currRow][kingColumn];
+                        resultList.add(currPos);
+                        currRow++;
+                    }
+                }
+            }
+        }
+        else if(queen != null){
             
         }
     }
