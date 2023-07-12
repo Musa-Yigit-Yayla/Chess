@@ -83,7 +83,57 @@ public class Knight extends Piece{
         }
         return moveables.toArray();
     }
-
+    public static String[] showMoveables(double[][] state, int row, int column){
+        ArrayList<String> moveables = new ArrayList<String>();
+        //String pos = Piece.positions[row][column];
+        row = 0; column = 0;
+        //boolean broken = false;
+        /*for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(positions[i][j].equals(pos)){
+                    row = i;
+                    column = j;
+                    broken = true;
+                    break;
+                }
+            }
+            if(broken){
+                break;
+            }
+        }*/
+        
+        if(row + 2 < 8 && column + 1 < 8){
+            moveables.add(positions[row + 2][column + 1]);
+        }
+        //1 right 2 up
+        if(row + 1 < 8 && column + 2 < 8){
+            moveables.add(positions[row + 1][column + 2]);
+        }
+        //1 left 2 up
+        if(row - 1 >= 0 && column + 2 < 8){
+            moveables.add(positions[row -1][column + 2]);
+        }
+        //2 left 1 up
+        if(row - 2 >= 0 && column + 1 < 8){
+            moveables.add(positions[row - 2][column + 1]);
+        }//2 left 1 down
+        if(row - 2 >= 0 && column - 1 >= 0){
+            moveables.add(positions[row - 2][column - 1]);
+        }
+        //1 left 2 down
+        if(row - 1 >= 0 && column - 2 >= 0 ){
+            moveables.add(positions[row - 1][column - 2]);
+        }
+        //1 right 2 down
+        if(row + 1 < 8 && column - 2 >= 0 ){
+            moveables.add(positions[row + 1][column - 2]);
+        }
+        //2 right 1 down
+        if(row + 2  < 8 && column - 1 >= 0 ){
+            moveables.add(positions[row + 2][column - 1]);
+        }
+        return (String[])moveables.toArray();
+    }
     @Override
     public void take() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

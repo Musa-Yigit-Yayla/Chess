@@ -66,7 +66,45 @@ public class Queen extends Piece{
         
         return result;
     }
+    
+    public static String[] showMoveables(double[][] state, int row, int column){
+        String friendlyColor = Piece.WHITE_COLOR;
+        String enemyColor = Piece.BLACK_COLOR;
+        
+        if(state[row][column] < 0){
+            String temp = friendlyColor;
+            friendlyColor = enemyColor;
+            enemyColor = temp;
+        }
+        
+        char color;
+        //instantiate a bishop and a rook of the same color independent from our game
+        if(friendlyColor.equals(Piece.WHITE_COLOR)){
+            color = 'w';
+        }
+        else{
+            color = 'b';
+        }
+        Bishop b = new Bishop(color);
+        Rook r = new Rook(color);
+        
+        b.setPosition(row, column);
+        r.setPosition(row, column);
+        
+        Object[] arr1 = (String[])b.showMoveables();
+        Object[] arr2 = (String[])r.showMoveables();
+        
+        //concatenate the two arrays
+        Object[] result = Arrays.copyOf(arr1, arr1.length + arr2.length);
+        System.arraycopy(arr2, 0, result, arr1.length, arr2.length);
+        
+        //Explicitly assign null to instantiated helper objects
+        b = null;
+        r = null;
+        
+        return (String[])result;
 
+    }
     @Override
     public void take() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

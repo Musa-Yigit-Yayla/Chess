@@ -366,7 +366,7 @@ public class App extends Application {
                     String currMoveable = friendlyMoveables[i];
                     if(currMoveable.equals(enemyPos)){
                         double[][] nextGameState = this.retrieveGameState(currFriendlyPos, enemyPos);
-                        if(!isChecked(nextGameState, friendlyColor)){
+                        if(!isChecked(nextGameState, friendlyColor, checkedKing.getPosition())){
                             return false;
                         }
                     }
@@ -386,7 +386,7 @@ public class App extends Application {
                         String currMoveable = friendlyMoveables[i];
                         if(currMoveable.equals(enemyPos)){
                             double[][] nextGameState = this.retrieveGameState(currFriendly.getPosition(), enemyPos);
-                            if(!isChecked(nextGameState, friendlyColor)){
+                            if(!isChecked(nextGameState, friendlyColor, checkedKing.getPosition())){
                                 return false;
                             }
                         }
@@ -402,7 +402,7 @@ public class App extends Application {
                         String currMoveable = friendlyMoveables[i];
                         if(currMoveable.equals(enemyPos)){
                             double[][] nextGameState = this.retrieveGameState(currFriendly.getPosition(), enemyPos);
-                            if(!isChecked(nextGameState, friendlyColor)){
+                            if(!isChecked(nextGameState, friendlyColor, checkedKing.getPosition())){
                                 return false;
                             }
                         }
@@ -421,7 +421,7 @@ public class App extends Application {
                           if(contains(currMoveables, currFriendly)){
                               //check whether we can obstruct the path by moving our currFriendly into that pos
                               double[][] nextState = this.retrieveGameState(currFriendly.getPosition(), currSquare);
-                              if(!isChecked(nextState, friendlyColor)){
+                              if(!isChecked(nextState, friendlyColor, checkedKing.getPosition())){
                                   return false;
                               }
                           }
@@ -466,9 +466,10 @@ public class App extends Application {
         }
         return true;
     }
-    //Static utility method for checking whether if a move is valid, instantiate game state representing aftermath of a possible move and check
-    //Whether our friendly king is not checked after that move
-    public static boolean isChecked(double[][] state, String kingColor){
+    //Static utility method for checking whether if a move is valid, pass a game state representing aftermath of a possible move and check
+    //Whether our friendly king is checked after that move
+    //Return true if friendly king is checked
+    public static boolean isChecked(double[][] state, String kingColor, String kingPosition){
         //retrieve each and every alive enemy piece positions except for enemy king
         ArrayList<Integer> enemyRows = new ArrayList<>();
         ArrayList<Integer> enemyColumns = new ArrayList<>();
@@ -508,21 +509,52 @@ public class App extends Application {
             Piece currEnemy = null;
             if(currValueAbs == 1.0){
                 currEnemy = new Pawn(enemyCharColor, currValue, currRow, currColumn);
+                String[] moveables = Pawn.showMoveables(state, currRow, currColumn);
+                for(int j = 0; j < moveables.length; j++){
+                    if(moveables[j].equals(kingPosition)){
+                        return true;
+                    }
+                }
             }
             else if(currValueAbs == 3.0){
                 currEnemy = new Knight(enemyCharColor, currValue, currRow, currColumn);
+                String[] moveables = Knight.showMoveables(state, currRow, currColumn);
+                for(int j = 0; j < moveables.length; j++){
+                    if(moveables[j].equals(kingPosition)){
+                        return true;
+                    }
+                }
             }
             else if(currValueAbs == 3.15){
                 currEnemy = new Bishop(enemyCharColor, currValue, currRow, currColumn);
+                String[] moveables = Bishop.showMoveables(state, currRow, currColumn);
+                for(int j = 0; j < moveables.length; j++){
+                    if(moveables[j].equals(kingPosition)){
+                        return true;
+                    }
+                }
             }
             else if(currValueAbs == 5.0){
                 currEnemy = new Rook(enemyCharColor, currValue, currRow, currColumn);
+                String[] moveables = Rook.showMoveables(state, currRow, currColumn);
+                for(int j = 0; j < moveables.length; j++){
+                    if(moveables[j].equals(kingPosition)){
+                        return true;
+                    }
+                }
             }
             else if(currValueAbs == 9.0){
                 currEnemy = new Queen(enemyCharColor, currValue, currRow, currColumn);
+                String[] moveables = Queen.showMoveables(state, currRow, currColumn);
+                for(int j = 0; j < moveables.length; j++){
+                    if(moveables[j].equals(kingPosition)){
+                        return true;
+                    }
+                }
             }
             
         }
+        return false;
     }
     
     //Method to retrieve gamestate representation subsequent to a move that could be made
