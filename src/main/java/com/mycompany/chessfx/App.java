@@ -360,15 +360,57 @@ public class App extends Application {
             //check if we can take the checking enemy by a piece except from our king, without exposing the king
             for(Piece p: friendlyPieces){
                 String[] friendlyMoveables = (String[])(p.showMoveables());
+                String currFriendlyPos = p.getPosition();
                 
                 for(int i = 0; i < friendlyMoveables.length; i++){
                     String currMoveable = friendlyMoveables[i];
                     if(currMoveable.equals(enemyPos)){
-                        
+                        double[][] nextGameState = this.retrieveGameState(currFriendlyPos, enemyPos);
+                        if(!isChecked(nextGameState, friendlyColor)){
+                            return false;
+                        }
                     }
                 }
             }
             
+        }
+        //Traverse each and every checking piece and apply logic that we have created
+        for(Piece p: checkingEnemies){
+            String enemyPos = p.getPosition();
+            if(p instanceof Knight || p instanceof Pawn){
+                
+                //We are obligated to take p since we cannot obstruct the path, traverse each friendly alive pieces see whether we can take p
+                for(Piece currFriendly: friendlyPieces){
+                    String[] friendlyMoveables = (String[])(currFriendly.showMoveables());
+                    for(int i = 0; i < friendlyMoveables.length; i++){
+                        String currMoveable = friendlyMoveables[i];
+                        if(currMoveable.equals(enemyPos)){
+                            double[][] nextGameState = this.retrieveGameState(currFriendly.getPosition(), enemyPos);
+                            if(!isChecked(nextGameState, friendlyColor)){
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            else{//Queen Bishop Rook
+                
+                //Same procedure that we have applied if we can save our king by taking a checking piece
+                for(Piece currFriendly: friendlyPieces){
+                    String[] friendlyMoveables = (String[])(currFriendly.showMoveables());
+                    for(int i = 0; i < friendlyMoveables.length; i++){
+                        String currMoveable = friendlyMoveables[i];
+                        if(currMoveable.equals(enemyPos)){
+                            double[][] nextGameState = this.retrieveGameState(currFriendly.getPosition(), enemyPos);
+                            if(!isChecked(nextGameState, friendlyColor)){
+                                return false;
+                            }
+                        }
+                    }
+                }
+                //If not, we should finally check whether we can obstruct the path from the enemy piece to our king with a friendly piece
+                
+            }
         }
         
     }
