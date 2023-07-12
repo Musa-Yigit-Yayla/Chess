@@ -9,6 +9,7 @@ package com.mycompany.chessfx;
  * @author yigit
  */
 import java.util.ArrayList;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 public class EmptyPane extends StackPane{
     public EmptyPane(){
@@ -18,7 +19,12 @@ public class EmptyPane extends StackPane{
         
     }
     //Check whether user intends to castle his/her king
+    //Invoke this when user presses an empty pane (square in checker board) which may enable our king to castle providing that king and rooks are not moved
+    //You may not have to complete this method, go through implementing move functions of piece subclasses, then take a look at here if necessary
     private boolean isCastling(){
+        //retrieve nodes from pieceHolder pane of App class and find this empty pane
+        GridPane pieceHolder = App.getPieceHolder();
+        
         
     }
     //Pass the square's coordinates, and it will check whether the square in the given position is threatened by any enemy piece(s)
