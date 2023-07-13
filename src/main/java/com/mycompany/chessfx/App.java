@@ -562,7 +562,7 @@ public class App extends Application {
     }
     
     //Method to retrieve gamestate representation subsequent to a move that could be made
-    public double[][] retrieveGameState(String takerPos, String takenPos){
+    public static double[][] retrieveGameState(String takerPos, String takenPos){
         double[][] result = new double[8][8];
         
         for(int i = 0; i < 8; i++){
@@ -886,6 +886,22 @@ public class App extends Application {
             }
         }
         return false;
+    }
+    public static String getKingPosition(double[][] state, String kingColor){
+        double kingValue = Piece.WHITE_KING_POINTS;
+        if(kingColor.equals(Piece.BLACK_COLOR)){
+            kingValue *= -1;
+        }
+        String kingPos = null;
+        for(int i = 0; i < state.length; i++){
+            for(int j = 0; j < state[i].length; j++){
+                if(state[i][j] == kingValue){
+                    kingPos = Piece.positions[i][j];
+                    break;
+                }
+            }
+        }
+        return kingPos;
     }
 }
     
