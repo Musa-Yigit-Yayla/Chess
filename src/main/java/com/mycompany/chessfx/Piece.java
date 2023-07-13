@@ -84,7 +84,37 @@ public abstract class Piece {
     public abstract void move();
     public abstract Object[] showMoveables(); // return all moveable squares, as a string array once a piece object is clicked
     // will be used when an enemy piece takes a piece instance. We will have empty method stub in King subclass
-    public void take(Piece taker){
+    public void take(Piece takerPiece){
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        String currPosition = this.getPosition();
+        if(takerPiece instanceof King){
+            //check whether the enemy king can take this piece (Check whether this piece is guarded by any friendly piece)
+            if(!EmptyPane.isSquareThreatened(currPosition, this.getColor())){
+                //take current piece
+                this.takeHelper(takerPiece);
+            }
+        }
+        //calculate moveables of takerPiece and see whether enemy king is checked after having taken this piece
+        else{
+            String[] takerMoveables = (String[])(takerPiece.showMoveables());
+            for(int i = 0; i < takerMoveables.length; i++){
+                String currMoveable = takerMoveables[i];
+                if(currPosition.equals(currMoveable)){
+                    //check whether an takerPiece's friendly king is exposed after having taken this piece
+                    double[][] nextState = App.retrieveGameState(takerPiece.getPosition(), currPosition);
+                    //Retrieve taker's king's position
+                    String enemyKingPosition = App.getKingPosition(nextState, takerPiece.getColor());
+                    if(!App.isChecked(nextState, takerPiece.getColor(), enemyKingPosition)){
+                        this.takeHelper(takerPiece);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    
+    private void takeHelper(Piece taker){
         String friendlyColor = this.getColor();
         String enemyColor = this.getEnemyColor();
         
@@ -115,6 +145,7 @@ public abstract class Piece {
             pieceHolder.getChildren().remove(takenPane);
             pieceHolder.add(takerPane, takenRow, takenColumn);
             
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             
         }
     }

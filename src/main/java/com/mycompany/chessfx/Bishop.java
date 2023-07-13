@@ -267,7 +267,7 @@ public class Bishop extends Piece{
     }
     @Override
     public void take(Piece takerPiece) {
-        String currPosition = this.getPosition();
+        /*String currPosition = this.getPosition();
         if(takerPiece instanceof King){
             //check whether the enemy king can take this piece (Check whether this piece is guarded by any friendly piece)
             if(!EmptyPane.isSquareThreatened(currPosition, this.getColor())){
@@ -291,7 +291,8 @@ public class Bishop extends Piece{
                     break;
                 }
             }
-        }
+        }*/
+        super.take(takerPiece);
     }
     
 }

@@ -25,7 +25,7 @@ public class EmptyPane extends StackPane{
         //retrieve nodes from pieceHolder pane of App class and find this empty pane
         GridPane pieceHolder = App.getPieceHolder();
         
-        
+        return false; //ToDo
     }
     //Pass the square's coordinates, and it will check whether the square in the given position is threatened by any enemy piece(s)
     //Use when castling and after each move to see whether a king is checked
