@@ -30,7 +30,7 @@ public class Rook extends Piece{
         return this.isMoved;
     }
     @Override
-    public void move(){
+    public void move(String nextPos){
         
     }
 

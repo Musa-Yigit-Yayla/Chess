@@ -29,7 +29,7 @@ public class Pawn extends Piece {
            
    }
    @Override
-   public void move(){
+   public void move(String nextPos){
        
    }
    

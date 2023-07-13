@@ -10,11 +10,11 @@ package com.mycompany.chessfx;
  * Class for representing chess moves
  */
 public class Move {
-    public static final int WHITE_TURN = 1;
-    public static final int BLACK_TURN = -1;
+    public static final boolean WHITE_TURN = true;
+    public static final boolean BLACK_TURN = false;
     
     private static Move lastMove; // last valid move that has been made
-    private static int turn = WHITE_TURN;// white's turn initially
+    private static boolean turn = WHITE_TURN;// white's turn initially
     
     private Piece piece;
     private String prevPos;
@@ -27,7 +27,7 @@ public class Move {
         this.newPos = newPos;
         
         //alter the static variable turn since a new move has been made
-        turn *= -1;
+        turn = !turn;
         //set the lastMove to this object
         lastMove = this;
     }
@@ -35,7 +35,7 @@ public class Move {
         return lastMove;
     }
     //1 for white turn, -1 for black turn
-    public static int getTurn(){
+    public static boolean getTurn(){
         return turn;
     }
     //Notice we are returning a direct reference to our piece data field

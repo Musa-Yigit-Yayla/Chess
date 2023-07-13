@@ -24,7 +24,7 @@ public class Queen extends Piece{
         super(color, value, row, column);
     }
     @Override
-    public void move() {
+    public void move(String nextPos) {
        
     }
     

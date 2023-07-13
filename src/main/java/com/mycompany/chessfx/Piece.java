@@ -5,6 +5,7 @@
 package com.mycompany.chessfx;
 
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
 /**
  *
@@ -81,7 +82,30 @@ public abstract class Piece {
     public void setPoints(double points){
         this.points = points;
     }
-    public abstract void move();
+    //Invoke from event handling methods when applicable
+    public void move(String nextPos){
+        if((Move.getTurn() == Move.WHITE_TURN && this.getColor().equals(Piece.WHITE_COLOR) || (Move.getTurn() == Move.BLACK_TURN && this.getColor().equals(Piece.BLACK_COLOR)))){
+            //retrieve the StackPane correspondance on the given position and evaluate whether it's a PiecePane instance or EmptyPane instance
+            //then proceed accordingly
+            GridPane pieceHolder = App.getPieceHolder();
+            StackPane nextPosPane = (StackPane)App.getPieceHolderNode(row, column);
+            
+            String friendlyColor = this.color;
+            String enemyColor = this.getEnemyColor();
+            if(nextPosPane instanceof PiecePane){
+                Piece nextPosPiece = ((PiecePane)((PiecePane) (nextPosPane))).getPiece();
+                if(nextPosPiece.getColor().equals(enemyColor) && !(nextPosPiece instanceof King)){
+                    //Invoke the take method to nextPosPiece and pass this Piece instance as takerPiece parameter
+                    nextPosPiece.take(this);
+                }
+            }
+            else if(nextPosPane instanceof EmptyPane){ //bool logic is written just to enhance readability
+                //move our piece to empty pane if applicable
+                //Check whether our friendly king is exposed or not after the move
+            }
+        }
+        
+    }
     public abstract Object[] showMoveables(); // return all moveable squares, as a string array once a piece object is clicked
     // will be used when an enemy piece takes a piece instance. We will have empty method stub in King subclass
     public void take(Piece takerPiece){
