@@ -135,7 +135,7 @@ public class Knight extends Piece{
         return (String[])moveables.toArray();
     }
     @Override
-    public void take() {
+    public void take(Piece taker) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

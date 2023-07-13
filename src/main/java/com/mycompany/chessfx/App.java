@@ -46,6 +46,7 @@ public class App extends Application {
     private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
     private static GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
     //1 point for pawn, 3 for knight, 3.15 for bishop, 5 for rook, 9 for queen, 90 for king
+    private static double gamePoints = 0.0; //negative means black is winning based on taken pieces, positive implies white is winning
     
     @Override
     public void start(Stage stage) throws IOException {
@@ -264,6 +265,9 @@ public class App extends Application {
             }
         }
         //pieceHolder.add(new Circle(50), 8, 8); // for debugging purposes
+    }
+    public static void updateGamePoints(double takenPiece){
+        gamePoints -= takenPiece;
     }
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));

@@ -4,6 +4,8 @@
  */
 package com.mycompany.chessfx;
 
+import javafx.scene.layout.GridPane;
+
 /**
  *
  * @author yigit
@@ -81,7 +83,41 @@ public abstract class Piece {
     }
     public abstract void move();
     public abstract Object[] showMoveables(); // return all moveable squares, as a string array once a piece object is clicked
-    public abstract void take(); // will be used when an enemy piece takes a piece instance. We will have empty method stub in King subclass
+    // will be used when an enemy piece takes a piece instance. We will have empty method stub in King subclass
+    public void take(Piece taker){
+        String friendlyColor = this.getColor();
+        String enemyColor = this.getEnemyColor();
+        
+        if(taker.getColor().equals(enemyColor)){
+            String takerPosition = taker.currPosition;
+            String takenPosition = this.currPosition;
+            
+            int takenRow = this.row;
+            int takenColumn = this.column;
+            int[] takerPos = Piece.getNumericPosition(takerPosition);
+            int takerRow = takerPos[0];
+            int takerColumn = takerPos[1];
+            GridPane pieceHolder = App.getPieceHolder();
+            taker.setPosition(takenRow, takenColumn);
+            PiecePane takenPane = (PiecePane)(App.getGridNode(pieceHolder, takenRow, takenColumn));
+            PiecePane takerPane = (PiecePane)(App.getGridNode(pieceHolder, taker.row, taker.column));
+            
+            Piece takenPiece = takenPane.getPiece();
+            double takenPoints = takenPiece.getPoints();
+            
+            App.updateGamePoints(takenPoints);
+            App.currentPieces.remove(takenPiece);
+            App.takenPieces.add(takenPiece); // add the piece that has been killed
+            
+            //Replace takenPane with takerPane and place an empty pane instance to taker pane position
+            pieceHolder.getChildren().remove(takerPane);
+            pieceHolder.add(new EmptyPane(), taker.row, taker.column);
+            pieceHolder.getChildren().remove(takenPane);
+            pieceHolder.add(takerPane, takenRow, takenColumn);
+            
+            
+        }
+    }
     //Call this after the Piece instance is either successfuly has been moved or during initialization process
     //No bounds checking performed
     public void setPosition(int row, int column){

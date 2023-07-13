@@ -266,8 +266,8 @@ public class Bishop extends Piece{
         return (String[])moveables.toArray();
     }
     @Override
-    public void take() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void take(Piece takerPiece) {
+        
     }
     
 }

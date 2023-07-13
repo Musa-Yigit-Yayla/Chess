@@ -230,7 +230,9 @@ public class King extends Piece{
     }
 
     @Override
-    public void take() {
-        
+    public void take(Piece takerPiece) {
+        //empty method stub in King, we cannot take a king
+        return;
     }
+
 }
