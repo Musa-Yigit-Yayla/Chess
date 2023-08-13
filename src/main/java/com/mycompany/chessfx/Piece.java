@@ -102,6 +102,24 @@ public abstract class Piece {
             else if(nextPosPane instanceof EmptyPane){ //bool logic is written just to enhance readability
                 //move our piece to empty pane if applicable
                 //Check whether our friendly king is exposed or not after the move
+                
+                //check the next game state here directly
+                double[][] nextState = App.retrieveGameState(this.getPosition(), nextPos);
+                //Retrieve the friendly king's pos so we can pass it as an argument to stateChecker
+                String friendlyKingPos = App.getKingPosition(nextState, this.color);
+                if(!App.isChecked(nextState, this.color, friendlyKingPos)){
+                    //move it to the empty pane and make the current pane an empty pane
+                    
+                    //first remove the piece pane and the empty destination from gridHolder
+                    pieceHolder.getChildren().remove(this.piecePane);
+                    pieceHolder.getChildren().remove(nextPosPane);
+                    
+                    int nextRow = Piece.getRow(nextPos);
+                    int nextColumn = Piece.getColumn(nextPos);
+                    
+                    //sdd the current piece to the next locations and don't forget to add the empty pane back again by instantiating a new one
+                    
+                }
             }
         }
         
@@ -211,6 +229,41 @@ public abstract class Piece {
         int result = -1;
         if(this.currPosition != null){
             char ch = this.currPosition.charAt(1);
+            switch(ch){
+                case '8': result = 0; break;
+                case '7': result = 1; break;
+                case '6': result = 2; break;
+                case '5': result = 3; break;
+                case '4': result = 4; break;
+                case '3': result = 5; break;
+                case '2': result = 6; break;
+                case '1': result = 7; break;
+            }
+        }
+        return result;
+    }
+    public static int getColumn(String givenPos){
+        int result = -1;
+        if(givenPos != null){
+            char ch = givenPos.charAt(0);
+            switch(ch){
+                case 'a': result = 0; break;
+                case 'b': result = 1; break;
+                case 'c': result = 2; break;
+                case 'd': result = 3; break;
+                case 'e': result = 4; break;
+                case 'f': result = 5; break;
+                case 'g': result = 6; break;
+                case 'h': result = 7; break;
+            }
+        }
+        return result;
+    }
+    //Static function to retrieve the numerical position for empty panes
+    public static int getRow(String givenPos){
+        int result = -1;
+        if(givenPos != null){
+            char ch = givenPos.charAt(1);
             switch(ch){
                 case '8': result = 0; break;
                 case '7': result = 1; break;
