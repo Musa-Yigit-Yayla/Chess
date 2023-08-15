@@ -117,7 +117,18 @@ public abstract class Piece {
                     int nextRow = Piece.getRow(nextPos);
                     int nextColumn = Piece.getColumn(nextPos);
                     
+                    int pieceRow = this.row;
+                    int pieceColumn = this.column;
+                    
                     //sdd the current piece to the next locations and don't forget to add the empty pane back again by instantiating a new one
+                    EmptyPane newEmptyPane = new EmptyPane();
+                    
+                    pieceHolder.add(this.piecePane, nextColumn, nextRow);
+                    pieceHolder.add(newEmptyPane, pieceRow, pieceColumn);
+                    
+                    //set the row and column data fields of the piece appropriately
+                    this.row = nextRow;
+                    this.column = nextColumn;
                     
                 }
             }

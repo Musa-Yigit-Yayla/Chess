@@ -66,6 +66,25 @@ public class EmptyPane extends StackPane{
             }
             else{
                 //check manually so as to avoid infinite recursion
+                //current piece is guaranteed to be the enemy king
+                int row = Piece.getRow(pos);
+                int column = Piece.getColumn(pos);
+                
+                int kingRow = currPiece.getRow();
+                int kingColumn = currPiece.getColumn();
+                for(int k = -1; k < 2; k++){
+                    for(int j = -1; j < 2; j++){
+                        int currRow = kingRow + k;
+                        int currColumn = kingColumn + j;
+                        
+                        if(currRow == kingRow && currColumn == kingColumn){
+                            continue;
+                        }
+                        if(currRow == row && currColumn == column){
+                            return true;
+                        }
+                    }
+                }
                 
             }
             //else if(currPiece instanceof Bishop){
