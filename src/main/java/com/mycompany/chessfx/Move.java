@@ -14,7 +14,7 @@ public class Move {
     public static final boolean BLACK_TURN = false;
     
     private static Move lastMove; // last valid move that has been made
-    private static boolean turn = WHITE_TURN;// white's turn initially
+    private static boolean  turn = true;// white's turn initially
     
     private Piece piece;
     private String prevPos;

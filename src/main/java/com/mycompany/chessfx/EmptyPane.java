@@ -16,6 +16,7 @@ public class EmptyPane extends StackPane{
         this.setOnClicked();
     }
     private void setOnClicked(){
+        //If we have a selected piece, try and move that piece to this empty pane
         
     }
     //Check whether user intends to castle his/her king

@@ -108,7 +108,7 @@ public class PiecePane extends StackPane{
                 break;
             }
         }
-        i = 7 - i; // THIS LINE IS VERY CRUCIAL SINCE IT ALLOWS US TO HAVE WHITE PIECES AT BOTTOM AND BLACK AT THE TOP, NOTICE
+        //i = 7 - i; // THIS LINE IS VERY CRUCIAL SINCE IT ALLOWS US TO HAVE WHITE PIECES AT BOTTOM AND BLACK AT THE TOP, NOTICE
         //WE DON'T ALTERNATE THE DATA FIELD OF POSITION AT OBJECT LEVEL
         //revert i and j since we have column then row on add function
         this.pieceHolder.add(this, j, i);
@@ -124,6 +124,8 @@ public class PiecePane extends StackPane{
         //set on click
         this.setOnMouseClicked(e->{
             boolean turnChecker = (this.piece.getColor().equals(Piece.WHITE_COLOR) && Move.getTurn()) || (this.piece.getColor().equals(Piece.BLACK_COLOR) && !Move.getTurn());
+            System.out.println("Turn checker is: " + turnChecker);
+            System.out.println("Curr piece color is: " + this.piece.getColor() + ". Move turn is " + Move.getTurn());
             if(turnChecker){
                 //turn checker checks whether the piece contained by this PiecePane instance satisfies the color required for the current turn
                 //Select the current piece that this piecePane holds

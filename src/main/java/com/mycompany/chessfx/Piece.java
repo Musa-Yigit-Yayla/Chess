@@ -48,10 +48,11 @@ public abstract class Piece {
         color = Character.toUpperCase(color);
         if(color == 'W'){
             this.color = WHITE_COLOR;
-            points *= -1; //passed points is assumed to be positive
+            
         }
         else{
             this.color = BLACK_COLOR;
+            points *= -1; //passed points is assumed to be positive
         }
         this.points = points;
         this.piecePane = new PiecePane(this);
@@ -89,6 +90,21 @@ public abstract class Piece {
             //then proceed accordingly
             GridPane pieceHolder = App.getPieceHolder();
             StackPane nextPosPane = (StackPane)App.getPieceHolderNode(row, column);
+            
+            //first we must ensure that we have this pos as a moveable location in this piece instance
+            String[] currMoveables = (String[])this.showMoveables();
+            boolean isMoveable = false; //can we move to the given nextPos
+            for(int i = 0; i < currMoveables.length; i++){
+                String currMoveable = currMoveables[i];
+                if(currMoveable.equals(nextPos)){
+                    isMoveable = true;
+                    break;
+                }
+            }
+            if(!isMoveable){
+                //return back to the caller since we don't have the given pos as a moveable piece
+                return;
+            }
             
             String friendlyColor = this.color;
             String enemyColor = this.getEnemyColor();
