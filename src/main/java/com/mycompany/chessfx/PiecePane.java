@@ -30,6 +30,7 @@ public class PiecePane extends StackPane{
         this.pieceHolder = App.getPieceHolder();
         this.setPrefSize(App.SQUARE_LENGTH, App.SQUARE_LENGTH);
         this.setImage();
+        this.setEventHandlers();
         //this.getChildren().add(imgView);
     }
     //Sets the image with respect to color and type of the piece
@@ -122,12 +123,20 @@ public class PiecePane extends StackPane{
     public void setEventHandlers(){
         //set on click
         this.setOnMouseClicked(e->{
-            if(App.selectedPiece == null){
+            boolean turnChecker = (this.piece.getColor().equals(Piece.WHITE_COLOR) && Move.getTurn()) || (this.piece.getColor().equals(Piece.BLACK_COLOR) && !Move.getTurn());
+            if(turnChecker){
+                //turn checker checks whether the piece contained by this PiecePane instance satisfies the color required for the current turn
                 //Select the current piece that this piecePane holds
                 App.selectedPiece = this.piece;
             }
             else{
-                //We already have a selected piece
+                //We already have a selected piece, now the user might have clicked an enemy piece contained in this pane in which we can take
+                String selectedPieceColor = App.selectedPiece.getColor();
+                
+                if(!selectedPieceColor.equals(this.piece.getColor()) && !(this.piece instanceof King)){ //colors do not match hence we have an enemy piece
+                    //take the piece contained by this guy the panes will be updated accordingly
+                    this.piece.take(App.selectedPiece);
+                }
             }
         });
     }

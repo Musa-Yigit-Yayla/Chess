@@ -127,8 +127,7 @@ public abstract class Piece {
                     pieceHolder.add(newEmptyPane, pieceRow, pieceColumn);
                     
                     //set the row and column data fields of the piece appropriately
-                    this.row = nextRow;
-                    this.column = nextColumn;
+                    this.setPosition(nextRow, nextColumn);
                     
                 }
             }
@@ -181,7 +180,7 @@ public abstract class Piece {
             int takerRow = takerPos[0];
             int takerColumn = takerPos[1];
             GridPane pieceHolder = App.getPieceHolder();
-            taker.setPosition(takenRow, takenColumn);
+            
             PiecePane takenPane = (PiecePane)(App.getGridNode(pieceHolder, takenRow, takenColumn));
             PiecePane takerPane = (PiecePane)(App.getGridNode(pieceHolder, taker.row, taker.column));
             
@@ -197,11 +196,11 @@ public abstract class Piece {
             pieceHolder.add(new EmptyPane(), taker.row, taker.column);
             pieceHolder.getChildren().remove(takenPane);
             pieceHolder.add(takerPane, takenRow, takenColumn);
-            
+            taker.setPosition(takenRow, takenColumn);
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             
         }
-    }
+    } 
     //Call this after the Piece instance is either successfuly has been moved or during initialization process
     //No bounds checking performed
     public void setPosition(int row, int column){

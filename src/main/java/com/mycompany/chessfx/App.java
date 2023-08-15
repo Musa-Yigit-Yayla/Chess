@@ -439,7 +439,7 @@ public class App extends Application {
     }
     public boolean isStaleMate(){
         String friendlyColor;
-        if(Move.getTurn() == 1){
+        if(Move.getTurn() == true){
             friendlyColor = Piece.WHITE_COLOR;
         }
         else{
