@@ -28,7 +28,7 @@ public class King extends Piece{
     }
     @Override
     public void move(String nextPos) {
-    
+        
     }
     public void castle(){
         

@@ -31,7 +31,7 @@ public class Rook extends Piece{
     }
     @Override
     public void move(String nextPos){
-        
+        super.move(nextPos);
     }
 
     //We will traverse vertically and horizontally

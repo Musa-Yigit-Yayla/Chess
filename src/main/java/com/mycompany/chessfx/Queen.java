@@ -25,7 +25,7 @@ public class Queen extends Piece{
     }
     @Override
     public void move(String nextPos) {
-       
+       super.move(nextPos);
     }
     
     //Queen behaves as a combination of a bishop and a rook, so we will use their corresponding showMoveables methods by instantiating

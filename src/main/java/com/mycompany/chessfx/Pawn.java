@@ -30,7 +30,7 @@ public class Pawn extends Piece {
    }
    @Override
    public void move(String nextPos){
-       
+       super.move(nextPos);
    }
    
     //Similar to other methods, we do not check for whether friendly king is exposed

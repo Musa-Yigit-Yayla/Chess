@@ -25,7 +25,7 @@ public class Knight extends Piece{
     }
     @Override
     public void move(String nextPos) {
-        
+        super.move(nextPos);
     }
     
     //Get the moveable squares into a local arraylist of strings, no need to show the moveable squares on screen

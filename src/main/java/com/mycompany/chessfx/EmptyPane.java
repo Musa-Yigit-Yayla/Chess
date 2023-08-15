@@ -17,7 +17,29 @@ public class EmptyPane extends StackPane{
     }
     private void setOnClicked(){
         //If we have a selected piece, try and move that piece to this empty pane
-        
+        if(App.selectedPiece != null){
+            String selectedColor = App.selectedPiece.getColor();
+       
+            boolean turnChecker = (selectedColor.equals(Piece.WHITE_COLOR) && Move.getTurn() == Move.WHITE_TURN) || (selectedColor.equals(Piece.BLACK_COLOR) && Move.getTurn() == Move.BLACK_TURN);  
+            if(turnChecker){
+                //Move the selected piece to this location if possible
+                
+                //!!! WE MUST RETRIEVE THE LOCATION IF THIS EMPTY PANE CAREFULLY !!!!
+                String nextPos = null;
+                for(int i = 0; i < 8; i++){
+                    for(int j = 0; j < 8; j++){
+                        StackPane currNode = App.getPieceHolderNode(i, j);
+                        if(currNode.equals(this)){
+                            nextPos = Piece.positions[i][j];
+                        }
+                    }
+                }
+                if(nextPos == null){
+                    System.out.println("CURRENT EMPTY PANE POSITION IS NULL");
+                }
+                App.selectedPiece.move(nextPos);
+            }
+        }
     }
     //Check whether user intends to castle his/her king
     //Invoke this when user presses an empty pane (square in checker board) which may enable our king to castle providing that king and rooks are not moved
