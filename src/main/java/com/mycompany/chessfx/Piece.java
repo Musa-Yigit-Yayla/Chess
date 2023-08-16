@@ -157,7 +157,7 @@ public abstract class Piece {
                     newEmptyPane.setEventHandling();
                     
                     pieceHolder.add(this.piecePane, nextColumn, nextRow);
-                    pieceHolder.add(newEmptyPane, pieceRow, pieceColumn);
+                    pieceHolder.add(newEmptyPane, pieceColumn, pieceRow);
                     
                     //set the row and column data fields of the piece appropriately
                     this.setPosition(nextRow, nextColumn);

@@ -9,6 +9,8 @@ package com.mycompany.chessfx;
  * @author yigit
  */
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 public class EmptyPane extends StackPane{
@@ -39,6 +41,7 @@ public class EmptyPane extends StackPane{
                         }
                     }
                 }
+                //ObservableList<Node> pieceHolderNodes = App.getPieceHolder().getChildren();
                 if(nextPos == null){
                     System.out.println("CURRENT EMPTY PANE POSITION IS NULL");
                 }
