@@ -44,10 +44,10 @@ public class Pawn extends Piece {
         
         int dy;
         if(friendlyColor.equals(WHITE_COLOR)){
-            dy = 1;
+            dy = -1; //!!! PAY ATTENTION HERE
         }
         else{
-            dy = -1;
+            dy = 1;
         }
         
         ArrayList<String> moveables = new ArrayList<>();
