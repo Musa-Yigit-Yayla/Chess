@@ -144,10 +144,10 @@ public class Pawn extends Piece {
         }
         
         boolean isMoved = true;
-        if(friendlyColor == Piece.WHITE_COLOR && row == 6){
+        if(friendlyColor.equals(Piece.WHITE_COLOR) && row == 6){
             isMoved = false;
         }
-        else if(friendlyColor == Piece.BLACK_COLOR && row == 1){
+        else if(friendlyColor.equals(Piece.BLACK_COLOR) && row == 1){
             isMoved = false;
         }
         

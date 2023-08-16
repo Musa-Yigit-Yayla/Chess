@@ -13,15 +13,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 public class EmptyPane extends StackPane{
     public EmptyPane(){
-        this.setOnClicked();
+        this.setEventHandling();
     }
-    private void setOnClicked(){
+    private void setOnClickedAction(){
+        System.out.println("An empty pane has been clicked");
         //If we have a selected piece, try and move that piece to this empty pane
         if(App.selectedPiece != null){
             String selectedColor = App.selectedPiece.getColor();
-       
+            
+            System.out.println("The selected piece is not null");
+            
             boolean turnChecker = (selectedColor.equals(Piece.WHITE_COLOR) && Move.getTurn() == Move.WHITE_TURN) || (selectedColor.equals(Piece.BLACK_COLOR) && Move.getTurn() == Move.BLACK_TURN);  
+            System.out.println("Turnchecker is " + turnChecker);
             if(turnChecker){
+                
                 //Move the selected piece to this location if possible
                 
                 //!!! WE MUST RETRIEVE THE LOCATION IF THIS EMPTY PANE CAREFULLY !!!!
@@ -36,6 +41,9 @@ public class EmptyPane extends StackPane{
                 }
                 if(nextPos == null){
                     System.out.println("CURRENT EMPTY PANE POSITION IS NULL");
+                }
+                else{
+                    System.out.println("Next pos is " + nextPos);
                 }
                 App.selectedPiece.move(nextPos);
             }
@@ -117,5 +125,11 @@ public class EmptyPane extends StackPane{
         //after having checked each and every enemy piece for whether it threatens our square, if we haven't returned yet
         //we can return the result which is a boolean false
         return result;
+    }
+
+    private void setEventHandling() {
+       this.setOnMouseClicked( e -> {
+          this.setOnClickedAction();
+       });
     }
 }

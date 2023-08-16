@@ -202,7 +202,7 @@ public class App extends Application {
             if(i > 1 && i < 6){
                 for(int j = 0; j < 8; j++){
                     //add empty stackpanes so we can have gaps in the pieceHolder
-                    StackPane emptyPane = new StackPane();
+                    StackPane emptyPane = new EmptyPane();
                     emptyPane.setPrefSize(SQUARE_LENGTH, SQUARE_LENGTH);
                     pieceHolder.add(emptyPane, j, i);
                 }

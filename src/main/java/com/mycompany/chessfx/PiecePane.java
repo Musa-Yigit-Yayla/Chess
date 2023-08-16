@@ -130,13 +130,17 @@ public class PiecePane extends StackPane{
                 //turn checker checks whether the piece contained by this PiecePane instance satisfies the color required for the current turn
                 //Select the current piece that this piecePane holds
                 App.selectedPiece = this.piece;
+                System.out.println("We have selected the initial piece");
             }
             else{
                 //We already have a selected piece, now the user might have clicked an enemy piece contained in this pane in which we can take
                 String selectedPieceColor = App.selectedPiece.getColor();
                 
+                System.out.println("We are trying to take a clicked piece");
                 if(!selectedPieceColor.equals(this.piece.getColor()) && !(this.piece instanceof King)){ //colors do not match hence we have an enemy piece
                     //take the piece contained by this guy the panes will be updated accordingly
+                    
+                    System.out.println("We are invoking the take method on a piece");
                     this.piece.take(App.selectedPiece);
                 }
             }

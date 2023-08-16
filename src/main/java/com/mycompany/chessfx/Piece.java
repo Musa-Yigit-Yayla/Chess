@@ -86,21 +86,30 @@ public abstract class Piece {
     //Invoke from event handling methods when applicable
     public void move(String nextPos){
         if((Move.getTurn() == Move.WHITE_TURN && this.getColor().equals(Piece.WHITE_COLOR) || (Move.getTurn() == Move.BLACK_TURN && this.getColor().equals(Piece.BLACK_COLOR)))){
+            System.out.println("---We are in the move function of a piece and it's our turn");
             //retrieve the StackPane correspondance on the given position and evaluate whether it's a PiecePane instance or EmptyPane instance
             //then proceed accordingly
             GridPane pieceHolder = App.getPieceHolder();
             StackPane nextPosPane = (StackPane)App.getPieceHolderNode(row, column);
             
             //first we must ensure that we have this pos as a moveable location in this piece instance
-            String[] currMoveables = (String[])this.showMoveables();
+            Object[] currMoveablesArray = (this.showMoveables());
+            String[] currMoveables = new String[currMoveablesArray.length];
+            //convert the object array containing strings into a new string array for easier use
+            for(int i = 0; i < currMoveables.length; i++){
+                String curr = (String)(currMoveablesArray[i]);
+                currMoveables[i] = curr;
+            }
             boolean isMoveable = false; //can we move to the given nextPos
             for(int i = 0; i < currMoveables.length; i++){
                 String currMoveable = currMoveables[i];
+                System.out.println("---Curr moveable of the piece is: " + currMoveable);
                 if(currMoveable.equals(nextPos)){
                     isMoveable = true;
                     break;
                 }
             }
+            System.out.println("isMoveable is: " + isMoveable);
             if(!isMoveable){
                 //return back to the caller since we don't have the given pos as a moveable piece
                 return;
