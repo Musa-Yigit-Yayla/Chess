@@ -34,6 +34,10 @@ public class Move {
     public static Move getLastMove(){
         return lastMove;
     }
+    private static void revertTurn(){
+        //reverts the turn to the opponent
+        turn = !turn;
+    }
     //1 for white turn, -1 for black turn
     public static boolean getTurn(){
         return turn;

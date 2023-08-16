@@ -205,7 +205,8 @@ public class App extends Application {
             if(i > 1 && i < 6){
                 for(int j = 0; j < 8; j++){
                     //add empty stackpanes so we can have gaps in the pieceHolder
-                    StackPane emptyPane = new EmptyPane();
+                    EmptyPane emptyPane = new EmptyPane();
+                    emptyPane.setEventHandling(); //set the event handling procedure after each and every instantiation of an EmptyPane
                     emptyPane.setPrefSize(SQUARE_LENGTH, SQUARE_LENGTH);
                     pieceHolder.add(emptyPane, j, i);
                 }
@@ -307,7 +308,13 @@ public class App extends Application {
                 break;
             }
         }
-
+        if(result == null){
+            System.out.println("!!!1Attention, we are returning null as an asked node from getPieceHolderNode function of App class");
+            System.out.println("!!!1 Row is: " + row + ", Column is: " + column);
+        }
+        else{
+            System.out.println("!!!2Attention, we are returning nonnull as an asked node from getPieceHolderNode function of App class");
+        }
         return (StackPane)result;
     }
     //Utility functions for checking game status

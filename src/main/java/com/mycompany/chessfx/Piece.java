@@ -154,6 +154,7 @@ public abstract class Piece {
                     
                     //sdd the current piece to the next locations and don't forget to add the empty pane back again by instantiating a new one
                     EmptyPane newEmptyPane = new EmptyPane();
+                    newEmptyPane.setEventHandling();
                     
                     pieceHolder.add(this.piecePane, nextColumn, nextRow);
                     pieceHolder.add(newEmptyPane, pieceRow, pieceColumn);

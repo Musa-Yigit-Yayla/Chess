@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 public class EmptyPane extends StackPane{
     public EmptyPane(){
-        this.setEventHandling();
+        this.setEventHandling(); //Set the event handling procedure from the constructor, user can manually set it again aswell
     }
     private void setOnClickedAction(){
         System.out.println("An empty pane has been clicked");
@@ -34,7 +34,7 @@ public class EmptyPane extends StackPane{
                 for(int i = 0; i < 8; i++){
                     for(int j = 0; j < 8; j++){
                         StackPane currNode = App.getPieceHolderNode(i, j);
-                        if(currNode.equals(this)){
+                        if(this.equals(currNode)){
                             nextPos = Piece.positions[i][j];
                         }
                     }
@@ -127,7 +127,7 @@ public class EmptyPane extends StackPane{
         return result;
     }
 
-    private void setEventHandling() {
+    public void setEventHandling() {
        this.setOnMouseClicked( e -> {
           this.setOnClickedAction();
        });
