@@ -138,10 +138,22 @@ public class PiecePane extends StackPane{
                 
                 System.out.println("We are trying to take a clicked piece");
                 if(!selectedPieceColor.equals(this.piece.getColor()) && !(this.piece instanceof King)){ //colors do not match hence we have an enemy piece
-                    //take the piece contained by this guy the panes will be updated accordingly
+                    //before performing the take operation make sure that we do have the selected piece in the reach of this piece
+                    //!!!!!!MIGHT NEED TO DO EXTRA WORK FOR KING'S SHOW MOVEABLES OR OTHER STUFF !!!!!!!
+                    Object[] thisMoveables = this.piece.showMoveables();
+                    boolean isReachable = false;
+                    String currPos = this.piece.getPosition();
+                    for(int i = 0; i < thisMoveables.length; i++){
+                        if(currPos.equals((String)thisMoveables[i])){
+                            isReachable = true;
+                        }
+                    }
                     
-                    System.out.println("We are invoking the take method on a piece");
-                    this.piece.take(App.selectedPiece);
+                    if(isReachable){
+                        //take the piece contained by this guy the panes will be updated accordingly                    
+                        System.out.println("We are invoking the take method on a piece");
+                        this.piece.take(App.selectedPiece);
+                    }
                 }
             }
         });

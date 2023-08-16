@@ -314,6 +314,7 @@ public class App extends Application {
         }
         else{
             System.out.println("!!!2Attention, we are returning nonnull as an asked node from getPieceHolderNode function of App class");
+            System.out.println("!!!2 Row is: " + row + ", Column is: " + column);
         }
         return (StackPane)result;
     }
