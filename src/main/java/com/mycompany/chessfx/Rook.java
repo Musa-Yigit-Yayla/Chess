@@ -255,7 +255,11 @@ public class Rook extends Piece{
             }
             currRow++;
         }
-        return (String[])moveables.toArray();
+        String[] returnArr = new String[moveables.size()];
+        for(int i = 0; i < returnArr.length; i++){
+            returnArr[i] = moveables.get(i);
+        }
+        return returnArr;
     }
     @Override
     public void take(Piece taker) {

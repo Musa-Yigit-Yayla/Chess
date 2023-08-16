@@ -146,8 +146,8 @@ public abstract class Piece {
                     pieceHolder.getChildren().remove(this.piecePane);
                     pieceHolder.getChildren().remove(nextPosPane);
                     
-                    int nextRow = Piece.getRow(nextPos);
-                    int nextColumn = Piece.getColumn(nextPos);
+                    /*int nextRow = Piece.getRow(nextPos);
+                    int nextColumn = Piece.getColumn(nextPos);*/
                     
                     int pieceRow = this.row;
                     int pieceColumn = this.column;

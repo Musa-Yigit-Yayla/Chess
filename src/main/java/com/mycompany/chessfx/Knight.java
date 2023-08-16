@@ -132,7 +132,11 @@ public class Knight extends Piece{
         if(row + 2  < 8 && column - 1 >= 0 ){
             moveables.add(positions[row + 2][column - 1]);
         }
-        return (String[])moveables.toArray();
+        String[] returnArr = new String[moveables.size()];
+        for(int i = 0; i < returnArr.length; i++){
+            returnArr[i] = moveables.get(i);
+        }
+        return returnArr;
     }
     @Override
     public void take(Piece taker) {

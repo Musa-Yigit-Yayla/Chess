@@ -219,6 +219,10 @@ public class Pawn extends Piece {
                 }
             }
         }
-        return (String[])moveables.toArray();
+        String[] returnArr = new String[moveables.size()];
+        for(int i = 0; i < returnArr.length; i++){
+            returnArr[i] = moveables.get(i);
+        }
+        return returnArr;
     }
 }

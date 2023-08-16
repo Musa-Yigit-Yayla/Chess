@@ -91,18 +91,28 @@ public class Queen extends Piece{
         b.setPosition(row, column);
         r.setPosition(row, column);
         
-        Object[] arr1 = (String[])b.showMoveables();
-        Object[] arr2 = (String[])r.showMoveables();
+        Object[] arr1 = b.showMoveables();
+        Object[] arr2 = r.showMoveables();
         
+        String[] resultArr1 = new String[arr1.length];
+        for(int i = 0; i < resultArr1.length; i++){
+            resultArr1[i] = (String)(arr1[i]);
+        }
+        
+        String[] resultArr2 = new String[arr2.length];
+        for(int i = 0; i < resultArr2.length; i++){
+            resultArr2[i] = (String)(arr2[i]);
+        }
         //concatenate the two arrays
-        Object[] result = Arrays.copyOf(arr1, arr1.length + arr2.length);
-        System.arraycopy(arr2, 0, result, arr1.length, arr2.length);
+        String[] result = Arrays.copyOf(resultArr1, resultArr1.length + resultArr2.length);
+        System.arraycopy(resultArr2, 0, result, resultArr1.length, resultArr2.length);
         
         //Explicitly assign null to instantiated helper objects
         b = null;
         r = null;
         
-        return (String[])result;
+        
+        return result;
 
     }
     @Override
