@@ -85,12 +85,17 @@ public abstract class Piece {
     }
     //Invoke from event handling methods when applicable
     public void move(String nextPos){
+        System.out.println("---Next pos is " + nextPos);
         if((Move.getTurn() == Move.WHITE_TURN && this.getColor().equals(Piece.WHITE_COLOR) || (Move.getTurn() == Move.BLACK_TURN && this.getColor().equals(Piece.BLACK_COLOR)))){
             System.out.println("---We are in the move function of a piece and it's our turn");
             //retrieve the StackPane correspondance on the given position and evaluate whether it's a PiecePane instance or EmptyPane instance
             //then proceed accordingly
+            
+            int nextRow = Piece.getRow(nextPos);
+            int nextColumn = Piece.getColumn(nextPos);
+            
             GridPane pieceHolder = App.getPieceHolder();
-            StackPane nextPosPane = (StackPane)App.getPieceHolderNode(row, column);
+            StackPane nextPosPane = (StackPane)App.getPieceHolderNode(nextRow, nextColumn);
             
             //first we must ensure that we have this pos as a moveable location in this piece instance
             Object[] currMoveablesArray = (this.showMoveables());
@@ -118,6 +123,7 @@ public abstract class Piece {
             String friendlyColor = this.color;
             String enemyColor = this.getEnemyColor();
             if(nextPosPane instanceof PiecePane){
+                System.out.println("Next pos pane is a PiecePane instance");
                 Piece nextPosPiece = ((PiecePane)((PiecePane) (nextPosPane))).getPiece();
                 if(nextPosPiece.getColor().equals(enemyColor) && !(nextPosPiece instanceof King)){
                     //Invoke the take method to nextPosPiece and pass this Piece instance as takerPiece parameter
@@ -128,13 +134,14 @@ public abstract class Piece {
                 //move our piece to empty pane if applicable
                 //Check whether our friendly king is exposed or not after the move
                 
+                System.out.println("*** Current nextPosPane is an instance of EmptyPane");
                 //check the next game state here directly
                 double[][] nextState = App.retrieveGameState(this.getPosition(), nextPos);
                 //Retrieve the friendly king's pos so we can pass it as an argument to stateChecker
                 String friendlyKingPos = App.getKingPosition(nextState, this.color);
                 if(!App.isChecked(nextState, this.color, friendlyKingPos)){
                     //move it to the empty pane and make the current pane an empty pane
-                    
+                    System.out.println("***Asked move is a valid move, friendly king is not checked");
                     //first remove the piece pane and the empty destination from gridHolder
                     pieceHolder.getChildren().remove(this.piecePane);
                     pieceHolder.getChildren().remove(nextPosPane);

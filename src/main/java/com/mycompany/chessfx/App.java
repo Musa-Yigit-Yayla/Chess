@@ -175,16 +175,19 @@ public class App extends Application {
             }
         }
         int i = 8, j;
+        int k = 0, t;
         int charValue = 104; // starts from 'a'
         Label lbl = null;
-        for(j = 0; j < 8; j++){
-            char ch = (char)(charValue - j);
-            String curr =  "" + ch;
+        for(j = 0, t = 7; j < 8; j++, t--){
+            
+            String curr = "" + (t + 1);
             lbl = new Label(curr);
             this.checkerBoard.add(lbl , i, j);
         }
-        for(i = 7, j = 8; i >= 0; i--){
-            String curr = "" + (i + 1);
+        for(i = 7, j = 8; i >= 0; i--, k++){
+            char ch = (char)(charValue - k);
+            String curr =  "" + ch;
+            
             lbl = new Label(curr);
             this.checkerBoard.add(lbl, i, j);
         }

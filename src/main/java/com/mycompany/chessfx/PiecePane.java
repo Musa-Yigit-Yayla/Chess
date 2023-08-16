@@ -132,7 +132,7 @@ public class PiecePane extends StackPane{
                 App.selectedPiece = this.piece;
                 System.out.println("We have selected the initial piece");
             }
-            else{
+            else if(App.selectedPiece != null){
                 //We already have a selected piece, now the user might have clicked an enemy piece contained in this pane in which we can take
                 String selectedPieceColor = App.selectedPiece.getColor();
                 
