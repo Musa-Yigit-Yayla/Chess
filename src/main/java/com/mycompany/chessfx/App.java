@@ -509,6 +509,16 @@ public class App extends Application {
         for(int i = 0; i < state.length; i++){
             for(int j = 0; j < state[i].length; j++){
                 double curr = state[i][j];
+                /*if(curr != 0 && Math.abs(curr) != 90){
+                    if(enemyColor.equals(Piece.BLACK_COLOR) && curr < 0){
+                        enemyRows.add(i);
+                        enemyRows.add(j);
+                    }
+                    else if(enemyColor.equals(Piece.WHITE_COLOR) && curr > 0){
+                        enemyRows.add(i);
+                        enemyRows.add(j);
+                    }
+                }*/
                 if(curr != 0 && Math.abs(curr) != 90){
                     enemyRows.add(i);
                     enemyColumns.add(j);

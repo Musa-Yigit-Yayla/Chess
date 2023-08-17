@@ -93,7 +93,7 @@ public class Knight extends Piece{
     public static String[] showMoveables(double[][] state, int row, int column){
         ArrayList<String> moveables = new ArrayList<String>();
         //String pos = Piece.positions[row][column];
-        row = 0; column = 0;
+        //row = 0; column = 0;
         //boolean broken = false;
         /*for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
