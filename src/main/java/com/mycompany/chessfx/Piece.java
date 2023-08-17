@@ -163,6 +163,9 @@ public abstract class Piece {
                     this.setPosition(nextRow, nextColumn);
                     
                 }
+                else{
+                    System.out.println("*!*!*Asked move is not a valid move, friendly king is checked");
+                }
             }
         }
         

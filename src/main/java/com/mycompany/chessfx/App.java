@@ -326,7 +326,7 @@ public class App extends Application {
                 break;
             }
         }
-        if(result == null){
+        /*if(result == null){
             System.out.println("!!!1Attention, we are returning null as an asked node from getPieceHolderNode function of App class");
             System.out.println("!!!1 Row is: " + row + ", Column is: " + column);
         }
@@ -334,11 +334,12 @@ public class App extends Application {
             System.out.println("!!!2Attention, we are returning nonnull as an asked node from getPieceHolderNode function of App class");
             System.out.println("!!!2 Row is: " + row + ", Column is: " + column);
             
-            StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-            for(int i = 0; i < stacktrace.length; i++){
-                System.out.println(stacktrace[i].getMethodName() + " of " + stacktrace[i].getClassName() + " has invoked getPieceHolderNode");
-            }
-        }
+            //Below commented code is for stack tracing
+            //StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+            //for(int i = 0; i < stacktrace.length; i++){
+                //System.out.println(stacktrace[i].getMethodName() + " of " + stacktrace[i].getClassName() + " has invoked getPieceHolderNode");
+            //}
+        }*/
         return (StackPane)result;
     }
     //Utility functions for checking game status
@@ -526,20 +527,20 @@ public class App extends Application {
         for(int i = 0; i < state.length; i++){
             for(int j = 0; j < state[i].length; j++){
                 double curr = state[i][j];
-                /*if(curr != 0 && Math.abs(curr) != 90){
+                if(curr != 0 && Math.abs(curr) != 90){
                     if(enemyColor.equals(Piece.BLACK_COLOR) && curr < 0){
                         enemyRows.add(i);
-                        enemyRows.add(j);
+                        enemyColumns.add(j);
                     }
                     else if(enemyColor.equals(Piece.WHITE_COLOR) && curr > 0){
                         enemyRows.add(i);
-                        enemyRows.add(j);
+                        enemyColumns.add(j);
                     }
-                }*/
-                if(curr != 0 && Math.abs(curr) != 90){
+                }
+                /*if(curr != 0 && Math.abs(curr) != 90){
                     enemyRows.add(i);
                     enemyColumns.add(j);
-                }
+                }*/
                 
             }
         }
