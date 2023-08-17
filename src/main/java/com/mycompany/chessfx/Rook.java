@@ -31,7 +31,15 @@ public class Rook extends Piece{
     }
     @Override
     public void move(String nextPos){
-        super.move(nextPos);
+        String currPos = super.getPosition();
+       super.move(nextPos);
+       String newCurrPos = super.getPosition();
+       boolean isMoved = (nextPos.equals(newCurrPos) && (!currPos.equals(newCurrPos)));
+       if(isMoved){
+           //alternate the move turn and create a new Move instance that will be used as the last move
+           this.isMoved = isMoved;
+           Move move = new Move(this, currPos, newCurrPos);
+       }
     }
 
     //We will traverse vertically and horizontally

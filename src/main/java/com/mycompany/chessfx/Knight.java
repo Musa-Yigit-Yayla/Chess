@@ -25,7 +25,14 @@ public class Knight extends Piece{
     }
     @Override
     public void move(String nextPos) {
-        super.move(nextPos);
+       String currPos = super.getPosition();
+       super.move(nextPos);
+       String newCurrPos = super.getPosition();
+       boolean isMoved = (nextPos.equals(newCurrPos) && (!currPos.equals(newCurrPos)));
+       if(isMoved){
+           //alternate the move turn and create a new Move instance that will be used as the last move
+           Move move = new Move(this, currPos, newCurrPos);
+       }
     }
     
     //Get the moveable squares into a local arraylist of strings, no need to show the moveable squares on screen

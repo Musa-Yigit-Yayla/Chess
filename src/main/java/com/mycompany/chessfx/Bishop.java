@@ -28,7 +28,14 @@ public class Bishop extends Piece{
     }
     @Override
     public void move(String nextPos) {
-        super.move(nextPos);
+        String currPos = super.getPosition();
+       super.move(nextPos);
+       String newCurrPos = super.getPosition();
+       boolean isMoved = (nextPos.equals(newCurrPos) && (!currPos.equals(newCurrPos)));
+       if(isMoved){
+           //alternate the move turn and create a new Move instance that will be used as the last move
+           Move move = new Move(this, currPos, newCurrPos);
+       }
     }
 
     //Logic is to traverse squares that we can go diagonally, and we will finish that diagonal direction as soon as we encounter
