@@ -40,6 +40,23 @@ public class App extends Application {
     public static Piece selectedPiece = null; // currently selected piece, will be used to paint the selected square to green
     
     private static Scene scene;
+
+    public static void displayMoveables() {
+        if(App.selectedPiece != null){
+            eraseMoveablesFromPane();
+            //retrieve the moveable squares of the selected piece and paint the stroke of those squares
+            Object[] moveables = selectedPiece.showMoveables();
+            for(int i = 0; i < moveables.length; i++){
+                String currMoveable = (String)(moveables[i]);
+                
+            }
+        }
+    }
+    //Method to stop displaying each and every moveable that is being displayed right now
+    //Invoke each time when the displayMoveables has been invoked
+    private static void eraseMoveablesFromPane(){
+        
+    }
     private BorderPane bp = new BorderPane(); //highest level container, set scene's pane to this
     private StackPane stackPane = new StackPane();//high level container, set this into borderPane's center container to this stackpane
     private double[][] gameGrid = new double[8][8]; // a grid for representing the current game status, - value for black pieces, + for white
@@ -607,7 +624,7 @@ public class App extends Application {
                         int takerRow = takerPositions[0];
                         int takerColumn = takerPositions[1];
                         Piece takerPiece = ((PiecePane)getGridNode(pieceHolder, takerRow, takerColumn)).getPiece();
-                        result[i][j] = takerPiece.getColumn();
+                        result[i][j] = takerPiece.getPoints();
                     }
                     else{
                         result[i][j] = p.getPoints();

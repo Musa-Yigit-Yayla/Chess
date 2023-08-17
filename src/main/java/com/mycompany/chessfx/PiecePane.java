@@ -131,6 +131,9 @@ public class PiecePane extends StackPane{
                 //Select the current piece that this piecePane holds
                 App.selectedPiece = this.piece;
                 System.out.println("We have selected the initial piece, current selected piece color is " + App.selectedPiece.getColor());
+                
+                //display the moveables of the recently selected piece
+                App.displayMoveables();
             }
             else if(App.selectedPiece != null){
                 //We already have a selected piece, now the user might have clicked an enemy piece contained in this pane in which we can take
@@ -154,6 +157,10 @@ public class PiecePane extends StackPane{
                         System.out.println("We are invoking the take method on a piece");
                         this.piece.take(App.selectedPiece);
                     }
+                }
+                else{
+                    //display the moveables of the recently selected piece
+                    App.displayMoveables();
                 }
             }
         });
