@@ -95,7 +95,7 @@ public abstract class Piece {
             int nextColumn = Piece.getColumn(nextPos);
             
             GridPane pieceHolder = App.getPieceHolder();
-            StackPane nextPosPane = (StackPane)App.getPieceHolderNode(nextRow, nextColumn);
+            StackPane nextPosPane = (StackPane)(App.getPieceHolderNode(nextRow, nextColumn));
             
             //first we must ensure that we have this pos as a moveable location in this piece instance
             Object[] currMoveablesArray = (this.showMoveables());
@@ -153,7 +153,7 @@ public abstract class Piece {
                     int pieceColumn = this.column;
                     
                     //sdd the current piece to the next locations and don't forget to add the empty pane back again by instantiating a new one
-                    EmptyPane newEmptyPane = new EmptyPane();
+                    EmptyPane newEmptyPane = new EmptyPane(Piece.positions[pieceColumn][pieceRow]);
                     newEmptyPane.setEventHandling();
                     
                     pieceHolder.add(this.piecePane, nextColumn, nextRow);
@@ -181,8 +181,14 @@ public abstract class Piece {
             }
         }
         //calculate moveables of takerPiece and see whether enemy king is checked after having taken this piece
-        else{
-            String[] takerMoveables = (String[])(takerPiece.showMoveables());
+        else if(takerPiece != null){
+            Object[] takerMoveablesObject = (takerPiece.showMoveables());
+            String[] takerMoveables = new String[takerMoveablesObject.length];
+            
+            for(int i = 0; i < takerMoveables.length; i++){
+                takerMoveables[i] = (String)(takerMoveablesObject[i]);
+            }
+            
             for(int i = 0; i < takerMoveables.length; i++){
                 String currMoveable = takerMoveables[i];
                 if(currPosition.equals(currMoveable)){
@@ -226,7 +232,7 @@ public abstract class Piece {
             
             //Replace takenPane with takerPane and place an empty pane instance to taker pane position
             pieceHolder.getChildren().remove(takerPane);
-            pieceHolder.add(new EmptyPane(), taker.row, taker.column);
+            pieceHolder.add(new EmptyPane(taker.getPosition()), taker.row, taker.column);
             pieceHolder.getChildren().remove(takenPane);
             pieceHolder.add(takerPane, takenRow, takenColumn);
             taker.setPosition(takenRow, takenColumn);

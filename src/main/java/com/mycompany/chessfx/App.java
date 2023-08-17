@@ -205,7 +205,8 @@ public class App extends Application {
             if(i > 1 && i < 6){
                 for(int j = 0; j < 8; j++){
                     //add empty stackpanes so we can have gaps in the pieceHolder
-                    EmptyPane emptyPane = new EmptyPane();
+                    String currPos = Piece.positions[i][j];
+                    EmptyPane emptyPane = new EmptyPane(currPos);
                     emptyPane.setEventHandling(); //set the event handling procedure after each and every instantiation of an EmptyPane
                     emptyPane.setPrefSize(SQUARE_LENGTH, SQUARE_LENGTH);
                     pieceHolder.add(emptyPane, j, i);
@@ -315,6 +316,11 @@ public class App extends Application {
         else{
             System.out.println("!!!2Attention, we are returning nonnull as an asked node from getPieceHolderNode function of App class");
             System.out.println("!!!2 Row is: " + row + ", Column is: " + column);
+            
+            StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+            for(int i = 0; i < stacktrace.length; i++){
+                System.out.println(stacktrace[i].getMethodName() + " of " + stacktrace[i].getClassName() + " has invoked getPieceHolderNode");
+            }
         }
         return (StackPane)result;
     }

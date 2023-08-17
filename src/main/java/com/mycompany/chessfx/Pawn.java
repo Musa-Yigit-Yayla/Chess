@@ -74,8 +74,8 @@ public class Pawn extends Piece {
                    moveables.add(Piece.positions[row + dy][column]);
                    isFirstAdded = true;
                 }
-                currSquare = App.getPieceHolderNode(row + 2 * dy, column);
-                if(currSquare instanceof EmptyPane && isFirstAdded){
+                StackPane nextCurrSquare = App.getPieceHolderNode(row + 2 * dy, column);
+                if(nextCurrSquare instanceof EmptyPane && isFirstAdded){
                     moveables.add(Piece.positions[row + 2 * dy][column]);
                 }
             }

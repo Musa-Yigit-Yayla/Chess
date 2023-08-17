@@ -14,7 +14,10 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 public class EmptyPane extends StackPane{
-    public EmptyPane(){
+    private String position;
+    
+    public EmptyPane(String pos){
+        this.position = pos;
         this.setEventHandling(); //Set the event handling procedure from the constructor, user can manually set it again aswell
     }
     private void setOnClickedAction(){
@@ -32,15 +35,15 @@ public class EmptyPane extends StackPane{
                 //Move the selected piece to this location if possible
                 
                 //!!! WE MUST RETRIEVE THE LOCATION IF THIS EMPTY PANE CAREFULLY !!!!
-                String nextPos = null;
-                for(int i = 0; i < 8; i++){
+                String nextPos = this.position;
+                /*for(int i = 0; i < 8; i++){
                     for(int j = 0; j < 8; j++){
                         StackPane currNode = App.getPieceHolderNode(i, j);
                         if(this.equals(currNode)){
                             nextPos = Piece.positions[i][j];
                         }
                     }
-                }
+                }*/
                 //ObservableList<Node> pieceHolderNodes = App.getPieceHolder().getChildren();
                 if(nextPos == null){
                     System.out.println("CURRENT EMPTY PANE POSITION IS NULL");
