@@ -13,8 +13,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 public class EmptyPane extends StackPane{
     private String position;
+    private Rectangle outerSquare;
     
     public EmptyPane(String pos){
         this.position = pos;
@@ -63,6 +65,20 @@ public class EmptyPane extends StackPane{
         GridPane pieceHolder = App.getPieceHolder();
         
         return false; //ToDo
+    }
+    public void setOuterFrame(boolean isAdded) {
+        if(this.outerSquare != null){
+            //remove the previous outer square representation
+            this.getChildren().remove(this.outerSquare);
+            this.outerSquare = null;
+        }
+        if(isAdded){
+            this.outerSquare = new Rectangle(PiecePane.OUTER_SQUARE_LENGTH, PiecePane.OUTER_SQUARE_LENGTH);
+            this.outerSquare.setFill(PiecePane.FILL_COLOR);
+            this.outerSquare.setStroke(PiecePane.MOVEABLE_COLOR);
+            this.outerSquare.setStrokeWidth(PiecePane.OUTER_SQUARE_STROKE_WIDTH);
+            this.getChildren().add(this.outerSquare);
+        }
     }
     //Pass the square's coordinates, and it will check whether the square in the given position is threatened by any enemy piece(s)
     //Use when castling and after each move to see whether a king is checked
@@ -137,5 +153,5 @@ public class EmptyPane extends StackPane{
        this.setOnMouseClicked( e -> {
           this.setOnClickedAction();
        });
-    }
+    }    
 }

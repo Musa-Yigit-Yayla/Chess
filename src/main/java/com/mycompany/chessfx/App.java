@@ -48,14 +48,47 @@ public class App extends Application {
             Object[] moveables = selectedPiece.showMoveables();
             for(int i = 0; i < moveables.length; i++){
                 String currMoveable = (String)(moveables[i]);
-                
+                //for each moveable that we have check if the game state is valid after we make that move
+                double[][] possibleState = App.retrieveGameState(App.selectedPiece.getPosition(), currMoveable);
+                String friendlyKingPos = App.getKingPosition(possibleState, App.selectedPiece.getColor());
+                if(!App.isChecked(possibleState, App.selectedPiece.getColor(), friendlyKingPos)){
+                    //you can simply display this square as a moveable square
+                    
+                    //Retrieve the moveable square's pane
+                    int[] currMoveablePositions = Piece.getNumericPosition(currMoveable);
+                    int currMoveableRow = currMoveablePositions[0];
+                    int currMoveableColumn = currMoveablePositions[1];
+                    
+                    StackPane moveableSquare = App.getPieceHolderNode(currMoveableRow, currMoveableColumn);
+                    if(moveableSquare instanceof PiecePane){
+                        PiecePane currMoveablePane = (PiecePane)(moveableSquare);
+                        currMoveablePane.setOuterFrame(true, false);
+                    }
+                    else if(moveableSquare instanceof EmptyPane){
+                        EmptyPane currMoveablePane = (EmptyPane)(moveableSquare);
+                        currMoveablePane.setOuterFrame(true);
+                    }
+                }
             }
         }
     }
     //Method to stop displaying each and every moveable that is being displayed right now
     //Invoke each time when the displayMoveables has been invoked
     private static void eraseMoveablesFromPane(){
-        
+        //Traverse each and every node in the pieceHolder pane and regardless of whether they have an outer rectangle or not, remove the rectangles
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                StackPane currNode = App.getPieceHolderNode(i, j);
+                if(currNode instanceof PiecePane){
+                    PiecePane currPane = (PiecePane)(currNode);
+                    currPane.setOuterFrame(false, false);
+                }
+                else if(currNode instanceof EmptyPane){
+                    EmptyPane currPane = (EmptyPane)(currNode);
+                    currPane.setOuterFrame(false);
+                }
+            }
+        }
     }
     private BorderPane bp = new BorderPane(); //highest level container, set scene's pane to this
     private StackPane stackPane = new StackPane();//high level container, set this into borderPane's center container to this stackpane

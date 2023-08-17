@@ -15,16 +15,26 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 //Holds individual pieces
 public class PiecePane extends StackPane{
     public final double PANE_WIDTH = 80.0;
     public final double PANE_HEIGHT = 80.0;
     
+    public static final Color SELECTED_COLOR = Color.GREEN;
+    public static final Color MOVEABLE_COLOR = Color.DARKBLUE;
+    public static final Color FILL_COLOR = Color.TRANSPARENT;
+    public static final double OUTER_SQUARE_LENGTH = App.SQUARE_LENGTH - 6.0;
+    public static final double OUTER_SQUARE_STROKE_WIDTH = 3.0;
+    
     private Piece piece;
     private Image image;
     private ImageView imgView = new ImageView();
     private GridPane pieceHolder; // retrieve from App.java
+    private Rectangle outerSquare;
+    
     public PiecePane(Piece piece){
         this.piece = piece;
         this.pieceHolder = App.getPieceHolder();
@@ -118,6 +128,27 @@ public class PiecePane extends StackPane{
     }
     public Piece getPiece(){
         return this.piece;
+    }
+    //@isAdded: boolean, if it's true then we are drawing the frame otherwise assigning null to the data field after having removed from the piecePane
+    //@isSelectedPiece: boolean, it will help us to determine which color this piece pane instance should have an outer stroke of
+    public void setOuterFrame(boolean isAdded, boolean isSelectedPiece){
+        if(this.outerSquare != null){
+                //remove the previous outer square representation
+                this.getChildren().remove(this.outerSquare);
+                this.outerSquare = null;
+        }
+        if(isAdded){
+            this.outerSquare = new Rectangle(PiecePane.OUTER_SQUARE_LENGTH, PiecePane.OUTER_SQUARE_LENGTH);
+            this.outerSquare.setFill(PiecePane.FILL_COLOR);
+            this.outerSquare.setStrokeWidth(PiecePane.OUTER_SQUARE_STROKE_WIDTH);
+            if(isSelectedPiece){
+                this.outerSquare.setStroke(PiecePane.SELECTED_COLOR);
+            }
+            else{
+                this.outerSquare.setStroke(PiecePane.MOVEABLE_COLOR);
+            }
+            this.getChildren().add(this.outerSquare);
+        }
     }
     //Currently sets on clicked, setOnDragged and drag exit could be implemented in future
     public void setEventHandlers(){
