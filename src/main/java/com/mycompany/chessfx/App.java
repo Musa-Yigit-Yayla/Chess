@@ -40,7 +40,14 @@ public class App extends Application {
     public static Piece selectedPiece = null; // currently selected piece, will be used to paint the selected square to green
     
     private static Scene scene;
-
+    private BorderPane bp = new BorderPane(); //highest level container, set scene's pane to this
+    private StackPane stackPane = new StackPane();//high level container, set this into borderPane's center container to this stackpane
+    private double[][] gameGrid = new double[8][8]; // a grid for representing the current game status, - value for black pieces, + for white
+    private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
+    private static GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
+    //1 point for pawn, 3 for knight, 3.15 for bishop, 5 for rook, 9 for queen, 90 for king
+    private static double gamePoints = 0.0; //negative means black is winning based on taken pieces, positive implies white is winning
+    
     public static void displayMoveables() {
         if(App.selectedPiece != null){
             eraseMoveablesFromPane();
@@ -93,13 +100,10 @@ public class App extends Application {
             }
         }
     }
-    private BorderPane bp = new BorderPane(); //highest level container, set scene's pane to this
-    private StackPane stackPane = new StackPane();//high level container, set this into borderPane's center container to this stackpane
-    private double[][] gameGrid = new double[8][8]; // a grid for representing the current game status, - value for black pieces, + for white
-    private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
-    private static GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
-    //1 point for pawn, 3 for knight, 3.15 for bishop, 5 for rook, 9 for queen, 90 for king
-    private static double gamePoints = 0.0; //negative means black is winning based on taken pieces, positive implies white is winning
+    //Invoke each and every time after a move has been made. Will be invoked from the Piece super class of Piece sub-classes.
+    public static void displayEnemyKingAsChecked(String enemyColor){
+        
+    }
     
     @Override
     public void start(Stage stage) throws IOException {
@@ -591,9 +595,9 @@ public class App extends Application {
             if(enemyColor.equals(Piece.BLACK_COLOR)){
                 enemyCharColor = 'b';
             }
-            Piece currEnemy = null;
+            //Piece currEnemy = null;
             if(currValueAbs == 1.0){
-                currEnemy = new Pawn(enemyCharColor, currValue, currRow, currColumn);
+                //currEnemy = new Pawn(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Pawn.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
@@ -602,7 +606,7 @@ public class App extends Application {
                 }
             }
             else if(currValueAbs == 3.0){
-                currEnemy = new Knight(enemyCharColor, currValue, currRow, currColumn);
+                //currEnemy = new Knight(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Knight.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
@@ -611,7 +615,7 @@ public class App extends Application {
                 }
             }
             else if(currValueAbs == 3.15){
-                currEnemy = new Bishop(enemyCharColor, currValue, currRow, currColumn);
+                //currEnemy = new Bishop(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Bishop.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
@@ -620,7 +624,7 @@ public class App extends Application {
                 }
             }
             else if(currValueAbs == 5.0){
-                currEnemy = new Rook(enemyCharColor, currValue, currRow, currColumn);
+                //currEnemy = new Rook(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Rook.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
@@ -629,7 +633,7 @@ public class App extends Application {
                 }
             }
             else if(currValueAbs == 9.0){
-                currEnemy = new Queen(enemyCharColor, currValue, currRow, currColumn);
+                //currEnemy = new Queen(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Queen.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){

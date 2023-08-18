@@ -246,7 +246,7 @@ public abstract class Piece {
             //Alternate the move turn by instantiating a new move
             Move newMove = new Move(taker, takerPosition, takenPosition);
         }
-    } 
+    }
     //Call this after the Piece instance is either successfuly has been moved or during initialization process
     //No bounds checking performed
     public void setPosition(int row, int column){

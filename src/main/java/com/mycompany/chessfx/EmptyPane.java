@@ -108,11 +108,11 @@ public class EmptyPane extends StackPane{
             Piece currPiece = enemyPieces.get(i);
             //int currRow = currPiece.getRow();
             //int currColumn = currPiece.getColumn();
-            String[] currMoveables;
+            Object[] currMoveables;
             if(!(currPiece instanceof King)){
-                currMoveables = (String[])currPiece.showMoveables(); // !! CAREFUL, THIS LINE MAY LEAD TO INFINITE RECURSION DUE TO KING'S METHOD
+                currMoveables = currPiece.showMoveables(); // !! CAREFUL, THIS LINE MAY LEAD TO INFINITE RECURSION DUE TO KING'S METHOD
                 for(int j = 0; j < currMoveables.length; i++){
-                    if(currMoveables[j].equals(pos)){
+                    if(((String)(currMoveables[j])).equals(pos)){
                         return true;
                     }
                 }

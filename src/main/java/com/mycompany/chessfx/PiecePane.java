@@ -25,6 +25,7 @@ public class PiecePane extends StackPane{
     
     public static final Color SELECTED_COLOR = Color.GREEN;
     public static final Color MOVEABLE_COLOR = Color.DARKBLUE;
+    public static final Color CHECKED_COLOR = Color.CRIMSON;
     public static final Color FILL_COLOR = Color.TRANSPARENT;
     public static final double OUTER_SQUARE_LENGTH = App.SQUARE_LENGTH - 6.0;
     public static final double OUTER_SQUARE_STROKE_WIDTH = 3.0;
@@ -161,6 +162,9 @@ public class PiecePane extends StackPane{
     public void setEventHandlers(){
         //set on click
         this.setOnMouseClicked(e->{
+            //remove the previosuly displayed moveables for providing better user interface
+            App.eraseMoveablesFromPane();
+            
             boolean turnChecker = (this.piece.getColor().equals(Piece.WHITE_COLOR) && Move.getTurn()) || (this.piece.getColor().equals(Piece.BLACK_COLOR) && !Move.getTurn());
             System.out.println("Turn checker is: " + turnChecker);
             System.out.println("Curr piece color is: " + this.piece.getColor() + ". Move turn is " + Move.getTurn());
