@@ -28,7 +28,7 @@ public class King extends Piece{
     }
     @Override
     public void move(String nextPos) {
-        
+        super.move(nextPos);
     }
     public void castle(){
         
@@ -39,6 +39,8 @@ public class King extends Piece{
 
     @Override
     public Object[] showMoveables() {
+        System.out.println("showMoveables of the King has been invoked");
+        
         final int row = super.getRow();
         final int column = super.getColumn();
         
@@ -48,7 +50,7 @@ public class King extends Piece{
         ArrayList<String> moveables = new ArrayList<>();
         
         //check for surrounding squares
-        //start from top left corner move with respect to clockwise direction
+        //start from bottom left corner move with respect to clockwise direction
         int currRow = row - 1;
         int currColumn = column - 1;
         int counter = 3;
@@ -57,28 +59,30 @@ public class King extends Piece{
             counter--; // decrement counter by one since we have a square that is out of bounds, (we will check only 2 squares at this row)
         }
         
-        
+        System.out.println("Before the first while loop");
         while(currRow >= 0 && currColumn >= 0 && currColumn < 8 && counter > 0){
+            System.out.println("currRow: " + currRow + " currColumn: " + currColumn + " counter: " + counter);
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
             
             String currPosition = Piece.positions[currRow][currColumn];
             if(currSquare instanceof EmptyPane){
-                if(!EmptyPane.isSquareThreatened( currPosition, enemyColor)){
+                if(!EmptyPane.isSquareThreatened( currPosition, friendlyColor)){
                     //moveable square
                     moveables.add(currPosition);
                 }
             }
-            else{// enemy king spotted
+            else if(currSquare instanceof PiecePane){//if condition is added for readability
                 //check whether currSquare contains an enemy piece and ensure that, that piece is not covered by another enemy piece
                 Piece currPiece = ((PiecePane)(currSquare)).getPiece();
-                if(currPiece.getColor().equals(enemyColor) && !EmptyPane.isSquareThreatened(currPosition, enemyColor)){
+                if(currPiece.getColor().equals(enemyColor) && !EmptyPane.isSquareThreatened(currPosition, friendlyColor)){
                     moveables.add(currPosition);
                 }
             }
             currColumn++;
             counter--;
         }
-        
+        System.out.println("After the first while loop");
+        //start from the upper left and move towards right
         currColumn = column - 1;
         currRow = row;
         counter = 3;
@@ -89,60 +93,59 @@ public class King extends Piece{
         while(currRow >= 0 && currColumn >= 0 && currColumn < 8 && counter > 0){
             if(currRow == row && currColumn == column){
                 counter--;
+                currColumn++;
                 continue;
             }
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
             
             String currPosition = Piece.positions[currRow][currColumn];
             if(currSquare instanceof EmptyPane){
-                if(!EmptyPane.isSquareThreatened( currPosition, enemyColor)){
+                if(!EmptyPane.isSquareThreatened( currPosition, friendlyColor)){
                     //moveable square
                     moveables.add(currPosition);
                 }
             }
-            else{// enemy king spotted
+            else if(currSquare instanceof PiecePane){// enemy king spotted
                 //check whether currSquare contains an enemy piece and ensure that, that piece is not covered by another enemy piece
                 Piece currPiece = ((PiecePane)(currSquare)).getPiece();
-                if(currPiece.getColor().equals(enemyColor) && !EmptyPane.isSquareThreatened(currPosition, enemyColor)){
+                if(currPiece.getColor().equals(enemyColor) && !EmptyPane.isSquareThreatened(currPosition, friendlyColor)){
                     moveables.add(currPosition);
                 }
             }
             currColumn++;
             counter--;
         }
-        
+        System.out.println("After the second while loop");
+        //Traverse the upper row
         currColumn = column - 1;
-        currRow = row;
+        currRow = row + 1;
         counter = 3;
         if(currColumn < 0){
             currColumn = 0;
             counter--;
         }
-        while(currRow >= 0 && currColumn >= 0 && currColumn < 8 && counter > 0){
-            if(currRow == row && currColumn == column){
-                counter--;
-                continue;
-            }
+        while(currRow >= 0 && currRow < 8 && currColumn >= 0 && currColumn < 8 && counter > 0){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
             
             String currPosition = Piece.positions[currRow][currColumn];
             if(currSquare instanceof EmptyPane){
-                if(!EmptyPane.isSquareThreatened( currPosition, enemyColor)){
+                if(!EmptyPane.isSquareThreatened( currPosition, friendlyColor)){
                     //moveable square
                     moveables.add(currPosition);
                 }
             }
-            else{// enemy king spotted
+            else if(currSquare instanceof PiecePane){// enemy king spotted
                 //check whether currSquare contains an enemy piece and ensure that, that piece is not covered by another enemy piece
                 Piece currPiece = ((PiecePane)(currSquare)).getPiece();
-                if(currPiece.getColor().equals(enemyColor) && !EmptyPane.isSquareThreatened(currPosition, enemyColor)){
+                if(currPiece.getColor().equals(enemyColor) && !EmptyPane.isSquareThreatened(currPosition, friendlyColor)){
                     moveables.add(currPosition);
                 }
             }
             currColumn++;
             counter--;
         }
-        
+        System.out.println("After the third while loop");
+        /*
         currColumn = column - 1;
         currRow = row + 1;
         counter = 3;
@@ -173,8 +176,8 @@ public class King extends Piece{
             }
             currColumn++;
             counter--;
-        }
-        
+        }*/
+        System.out.println("We are about to check whether our king can perform any castling");
         //check whether we can castle
         //Initially retrieve rooks that haven't been moved
         if(!this.isMoved){
@@ -192,15 +195,18 @@ public class King extends Piece{
                 if(!curr.getIsMoved()){
                     //check the squares in between
                     int rookColumn = curr.getColumn();
+                    boolean isRookOnLeft;
                     int j;
                     int max;
                     if(rookColumn > column){
                         j = column;
                         max = rookColumn;
+                        isRookOnLeft = false;
                     }
                     else{
                         j = rookColumn;
                         max = column;
+                        isRookOnLeft = true;
                     }
                     boolean isCastlingPossible = true;
                     while(j <= max){

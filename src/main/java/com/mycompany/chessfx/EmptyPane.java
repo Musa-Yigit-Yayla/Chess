@@ -111,7 +111,7 @@ public class EmptyPane extends StackPane{
             Object[] currMoveables;
             if(!(currPiece instanceof King)){
                 currMoveables = currPiece.showMoveables(); // !! CAREFUL, THIS LINE MAY LEAD TO INFINITE RECURSION DUE TO KING'S METHOD
-                for(int j = 0; j < currMoveables.length; i++){
+                for(int j = 0; j < currMoveables.length; j++){
                     if(((String)(currMoveables[j])).equals(pos)){
                         return true;
                     }
