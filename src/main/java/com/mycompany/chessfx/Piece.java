@@ -214,6 +214,8 @@ public abstract class Piece {
         String enemyColor = this.getEnemyColor();
         
         if(taker.getColor().equals(enemyColor)){
+            System.out.println("We are about to take a piece and update the pieceHolder accordingly");
+            
             String takerPosition = taker.currPosition;
             String takenPosition = this.currPosition;
             
@@ -225,7 +227,7 @@ public abstract class Piece {
             GridPane pieceHolder = App.getPieceHolder();
             
             PiecePane takenPane = (PiecePane)(App.getGridNode(pieceHolder, takenRow, takenColumn));
-            PiecePane takerPane = (PiecePane)(App.getGridNode(pieceHolder, taker.row, taker.column));
+            PiecePane takerPane = (PiecePane)(App.getGridNode(pieceHolder, takerRow, takerColumn));
             
             Piece takenPiece = takenPane.getPiece();
             double takenPoints = takenPiece.getPoints();
@@ -236,12 +238,13 @@ public abstract class Piece {
             
             //Replace takenPane with takerPane and place an empty pane instance to taker pane position
             pieceHolder.getChildren().remove(takerPane);
-            pieceHolder.add(new EmptyPane(taker.getPosition()), taker.row, taker.column);
+            pieceHolder.add(new EmptyPane(taker.getPosition()), takerColumn, takerRow); //YOU MIGHT WANT TO REVERT THE LATEST 2 PARAMETERS
             pieceHolder.getChildren().remove(takenPane);
-            pieceHolder.add(takerPane, takenRow, takenColumn);
+            pieceHolder.add(takerPane, takenColumn, takenRow); //YOU MIGHT WANT TO REVERT THE PARAMETERS HERE AS WELL
             taker.setPosition(takenRow, takenColumn);
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            
+            //Alternate the move turn by instantiating a new move
+            Move newMove = new Move(taker, takerPosition, takenPosition);
         }
     } 
     //Call this after the Piece instance is either successfuly has been moved or during initialization process

@@ -181,11 +181,12 @@ public class PiecePane extends StackPane{
                 if(!selectedPieceColor.equals(this.piece.getColor()) && !(this.piece instanceof King)){ //colors do not match hence we have an enemy piece
                     //before performing the take operation make sure that we do have the selected piece in the reach of this piece
                     //!!!!!!MIGHT NEED TO DO EXTRA WORK FOR KING'S SHOW MOVEABLES OR OTHER STUFF !!!!!!!
-                    Object[] thisMoveables = this.piece.showMoveables();
+                    System.out.println("We are inside the first condition for take operation");
+                    Object[] selectedPieceMoveables = App.selectedPiece.showMoveables();
                     boolean isReachable = false;
                     String currPos = this.piece.getPosition();
-                    for(int i = 0; i < thisMoveables.length; i++){
-                        if(currPos.equals((String)thisMoveables[i])){
+                    for(int i = 0; i < selectedPieceMoveables.length; i++){
+                        if(currPos.equals((String)selectedPieceMoveables[i])){
                             isReachable = true;
                         }
                     }
