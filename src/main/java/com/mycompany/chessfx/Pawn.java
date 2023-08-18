@@ -5,6 +5,7 @@
 package com.mycompany.chessfx;
 
 import java.util.ArrayList;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -31,11 +32,32 @@ public class Pawn extends Piece {
    @Override
    public void move(String nextPos){
        String currPos = super.getPosition();
+       StackPane destinationPane = App.getPieceHolderNode(Piece.getRow(nextPos), Piece.getColumn(nextPos));
        super.move(nextPos);
        String newCurrPos = super.getPosition();
+       if((destinationPane instanceof EmptyPane)){
+           System.out.println("Destination pane is an EmptyPane instance");
+       }
+       if(Piece.getColumn(currPos) != Piece.getColumn(newCurrPos)){
+           System.out.println("Previous position and the newly moved position differ by their columns");
+       }
+       boolean isEnPassanted = (destinationPane instanceof EmptyPane) && (Piece.getColumn(currPos) != Piece.getColumn(newCurrPos));
        boolean isMoved = (nextPos.equals(newCurrPos) && (!currPos.equals(newCurrPos)));
+       
+       System.out.println("isEnPassanted is: " + isEnPassanted);
        if(isMoved){
            //alternate the move turn and create a new Move instance that will be used as the last move
+           if(isEnPassanted){
+               //this is an en-passant move, we must remove the enemy pawn from the pieceHolder
+               GridPane pieceHolder = App.getPieceHolder();
+               //int dx = Piece.getColumn(newCurrPos) - Piece.getColumn(currPos);
+               String enemyPawnPos = Piece.positions[Piece.getRow(currPos)][Piece.getColumn(newCurrPos)];
+               int enemyPawnRow = Piece.getRow(enemyPawnPos);
+               int enemyPawnColumn = Piece.getColumn(enemyPawnPos);
+               pieceHolder.getChildren().remove(App.getPieceHolderNode(enemyPawnRow, enemyPawnColumn));
+               EmptyPane emptyPane = new EmptyPane(enemyPawnPos);
+               pieceHolder.add(emptyPane, enemyPawnRow, enemyPawnColumn);
+           }
            this.isMoved = isMoved;
            Move move = new Move(this, currPos, newCurrPos);
        }
@@ -122,7 +144,12 @@ public class Pawn extends Piece {
                 //check whether these positions differ by only two columns and whether if newPos is at the same level with our current pos of this pawn
                 boolean isEnPassantable = this.getRow() == possibleEnemy.getRow() && Math.abs(Integer.parseInt(prevPos.substring(1)) - Integer.parseInt(newPos.substring(1))) == 2;
                 if(isEnPassantable){
-                    moveables.add(newPos);
+                    //new pos represents the lately moved enemy pawn's current position
+                    int[] newPosValues = Piece.getNumericPosition(newPos);
+                    int newPosRow = newPosValues[0];
+                    int newPosColumn = newPosValues[1];
+                    String enPassantPos = Piece.positions[newPosRow + dy][newPosColumn];
+                    moveables.add(enPassantPos);
                 }
             }
         }
@@ -223,7 +250,12 @@ public class Pawn extends Piece {
                 //check whether these positions differ by only two columns and whether if newPos is at the same level with our current pos of this pawn
                 boolean isEnPassantable = row == possibleEnemy.getRow() && Math.abs(Integer.parseInt(prevPos.substring(1)) - Integer.parseInt(newPos.substring(1))) == 2;
                 if(isEnPassantable){
-                    moveables.add(newPos);
+                    //new pos represents the lately moved enemy pawn's current position
+                    int[] newPosValues = Piece.getNumericPosition(newPos);
+                    int newPosRow = newPosValues[0];
+                    int newPosColumn = newPosValues[1];
+                    String enPassantPos = Piece.positions[newPosRow + dy][newPosColumn];
+                    moveables.add(enPassantPos);
                 }
             }
         }
