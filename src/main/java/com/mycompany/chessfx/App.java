@@ -53,33 +53,39 @@ public class App extends Application {
             eraseMoveablesFromPane();
             //retrieve the moveable squares of the selected piece and paint the stroke of those squares
             Object[] moveables = selectedPiece.showMoveables();
-            for(int i = 0; i < moveables.length; i++){
-                String currMoveable = (String)(moveables[i]);
-                //for each moveable that we have check if the game state is valid after we make that move
-                double[][] possibleState = App.retrieveGameState(App.selectedPiece.getPosition(), currMoveable);
-                String friendlyKingPos = App.getKingPosition(possibleState, App.selectedPiece.getColor());
-                if(!App.isChecked(possibleState, App.selectedPiece.getColor(), friendlyKingPos)){
-                    //you can simply display this square as a moveable square
-                    
-                    //Retrieve the moveable square's pane
-                    int[] currMoveablePositions = Piece.getNumericPosition(currMoveable);
-                    int currMoveableRow = currMoveablePositions[0];
-                    int currMoveableColumn = currMoveablePositions[1];
-                    
-                    StackPane moveableSquare = App.getPieceHolderNode(currMoveableRow, currMoveableColumn);
-                    if(moveableSquare instanceof PiecePane){
-                        PiecePane currMoveablePane = (PiecePane)(moveableSquare);
-                        currMoveablePane.setOuterFrame(true, false);
-                    }
-                    else if(moveableSquare instanceof EmptyPane){
-                        EmptyPane currMoveablePane = (EmptyPane)(moveableSquare);
-                        currMoveablePane.setOuterFrame(true);
+            if(!(App.selectedPiece instanceof King)){
+                for(int i = 0; i < moveables.length; i++){
+                    String currMoveable = (String)(moveables[i]);
+                    //for each moveable that we have check if the game state is valid after we make that move
+                    double[][] possibleState = App.retrieveGameState(App.selectedPiece.getPosition(), currMoveable);
+                    String friendlyKingPos = App.getKingPosition(possibleState, App.selectedPiece.getColor());
+                    if(!App.isChecked(possibleState, App.selectedPiece.getColor(), friendlyKingPos)){
+                        //you can simply display this square as a moveable square
+
+                        //Retrieve the moveable square's pane
+                        int[] currMoveablePositions = Piece.getNumericPosition(currMoveable);
+                        int currMoveableRow = currMoveablePositions[0];
+                        int currMoveableColumn = currMoveablePositions[1];
+
+                        StackPane moveableSquare = App.getPieceHolderNode(currMoveableRow, currMoveableColumn);
+                        if(moveableSquare instanceof PiecePane){
+                            PiecePane currMoveablePane = (PiecePane)(moveableSquare);
+                            currMoveablePane.setOuterFrame(true, false);
+                        }
+                        else if(moveableSquare instanceof EmptyPane){
+                            EmptyPane currMoveablePane = (EmptyPane)(moveableSquare);
+                            currMoveablePane.setOuterFrame(true);
+                        }
                     }
                 }
+                //draw the outer frame of the selected piece as well
+                PiecePane selectedPiecePane = App.selectedPiece.getPiecePane();
+                selectedPiecePane.setOuterFrame(false, true);
             }
-            //draw the outer frame of the selected piece as well
-            PiecePane selectedPiecePane = App.selectedPiece.getPiecePane();
-            selectedPiecePane.setOuterFrame(false, true);
+            else{
+                //we are trying to display the moveable squares of a king
+            }
+            
         }
     }
     //Method to stop displaying each and every moveable that is being displayed right now

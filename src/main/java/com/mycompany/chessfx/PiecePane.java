@@ -202,7 +202,7 @@ public class PiecePane extends StackPane{
                     }
                 }
                 else{
-                    //display the moveables of the recently selected piece
+                    //display the moveables of the recently selected piece after having selecting the piece contained by this piece pane
                     App.displayMoveables();
                 }
             }
