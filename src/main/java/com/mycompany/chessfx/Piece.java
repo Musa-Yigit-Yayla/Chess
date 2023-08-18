@@ -161,7 +161,8 @@ public abstract class Piece {
                     
                     //set the row and column data fields of the piece appropriately
                     this.setPosition(nextRow, nextColumn);
-                    
+                    //erase the moveables which were visible before we have made the move
+                    App.eraseMoveablesFromPane();
                 }
                 else{
                     System.out.println("*!*!*Asked move is not a valid move, friendly king is checked");

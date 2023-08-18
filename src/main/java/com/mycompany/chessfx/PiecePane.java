@@ -149,6 +149,13 @@ public class PiecePane extends StackPane{
             }
             this.getChildren().add(this.outerSquare);
         }
+        else if(isSelectedPiece){
+            this.outerSquare = new Rectangle(PiecePane.OUTER_SQUARE_LENGTH, PiecePane.OUTER_SQUARE_LENGTH);
+            this.outerSquare.setFill(PiecePane.FILL_COLOR);
+            this.outerSquare.setStrokeWidth(PiecePane.OUTER_SQUARE_STROKE_WIDTH);
+            this.outerSquare.setStroke(PiecePane.SELECTED_COLOR);
+            this.getChildren().add(this.outerSquare);
+        }
     }
     //Currently sets on clicked, setOnDragged and drag exit could be implemented in future
     public void setEventHandlers(){

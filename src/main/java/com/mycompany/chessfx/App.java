@@ -70,11 +70,14 @@ public class App extends Application {
                     }
                 }
             }
+            //draw the outer frame of the selected piece as well
+            PiecePane selectedPiecePane = App.selectedPiece.getPiecePane();
+            selectedPiecePane.setOuterFrame(false, true);
         }
     }
     //Method to stop displaying each and every moveable that is being displayed right now
     //Invoke each time when the displayMoveables has been invoked
-    private static void eraseMoveablesFromPane(){
+    public static void eraseMoveablesFromPane(){
         //Traverse each and every node in the pieceHolder pane and regardless of whether they have an outer rectangle or not, remove the rectangles
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
