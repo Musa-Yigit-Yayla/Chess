@@ -129,6 +129,17 @@ public abstract class Piece {
                     //Invoke the take method to nextPosPiece and pass this Piece instance as takerPiece parameter
                     nextPosPiece.take(this);
                 }
+                //Last but not least if the enemy king is checked after this successfull move simply set it's outer frame to red
+                    double[][] currState = App.retrieveGameState(this.getPosition(), this.getPosition());
+                    String enemyKingPos = App.getKingPosition(currState , this.getEnemyColor());
+                    int enemyKingRow = Piece.getRow(enemyKingPos);
+                    int enemyKingColumn = Piece.getColumn(enemyKingPos);
+                    
+                    if(App.isChecked(currState, this.getEnemyColor(), enemyKingPos)){
+                        //set the outer frame of the enemy king
+                        King enemyKing = ((King)((PiecePane)(App.getPieceHolderNode(enemyKingRow, enemyKingColumn))).getPiece());
+                        enemyKing.setCheckedFrame();
+                    }
             }
             else if(nextPosPane instanceof EmptyPane){ //bool logic is written just to enhance readability
                 //move our piece to empty pane if applicable
