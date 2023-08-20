@@ -28,7 +28,35 @@ public class King extends Piece{
     }
     @Override
     public void move(String nextPos) {
-        super.move(nextPos);
+       String currPos = super.getPosition();
+       super.move(nextPos);
+       String newCurrPos = super.getPosition();
+       boolean isMoved = (nextPos.equals(newCurrPos) && (!currPos.equals(newCurrPos)));
+       if(isMoved){
+           //alternate the move turn and create a new Move instance that will be used as the last move
+           this.isMoved = isMoved;
+           Move move = new Move(this, currPos, newCurrPos);
+           
+           //check whether we should be moving the correlated rook as well if we have castled our king with it
+           int currPosRow = Piece.getRow(currPos);
+           int currPosColumn = Piece.getColumn(currPos);
+           int newCurrPosRow = Piece.getRow(newCurrPos);
+           int newCurrPosColumn = Piece.getColumn(newCurrPos);
+           if(currPosRow ==  newCurrPosRow && Math.abs(currPosColumn - newCurrPosColumn) > 1){
+               //if this if condition evaluates to true then it implies that we have castled our king
+               //Now we have to move our rook properly
+               boolean kingMovedLeft = currPosColumn > newCurrPosColumn;
+               int initialRookColumn;
+               if(kingMovedLeft){
+                   initialRookColumn = 0;
+                   //move the rook to the right of the king's new position, make sure you retrieve the right rook
+                   PiecePane rookPane = (PiecePane)(App.getPieceHolderNode(currPosRow, initialRookColumn));
+                   Rook castledRook = (Rook)(rookPane.getPiece());
+                   
+                   castledRook.setMoved();
+               }
+           }
+       }
     }
     public void castle(){
         
