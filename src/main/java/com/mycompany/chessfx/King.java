@@ -7,6 +7,7 @@ package com.mycompany.chessfx;
 import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -99,8 +100,21 @@ public class King extends Piece{
     public void castle(){
         
     }
-    public boolean isChecked(){
-        return true; //ToDo
+    //Set the outer frame of the king's PiecePane data field so that we can underline that his king is checked
+    public void setCheckedFrame(){
+        PiecePane piecePane = this.getPiecePane();
+        Rectangle outerSquare = piecePane.getOuterSquare();
+        if(outerSquare != null){
+                //remove the previous outer square representation
+                piecePane.removeOuterSquare();
+                outerSquare = null; //deallocate the outerSquare
+        }
+        //assign a new object to the outerSquare reference
+        outerSquare = new Rectangle(PiecePane.OUTER_SQUARE_LENGTH, PiecePane.OUTER_SQUARE_LENGTH);
+        outerSquare.setFill(PiecePane.FILL_COLOR);
+        outerSquare.setStroke(PiecePane.CHECKED_COLOR);
+        outerSquare.setStrokeWidth(PiecePane.OUTER_SQUARE_STROKE_WIDTH);
+        piecePane.addOuterSquare(outerSquare); //the outerSquare will be automatically added to the piecePane's children hence will be displayed
     }
 
     @Override

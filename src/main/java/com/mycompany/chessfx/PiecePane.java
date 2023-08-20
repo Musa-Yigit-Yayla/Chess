@@ -158,6 +158,21 @@ public class PiecePane extends StackPane{
             this.getChildren().add(this.outerSquare);
         }
     }
+    //Invoke the below 3 methods from King class when necessary
+    public Rectangle getOuterSquare(){
+        return this.outerSquare;
+    }
+    public void removeOuterSquare(){
+        if(this.outerSquare != null){
+            this.getChildren().remove(this.outerSquare);
+        }
+    }
+    public void addOuterSquare(Rectangle outerSquare){
+        this.outerSquare = outerSquare;
+        if(this.outerSquare != null){
+            this.getChildren().add(this.outerSquare);
+        }
+    }
     //Currently sets on clicked, setOnDragged and drag exit could be implemented in future
     public void setEventHandlers(){
         //set on click

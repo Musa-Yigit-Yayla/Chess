@@ -163,6 +163,18 @@ public abstract class Piece {
                     this.setPosition(nextRow, nextColumn);
                     //erase the moveables which were visible before we have made the move
                     App.eraseMoveablesFromPane();
+                    
+                    //Last but not least if the enemy king is checked after this successfull move simply set it's outer frame to red
+                    double[][] currState = App.retrieveGameState(this.getPosition(), this.getPosition());
+                    String enemyKingPos = App.getKingPosition(currState , this.getEnemyColor());
+                    int enemyKingRow = Piece.getRow(enemyKingPos);
+                    int enemyKingColumn = Piece.getColumn(enemyKingPos);
+                    
+                    if(App.isChecked(currState, this.getEnemyColor(), enemyKingPos)){
+                        //set the outer frame of the enemy king
+                        King enemyKing = ((King)((PiecePane)(App.getPieceHolderNode(enemyKingRow, enemyKingColumn))).getPiece());
+                        enemyKing.setCheckedFrame();
+                    }
                 }
                 else{
                     System.out.println("*!*!*Asked move is not a valid move, friendly king is checked");

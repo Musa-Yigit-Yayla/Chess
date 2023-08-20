@@ -428,7 +428,10 @@ public class App extends Application {
         for(Piece p: currentPieces){
             if(p instanceof King){
                 King currKing = (King)(p);
-                if(currKing.isChecked()){
+                //Check whether the current king is threatened by using the static isChecked function
+                boolean isCurrKingChecked = App.isChecked(App.retrieveGameState(currKing.getPosition(), currKing.getPosition())
+                        , currKing.getColor(), currKing.getPosition());
+                if(isCurrKingChecked){
                     checkedKing = currKing;
                     friendlyColor = checkedKing.getColor();
                     enemyColor = checkedKing.getEnemyColor();
@@ -566,7 +569,9 @@ public class App extends Application {
         }
         //initially ensure that our king is not checked and whether it has any possible moves
         String[] kingMoveables = (String[])(friendlyKing.showMoveables());
-        if(!friendlyKing.isChecked() && kingMoveables.length != 0){//
+        boolean isFriendlyKingChecked = App.isChecked(App.retrieveGameState(friendlyKing.getPosition(), friendlyKing.getPosition())
+                        , friendlyKing.getColor(), friendlyKing.getPosition());
+        if(!isFriendlyKingChecked && kingMoveables.length != 0){//
             return false;
         }
         //ensure that we cannot move any other piece
