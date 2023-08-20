@@ -31,7 +31,7 @@ public class Rook extends Piece{
     }
     @Override
     public void move(String nextPos){
-        String currPos = super.getPosition();
+       String currPos = super.getPosition();
        super.move(nextPos);
        String newCurrPos = super.getPosition();
        boolean isMoved = (nextPos.equals(newCurrPos) && (!currPos.equals(newCurrPos)));
@@ -153,6 +153,11 @@ public class Rook extends Piece{
             currRow++;
         }
         return moveables.toArray();
+    }
+    //Invoke after we have castled our king with this rook
+    //Sets the isMoved datafield true once and for all
+    public void setMoved(){
+        this.isMoved = true;
     }
     public static String[] showMoveables(double[][] state, int row, int column){
         

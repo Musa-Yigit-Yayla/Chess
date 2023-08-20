@@ -5,6 +5,7 @@
 package com.mycompany.chessfx;
 
 import java.util.ArrayList;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -54,6 +55,43 @@ public class King extends Piece{
                    Rook castledRook = (Rook)(rookPane.getPiece());
                    
                    castledRook.setMoved();
+                   
+                   //move the castled rook manually
+                   EmptyPane newEP = new EmptyPane(castledRook.getPosition());
+                   EmptyPane prevEP = (EmptyPane)(App.getPieceHolderNode(newCurrPosRow, newCurrPosColumn + 1));
+                   GridPane pieceHolder = App.getPieceHolder();
+                   pieceHolder.getChildren().remove(prevEP);//remove the EmptyPane instance which is positioned at the Rook's new position
+                   //Initially remove the rook's PiecePane from the pieceHolder then insert it to the desired location
+                   pieceHolder.getChildren().remove(rookPane);
+                   
+                   pieceHolder.add(rookPane, newCurrPosColumn + 1, newCurrPosRow);
+                   pieceHolder.add(newEP, currPosRow, initialRookColumn );
+                   
+                   //finally set the position of the rook appropriately
+                   castledRook.setPosition(newCurrPosRow, newCurrPosColumn + 1);
+               }
+               else{
+                   //this block implies that our king moved towards right
+                   initialRookColumn = 7;
+                   //move the rook to the left of the king's new position, make sure you retrieve the right rook
+                   PiecePane rookPane = (PiecePane)(App.getPieceHolderNode(currPosRow, initialRookColumn));
+                   Rook castledRook = (Rook)(rookPane.getPiece());
+                   
+                   castledRook.setMoved();
+                   
+                   //move the castled rook manually
+                   EmptyPane newEP = new EmptyPane(castledRook.getPosition());
+                   EmptyPane prevEP = (EmptyPane)(App.getPieceHolderNode(newCurrPosRow, newCurrPosColumn - 1));
+                   GridPane pieceHolder = App.getPieceHolder();
+                   pieceHolder.getChildren().remove(prevEP);//remove the EmptyPane instance which is positioned at the Rook's new position
+                   //Initially remove the rook's PiecePane from the pieceHolder then insert it to the desired location
+                   pieceHolder.getChildren().remove(rookPane);
+                   
+                   pieceHolder.add(rookPane, newCurrPosColumn - 1, newCurrPosRow);
+                   pieceHolder.add(newEP, currPosRow, initialRookColumn );
+                   
+                   //finally set the position of the rook appropriately
+                   castledRook.setPosition(newCurrPosRow, newCurrPosColumn - 1);
                }
            }
        }
