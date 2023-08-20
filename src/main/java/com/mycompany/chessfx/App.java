@@ -84,6 +84,33 @@ public class App extends Application {
             }
             else{
                 //we are trying to display the moveable squares of a king
+                //we can directly invoke the show moveables of the king since we already check whether a moveable square is a valid move
+                //in-place on the showMoveables method of the king
+                Object[] moveableSquares = App.selectedPiece.showMoveables();
+                for(Object o: moveableSquares){
+                    String currMoveable = (String)(o);
+                    //Retrieve the moveable square's pane
+                        int[] currMoveablePositions = Piece.getNumericPosition(currMoveable);
+                        int currMoveableRow = currMoveablePositions[0];
+                        int currMoveableColumn = currMoveablePositions[1];
+                        
+                    StackPane currMoveableSquare = App.getPieceHolderNode(currMoveableRow, currMoveableColumn);
+                    //since we have already checked in the showMoveable method of the King, we can simply draw these squares as moveables
+                    if(currMoveableSquare instanceof PiecePane){
+                        ((PiecePane)(currMoveableSquare)).setOuterFrame(true, false);
+                    }
+                    else if(currMoveableSquare instanceof EmptyPane){
+                        ((EmptyPane)(currMoveableSquare)).setOuterFrame(true);
+                    }
+                }
+                //If the friendly king is not currently checked then draw the outer frame of the selected piece as well
+                String kingPos = App.selectedPiece.getPosition();
+                String kingColor = App.selectedPiece.getColor();
+                boolean isChecked = App.isChecked(App.retrieveGameState(kingPos, kingPos), kingColor, kingPos);
+                if(!isChecked){
+                    PiecePane selectedPiecePane = App.selectedPiece.getPiecePane();
+                    selectedPiecePane.setOuterFrame(false, true);
+                }
             }
             
         }
