@@ -198,7 +198,7 @@ public class Bishop extends Piece{
                 break;
             }
             currRow--;
-            currColumn++;
+            currColumn--;
         }
         //continue with towards upper right
         currRow = row - 1;
@@ -249,8 +249,8 @@ public class Bishop extends Piece{
                 //If we have a friendly piece, we don't add it
                 break;
             }
-            currRow--;
-            currColumn--;
+            currRow++;
+            currColumn++;
         }
         //lower left
         currRow = row + 1;
