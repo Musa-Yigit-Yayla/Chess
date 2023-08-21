@@ -691,13 +691,11 @@ public class App extends Application {
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 StackPane currPane = (StackPane)(getGridNode(pieceHolder, i, j));
+                String currPos = Piece.positions[i][j];
                 if(currPane instanceof PiecePane){
                     PiecePane currPiecePane = (PiecePane)(currPane);
                     Piece p = currPiecePane.getPiece();
-                    if(p.getPosition().equals(takerPos)){
-                        continue;
-                    }
-                    else if(p.getPosition().equals(takenPos)){
+                    if(p.getPosition().equals(takenPos)){
                         //Retrieve the taker piece 
                         int[] takerPositions = Piece.getNumericPosition(takerPos);
                         int takerRow = takerPositions[0];
@@ -705,9 +703,20 @@ public class App extends Application {
                         Piece takerPiece = ((PiecePane)getGridNode(pieceHolder, takerRow, takerColumn)).getPiece();
                         result[i][j] = takerPiece.getPoints();
                     }
+                    else if(p.getPosition().equals(takerPos)){
+                        continue;
+                    }
                     else{
                         result[i][j] = p.getPoints();
                     }
+                }
+                else if(currPane instanceof EmptyPane && currPos.equals(takenPos)){
+                   //Retrieve the taker piece 
+                    int[] takerPositions = Piece.getNumericPosition(takerPos);
+                    int takerRow = takerPositions[0];
+                    int takerColumn = takerPositions[1];
+                    Piece takerPiece = ((PiecePane)getGridNode(pieceHolder, takerRow, takerColumn)).getPiece();
+                    result[i][j] = takerPiece.getPoints();
                 }
             }
         }
@@ -1024,6 +1033,7 @@ public class App extends Application {
                 }
             }
         }
+        System.out.println("Returned king value is: " + kingValue + ", and returned king position is " + kingPos);
         return kingPos;
     }
 }

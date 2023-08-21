@@ -109,7 +109,11 @@ public abstract class Piece {
             for(int i = 0; i < currMoveables.length; i++){
                 String currMoveable = currMoveables[i];
                 System.out.println("---Curr moveable of the piece is: " + currMoveable);
-                if(currMoveable.equals(nextPos)){
+                double[][] nextPossibleState = App.retrieveGameState(this.currPosition, currMoveable);
+                String kingPos = App.getKingPosition(nextPossibleState, color);
+                        
+                if(currMoveable.equals(nextPos) && !App.isChecked(nextPossibleState, color, kingPos)){
+                    System.out.println("!!!!!We are about to move a piece without exposing the friendly king");
                     isMoveable = true;
                     break;
                 }
