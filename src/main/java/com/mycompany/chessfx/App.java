@@ -59,6 +59,8 @@ public class App extends Application {
                     //for each moveable that we have check if the game state is valid after we make that move
                     double[][] possibleState = App.retrieveGameState(App.selectedPiece.getPosition(), currMoveable);
                     String friendlyKingPos = App.getKingPosition(possibleState, App.selectedPiece.getColor());
+                    System.out.println("We are displaying the following matrix from displayMoveables of App.java");
+                    App.printMatrix(possibleState);
                     if(!App.isChecked(possibleState, App.selectedPiece.getColor(), friendlyKingPos)){
                         //you can simply display this square as a moveable square
 
@@ -591,6 +593,9 @@ public class App extends Application {
         ArrayList<Integer> enemyRows = new ArrayList<>();
         ArrayList<Integer> enemyColumns = new ArrayList<>();
         
+        //print the current given state for debugging purposes
+        App.printMatrix(state);
+        
         String friendlyColor;
         String enemyColor;
         boolean isWhiteFriendly = kingColor.equals(Piece.WHITE_COLOR);
@@ -704,6 +709,7 @@ public class App extends Application {
                         result[i][j] = takerPiece.getPoints();
                     }
                     else if(p.getPosition().equals(takerPos)){
+                        result[i][j] = 0.0;
                         continue;
                     }
                     else{
@@ -1035,6 +1041,14 @@ public class App extends Application {
         }
         System.out.println("Returned king value is: " + kingValue + ", and returned king position is " + kingPos);
         return kingPos;
+    }
+    public static void printMatrix(double[][] state){
+        for(int i = 0; i < state.length; i++){
+            for(int j = 0; j < state[i].length; j++){
+                System.out.print(state[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
     
