@@ -634,6 +634,8 @@ public class App extends Application {
             double currValue = state[currRow][currColumn];
             double currValueAbs = Math.abs(currValue);
             
+            String currPos = Piece.positions[currRow][currColumn];
+            
             char enemyCharColor = 'w';
             if(enemyColor.equals(Piece.BLACK_COLOR)){
                 enemyCharColor = 'b';
@@ -643,7 +645,11 @@ public class App extends Application {
                 //currEnemy = new Pawn(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Pawn.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
-                    if(moveables[j].equals(kingPosition)){
+                    int pawnColumn = Piece.getColumn(currPos);
+                    int kingColumn = Piece.getColumn(kingPosition);
+                    System.out.println("For pawn moveables, j is: " + j + "\npawnColum & kingColumn is (respectively): " + pawnColumn + ", " + kingColumn);
+                    if(moveables[j].equals(kingPosition) && pawnColumn != kingColumn){ 
+                        //ensure that it is diagonal to the pawn by the above if block
                         return true;
                     }
                 }
