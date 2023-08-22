@@ -92,6 +92,7 @@ public class EmptyPane extends StackPane{
         else{
             enemyColor = Piece.WHITE_COLOR;
         }
+        System.out.println("We are about to check whether the square " + pos + " is threatened by color " + enemyColor);
         //Get all enemy colored pieces
         ArrayList<Piece> enemyPieces = new ArrayList<>();
         for(Piece e: App.currentPieces){

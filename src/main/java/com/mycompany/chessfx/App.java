@@ -655,6 +655,14 @@ public class App extends Application {
                     if(((enemyCharColor == 'w' && pawnRow - kingRow == 1) || (enemyCharColor == 'b' && pawnRow - kingRow == -1)) && Math.abs(pawnColumn - kingColumn) == 1){
                         canPawnCheck = true;
                     }
+                    /*else{
+                        //retrieve the last move and check if it was a kick start of a friendly pawn and the current enemy pawn can en passant it
+                        Move lastMove = Move.getLastMove();
+                        Piece lastMovedPiece 
+                        if(){ //check for en passant
+                        
+                        }
+                    }*/
                     //if(moveables[j].equals(kingPosition) && pawnColumn != kingColumn){
                     if(canPawnCheck){
                         System.out.println("$$$$$$We can check the king with a pawn");
