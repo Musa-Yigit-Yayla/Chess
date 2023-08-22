@@ -339,6 +339,17 @@ public class EmptyPane extends StackPane{
                 else if(p instanceof King){ //the if condition is just for increasing the readability
                     //check the adjacent squares of the king
                     
+                    for(int i = pieceColumn - 1; i <= pieceColumn + 1; i++){
+                        for(int j = pieceRow - 1; j <= pieceRow + 1; j++){
+                            boolean isValidPos = ((j >= 0 && j < 8) && (i >= 0 && i < 8) && (pieceRow != j && pieceColumn != i));
+                            if(isValidPos){
+                                String currPos = Piece.positions[j][i];
+                                if(currPos.equals(pos)){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
