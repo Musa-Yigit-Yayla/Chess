@@ -147,6 +147,7 @@ public class King extends Piece{
             String currPosition = Piece.positions[currRow][currColumn];
             if(currSquare instanceof EmptyPane){
                 if(!EmptyPane.isSquareThreatened( currPosition, friendlyColor)){
+                    System.out.println("~~~Adding the current position " + currPosition + " as a moveable of the " + friendlyColor + " king");
                     //moveable square
                     moveables.add(currPosition);
                 }
