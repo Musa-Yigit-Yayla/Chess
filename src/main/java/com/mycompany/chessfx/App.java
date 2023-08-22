@@ -645,10 +645,19 @@ public class App extends Application {
                 //currEnemy = new Pawn(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Pawn.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
+                    int pawnRow = Piece.getRow(currPos);
                     int pawnColumn = Piece.getColumn(currPos);
+                    int kingRow = Piece.getRow(kingPosition);
                     int kingColumn = Piece.getColumn(kingPosition);
-                    System.out.println("For pawn moveables, j is: " + j + "\npawnColum & kingColumn is (respectively): " + pawnColumn + ", " + kingColumn);
-                    if(moveables[j].equals(kingPosition) && pawnColumn != kingColumn){ 
+                    System.out.println("$$$$$$$For pawn moveables, j is: " + j + "\npawnColum & kingColumn is (respectively): " + pawnColumn + ", " + kingColumn);
+                    boolean canPawnCheck = false;
+                    //set the canPawnCheck accordingly
+                    if(((enemyCharColor == 'w' && pawnRow - kingRow == 1) || (enemyCharColor == 'b' && pawnRow - kingRow == -1)) && Math.abs(pawnColumn - kingColumn) == 1){
+                        canPawnCheck = true;
+                    }
+                    //if(moveables[j].equals(kingPosition) && pawnColumn != kingColumn){
+                    if(canPawnCheck){
+                        System.out.println("$$$$$$We can check the king with a pawn");
                         //ensure that it is diagonal to the pawn by the above if block
                         return true;
                     }
