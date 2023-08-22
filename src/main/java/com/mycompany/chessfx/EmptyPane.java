@@ -187,9 +187,161 @@ public class EmptyPane extends StackPane{
                     }
                 }
                 else if(p instanceof Knight){
+                    Object[] knightMoveables = p.showMoveables();
+                    for(int i = 0; i < knightMoveables.length; i++){
+                        String currMoveable = (String)(knightMoveables[i]);
+                        if(pos.equals(currMoveable)){
+                            return true;
+                        }
+                    }
+                }
+                else if(p instanceof Bishop){
+                    //If the absolute value of the slope is 1 and path is clear
+                    int slope = 0;
+                    if(pieceColumn != posColumn){
+                        slope = Math.abs((pieceRow - posRow) / (pieceColumn - posColumn));
+                    }
+                    
+                    if(slope == 1){
+                        String closePos = null;
+                        Object[] bishopMoveables = p.showMoveables();
+                        
+                        //check all 4 possible directions between the path between bishop and the given pos and set the closePos accordingly
+                        
+                        //check for bishop on top left
+                        if(posRow > pieceRow && posColumn > pieceColumn){
+                            closePos = Piece.positions[posRow - 1][posColumn - 1];
+                        }
+                        //check for bishop on top right
+                        else if(posRow > pieceRow && posColumn < pieceColumn){
+                            closePos = Piece.positions[posRow - 1][posColumn + 1];
+                        }
+                        //check for bottom left
+                        else if(posRow < pieceRow && posColumn > pieceColumn){
+                            closePos = Piece.positions[posRow + 1][posColumn - 1];
+                        }
+                        else if(posRow < pieceRow && posColumn < pieceColumn){
+                            closePos = Piece.positions[posRow + 1][posColumn + 1];
+                        }
+                        //Iterate over bishop's moveables and check whether we have the closePos
+                        for(Object o: bishopMoveables){
+                            if(closePos.equals((String)(o))){
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(p instanceof Rook){
+                    Object[] rookMoveables = p.showMoveables();
+                    //again set the close pos
+                    String closePos = null;
+                    if(pieceRow == posRow){
+                        //check the columns
+                        //rook is positioned at right
+                        if(pieceColumn > posColumn){
+                            closePos = Piece.positions[posRow][posColumn + 1];
+                        }
+                        //the rook is positioned at left
+                        else if(pieceColumn < posColumn){
+                            closePos = Piece.positions[posRow][posColumn - 1];
+                        }
+                    }
+                    else if(pieceColumn == posColumn){
+                        //rook is positioned at above
+                        if(pieceRow < posRow){
+                            closePos = Piece.positions[posRow - 1][posColumn];
+                        }
+                        //rook is positioned at below
+                        else if(pieceRow > posRow){
+                            closePos = Piece.positions[posRow + 1][posColumn];
+                        }
+                    }
+                    //check whether we have the closePos as one of our moveables
+                    if(closePos != null){
+                        for(Object o: rookMoveables){
+                            if(closePos.equals((String)(o))){
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else if(p instanceof Queen){
+                    //apply the same procedures with queen and rook based on the slope
+                    //If the absolute value of the slope is 1 and path is clear
+                    int slope = 0;
+                    if(pieceColumn != posColumn){
+                        slope = Math.abs((pieceRow - posRow) / (pieceColumn - posColumn));
+                    }
+                    
+                    if(slope == 1){
+                        String closePos = null;
+                        Object[] bishopMoveables = p.showMoveables();
+                        
+                        //check all 4 possible directions between the path between bishop and the given pos and set the closePos accordingly
+                        
+                        //check for bishop on top left
+                        if(posRow > pieceRow && posColumn > pieceColumn){
+                            closePos = Piece.positions[posRow - 1][posColumn - 1];
+                        }
+                        //check for bishop on top right
+                        else if(posRow > pieceRow && posColumn < pieceColumn){
+                            closePos = Piece.positions[posRow - 1][posColumn + 1];
+                        }
+                        //check for bottom left
+                        else if(posRow < pieceRow && posColumn > pieceColumn){
+                            closePos = Piece.positions[posRow + 1][posColumn - 1];
+                        }
+                        else if(posRow < pieceRow && posColumn < pieceColumn){
+                            closePos = Piece.positions[posRow + 1][posColumn + 1];
+                        }
+                        //Iterate over bishop's moveables and check whether we have the closePos
+                        for(Object o: bishopMoveables){
+                            if(closePos.equals((String)(o))){
+                                return true;
+                            }
+                        }
+                    }
+                    else{
+                        Object[] rookMoveables = p.showMoveables();
+                        //again set the close pos
+                        String closePos = null;
+                        if(pieceRow == posRow){
+                            //check the columns
+                            //rook is positioned at right
+                            if(pieceColumn > posColumn){
+                                closePos = Piece.positions[posRow][posColumn + 1];
+                            }
+                            //the rook is positioned at left
+                            else if(pieceColumn < posColumn){
+                                closePos = Piece.positions[posRow][posColumn - 1];
+                            }
+                        }
+                        else if(pieceColumn == posColumn){
+                            //rook is positioned at above
+                            if(pieceRow < posRow){
+                                closePos = Piece.positions[posRow - 1][posColumn];
+                            }
+                            //rook is positioned at below
+                            else if(pieceRow > posRow){
+                                closePos = Piece.positions[posRow + 1][posColumn];
+                            }
+                        }
+                        //check whether we have the closePos as one of our moveables
+                        if(closePos != null){
+                            for(Object o: rookMoveables){
+                                if(closePos.equals((String)(o))){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(p instanceof King){ //the if condition is just for increasing the readability
+                    //check the adjacent squares of the king
                     
                 }
             }
         }
+        return false;
     }
 }
