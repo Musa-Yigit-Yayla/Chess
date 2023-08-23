@@ -57,18 +57,6 @@ public class Pawn extends Piece {
                pieceHolder.getChildren().remove(App.getPieceHolderNode(enemyPawnRow, enemyPawnColumn));
                EmptyPane emptyPane = new EmptyPane(enemyPawnPos);
                pieceHolder.add(emptyPane, enemyPawnRow, enemyPawnColumn);
-               
-               //Last but not least if the enemy king is checked after this successfull move simply set it's outer frame to red
-                    /*double[][] currState = App.retrieveGameState(this.getPosition(), this.getPosition());
-                    String enemyKingPos = App.getKingPosition(currState , this.getEnemyColor());
-                    int enemyKingRow = Piece.getRow(enemyKingPos);
-                    int enemyKingColumn = Piece.getColumn(enemyKingPos);
-                    
-                    if(App.isChecked(currState, this.getEnemyColor(), enemyKingPos)){
-                        //set the outer frame of the enemy king
-                        King enemyKing = ((King)((PiecePane)(App.getPieceHolderNode(enemyKingRow, enemyKingColumn))).getPiece());
-                        enemyKing.setCheckedFrame();
-                    }*/
            }
            this.isMoved = isMoved;
            Move move = new Move(this, currPos, newCurrPos);
