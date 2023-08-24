@@ -203,7 +203,7 @@ public class PiecePane extends StackPane{
                     ArrayList<Piece> checkingPieces = new ArrayList<>();
                     for(int i = 0; i < App.currentPieces.size(); i++){
                        Piece currPiece = App.currentPieces.get(i);
-                       if(!(currPiece.getColor().equals(friendlyColor)) && !(currPiece instanceof King || currPiece instanceof Bishop || currPiece instanceof Rook)){
+                       if(!(currPiece.getColor().equals(friendlyColor)) && !(currPiece instanceof King )){
                            //we ensured that we have an enemy piece which is not the king, now we must check whether it checks our king
                            String[] path = App.getPath(friendlyKing, currPiece);
                            if(path != null){

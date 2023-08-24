@@ -1073,7 +1073,12 @@ public class App extends Application {
     if(resultList.isEmpty()){
         return null;
     }
-        return (String[])(resultList.toArray());
+        Object[] resultObjects = (resultList.toArray());
+        result = new String[resultObjects.length];
+        for(int i = 0; i < resultObjects.length; i++){
+            result[i] = (String)(resultObjects[i]);
+        }
+        return result;
     }
     public static boolean  contains(Object[] arr, Object elt){
         for(int i = 0; i < arr.length; i++){
@@ -1119,17 +1124,34 @@ public class App extends Application {
         boolean result = false;
         King friendlyKing = (King)((PiecePane)(App.getGridNode(pieceHolder, Piece.getRow(kingPos), Piece.getColumn(kingPos)))).getPiece();
         
+        //retrieve the current state of the game
+        double[][] state = App.retrieveGameState(kingPos, kingPos);
         for(Piece checkingEnemy: checkingEnemies){
-            String[] currPath = App.getPath(friendlyKing, checkingEnemy);
-            boolean found = false;
-            for(int i = 0; i < currPath.length; i++){
-                if(currPath[i].equals(currMoveable)){
-                    found = true;
-                    break;
-                }
+            //String[] currPath = App.getPath(friendlyKing, checkingEnemy);
+            String[] currPath = null;
+            if(checkingEnemy instanceof Bishop){
+                currPath = Bishop.showMoveables2(state, checkingEnemy.getRow(), checkingEnemy.getColumn());
             }
-            if(!found){
-                return true;
+            else if(checkingEnemy instanceof Rook){
+                
+            }
+            else if(checkingEnemy instanceof Queen){
+                
+            }
+            if(currPath != null){
+                boolean found = false;
+                System.out.println("?????Curr moveable is " + currMoveable);
+                System.out.println("???????We are in evaluateStateForCheck in app class to check the current path");
+                for(int i = 0; i < currPath.length; i++){
+                    System.out.println("?????????Curr square along the path is " + currPath[i]);
+                    if(currPath[i].equals(currMoveable)){
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found){
+                    return true;
+                }
             }
         }
         return result;

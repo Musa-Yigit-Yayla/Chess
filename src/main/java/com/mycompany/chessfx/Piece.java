@@ -4,6 +4,7 @@
  */
 package com.mycompany.chessfx;
 
+import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -105,19 +106,56 @@ public abstract class Piece {
                 String curr = (String)(currMoveablesArray[i]);
                 currMoveables[i] = curr;
             }
+            //retrieve the checking pieces !!!THE FOLLOWING BLOCK IS TAKEN FROM PIECEPANE
+            
+                double[][] presentState = App.retrieveGameState(this.getPosition(), this.getPosition());
+            String presentKingPos = App.getKingPosition(presentState, this.color);
+            King friendlyKing = (King)((PiecePane)(App.getGridNode(pieceHolder, Piece.getRow(presentKingPos), Piece.getColumn(presentKingPos)))).getPiece();
+                    //retrieve each and every piece that checks our king by using getPath function
+                    ArrayList<Piece> checkingEnemies = new ArrayList<>();
+                    for(int i = 0; i < App.currentPieces.size(); i++){
+                       Piece currPiece = App.currentPieces.get(i);
+                       if(!(currPiece.getColor().equals(this.color)) && !(currPiece instanceof King )){
+                           //we ensured that we have an enemy piece which is not the king, now we must check whether it checks our king
+                           String[] path = App.getPath(friendlyKing, currPiece);
+                           if(path != null){
+                               checkingEnemies.add(currPiece);
+                           }
+                       }
+                       
+                    }
+                    
+            boolean x = false;
+            boolean y = false;
+            boolean u = false;
+            boolean z = false;
+            
+            //THE FOLLOWING BLOCK IS TAKEN FROM PIECE PANE EVENT HANDLERS
             boolean isMoveable = false; //can we move to the given nextPos
             for(int i = 0; i < currMoveables.length; i++){
                 String currMoveable = currMoveables[i];
                 System.out.println("---Curr moveable of the piece is: " + currMoveable);
-                double[][] nextPossibleState = App.retrieveGameState(this.currPosition, currMoveable);
-                String kingPos = App.getKingPosition(nextPossibleState, color);
-                
-                //System.out.println("nextPossibleState is ");
-                //App.printMatrix(nextPossibleState);
-                if(currMoveable.equals(nextPos) && !App.isChecked(nextPossibleState, color, kingPos)){
-                    System.out.println("!!!!!We are about to move a piece without exposing the friendly king");
-                    isMoveable = true;
-                    break;
+                if(currMoveable.equals(nextPos)){
+                    double[][] nextPossibleState = App.retrieveGameState(this.currPosition, currMoveable);
+                    String kingPos = App.getKingPosition(nextPossibleState, color);
+
+                    //System.out.println("nextPossibleState is ");
+                    //App.printMatrix(nextPossibleState);
+                    x = currMoveable.equals(nextPos);
+                    y = !(App.isChecked(nextPossibleState, color, kingPos));
+                    if(!y){
+                        u = !App.evaluateStateForCheck(checkingEnemies, currMoveable, kingPos);
+                        z = (this instanceof King) || u;
+                    }
+                    boolean isFriendlyKingSafe = (x && (y || z));
+                    //check the second condition of the above z boolean variable only when the first one is not satisfied
+                    System.out.println("*******************************************X, Y, Z  are respectively " + x + "," + y + "," + z);
+                    System.out.println("******************************isFriendlyKingSafe evaluates to " + isFriendlyKingSafe);
+                    if(isFriendlyKingSafe){
+                        System.out.println("!!!!!We are about to move a piece without exposing the friendly king");
+                        isMoveable = true;
+                        break;
+                    }
                 }
             }
             System.out.println("isMoveable is: " + isMoveable);
@@ -147,8 +185,52 @@ public abstract class Piece {
                         enemyKing.setCheckedFrame();
                     }
             }
+            //we need to have a logic flow separating what to do when the nextPosPane is an instance of EmptyPane
             else if(nextPosPane instanceof EmptyPane){ //bool logic is written just to enhance readability
                 //move our piece to empty pane if applicable
+                if(!y && u && !(this instanceof King)){
+                    //here we are about to cover our king by moving this piece into designated location in-place
+                    //I reckon if we made it into this code block by satisfying the required logic, we must be able to save our king from being checked
+                    
+                    //perform the required operations accordingly
+                    System.out.println("????????????GOD SAVE THE KING!");
+                    System.out.println("***Asked move is a valid move, friendly king is not checked");
+                    //first remove the piece pane and the empty destination from gridHolder
+                    pieceHolder.getChildren().remove(this.piecePane);
+                    pieceHolder.getChildren().remove(nextPosPane);
+                    
+                    /*int nextRow = Piece.getRow(nextPos);
+                    int nextColumn = Piece.getColumn(nextPos);*/
+                    
+                    int pieceRow = this.row;
+                    int pieceColumn = this.column;
+                    
+                    //sdd the current piece to the next locations and don't forget to add the empty pane back again by instantiating a new one
+                    EmptyPane newEmptyPane = new EmptyPane(Piece.positions[pieceRow][pieceColumn]);
+                    newEmptyPane.setEventHandling();
+                    
+                    pieceHolder.add(this.piecePane, nextColumn, nextRow);
+                    pieceHolder.add(newEmptyPane, pieceColumn, pieceRow);
+                    
+                    //set the row and column data fields of the piece appropriately
+                    this.setPosition(nextRow, nextColumn);
+                    //erase the moveables which were visible before we have made the move
+                    App.eraseMoveablesFromPane();
+                    
+                    //Last but not least if the enemy king is checked after this successfull move simply set it's outer frame to red
+                    double[][] currState = App.retrieveGameState(this.getPosition(), this.getPosition());
+                    String enemyKingPos = App.getKingPosition(currState , this.getEnemyColor());
+                    int enemyKingRow = Piece.getRow(enemyKingPos);
+                    int enemyKingColumn = Piece.getColumn(enemyKingPos);
+                    
+                    if(App.isChecked(currState, this.getEnemyColor(), enemyKingPos)){
+                        //set the outer frame of the enemy king
+                        King enemyKing = ((King)((PiecePane)(App.getPieceHolderNode(enemyKingRow, enemyKingColumn))).getPiece());
+                        enemyKing.setCheckedFrame();
+                    }
+                    
+                    return;
+                }
                 //Check whether our friendly king is exposed or not after the move
                 
                 System.out.println("*** Current nextPosPane is an instance of EmptyPane");
