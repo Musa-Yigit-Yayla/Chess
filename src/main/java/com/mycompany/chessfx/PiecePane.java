@@ -9,6 +9,7 @@ package com.mycompany.chessfx;
  * @author yigit
  */
 import java.io.File;
+import java.util.ArrayList;
 import javafx.scene.layout.StackPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -189,8 +190,47 @@ public class PiecePane extends StackPane{
                 App.selectedPiece = this.piece;
                 System.out.println("We have selected the initial piece, current selected piece color is " + App.selectedPiece.getColor());
                 
-                //display the moveables of the recently selected piece
-                App.displayMoveables();
+                String friendlyColor = this.piece.getColor();
+                double[][] currState = App.retrieveGameState(this.piece.getPosition(), this.piece.getPosition());
+                String kingPos = App.getKingPosition(currState, friendlyColor);
+                if(!(this.piece instanceof King) && (App.isChecked(currState, friendlyColor, kingPos))){
+                    //try and display the moves which can cover our king
+                    //Initially retrieve the path between a checking piece and friendly king
+                    System.out.println("We are about to try to cover our king and save it from check with a friendly piece");
+                    
+                    King friendlyKing = (King)((PiecePane)(App.getGridNode(pieceHolder, Piece.getRow(kingPos), Piece.getColumn(kingPos)))).getPiece();
+                    //retrieve each and every piece that checks our king by using getPath function
+                    ArrayList<Piece> checkingPieces = new ArrayList<>();
+                    for(int i = 0; i < App.currentPieces.size(); i++){
+                       Piece currPiece = App.currentPieces.get(i);
+                       if(!(currPiece.getColor().equals(friendlyColor)) && !(currPiece instanceof King || currPiece instanceof Bishop || currPiece instanceof Rook)){
+                           //we ensured that we have an enemy piece which is not the king, now we must check whether it checks our king
+                           String[] path = App.getPath(friendlyKing, currPiece);
+                           if(path != null){
+                               checkingPieces.add(currPiece);
+                           }
+                       }
+                       
+                    }
+                    
+                    
+                    //here we will not use the static showMoveables functions but instead instance methods
+                    String originalPos = this.piece.getPosition();
+                    Object[] moveables = this.piece.showMoveables();
+                    ArrayList<String> validMoveables = new ArrayList<>();
+                    for(int i = 0; i < moveables.length; i++){
+                        String currMoveable = (String)(moveables[i]);
+                        if(!App.evaluateStateForCheck(checkingPieces, currMoveable, kingPos)){
+                            //this block implies that the currMoveable square covers our king from each checking piece
+                            validMoveables.add(currMoveable);
+                        }
+                    }
+                    App.displayValidMoveables(validMoveables);
+                }
+                else{
+                    // simply display the moveables of the recently selected piece
+                    App.displayMoveables();
+                }
             }
             else if(App.selectedPiece != null){
                 //We already have a selected piece, now the user might have clicked an enemy piece contained in this pane in which we can take
@@ -219,6 +259,7 @@ public class PiecePane extends StackPane{
                 else{
                     //display the moveables of the recently selected piece after having selecting the piece contained by this piece pane
                     App.displayMoveables();
+                    
                 }
             }
         });

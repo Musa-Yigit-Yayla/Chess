@@ -117,6 +117,24 @@ public class App extends Application {
             
         }
     }
+    //Invoke when we are able to cover our king from checking piece(s) by moving an alternative piece onto the path
+    //Caller is responsible of ensuring that the validMoveables are valid positions which do not expose their friendly king
+    public static void displayValidMoveables(ArrayList<String> validMoveables){
+        eraseMoveablesFromPane();
+        //Each and every node that we will retrieve is guaranteed to be an empty pane instance since our king is already checked by a bishop, rook, or queen
+        for(String currPos: validMoveables){
+            EmptyPane currPane = (EmptyPane)App.getPieceHolderNode(Piece.getRow(currPos), Piece.getColumn(currPos));
+            currPane.setOuterFrame(true);
+        }
+        //If the friendly king is not currently checked then draw the outer frame of the selected piece as well
+                String kingPos = App.selectedPiece.getPosition();
+                String kingColor = App.selectedPiece.getColor();
+                boolean isChecked = App.isChecked(App.retrieveGameState(kingPos, kingPos), kingColor, kingPos);
+                if(!isChecked){
+                    PiecePane selectedPiecePane = App.selectedPiece.getPiecePane();
+                    selectedPiecePane.setOuterFrame(false, true);
+                }
+    }
     //Method to stop displaying each and every moveable that is being displayed right now
     //Invoke each time when the displayMoveables has been invoked
     public static void eraseMoveablesFromPane(){
@@ -1075,6 +1093,32 @@ public class App extends Application {
             }
             System.out.println();
         }
+    }
+    //Evaluate a given state to check whether it is already checked or not
+    //@return true when the given state is already checked
+    public static boolean evaluateStateForCheck(ArrayList<Piece> checkingEnemies, String currMoveable, String kingPos){
+        //You may stem the process of evaluating whether the friendly king is checked by starting from the friendly king's pos
+        //Alternatively we can simply invoke getPath function on each enemy piece and store the ones which check the enemy king
+        //If there is none then the we return false otherwise true
+        
+        //iterate through all of the checkingEnemies' path's between the king and if all of the paths contain currMoveable then return false
+        boolean result = false;
+        King friendlyKing = (King)((PiecePane)(App.getGridNode(pieceHolder, Piece.getRow(kingPos), Piece.getColumn(kingPos)))).getPiece();
+        
+        for(Piece checkingEnemy: checkingEnemies){
+            String[] currPath = App.getPath(friendlyKing, checkingEnemy);
+            boolean found = false;
+            for(int i = 0; i < currPath.length; i++){
+                if(currPath[i].equals(currMoveable)){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                return true;
+            }
+        }
+        return result;
     }
 }
     
