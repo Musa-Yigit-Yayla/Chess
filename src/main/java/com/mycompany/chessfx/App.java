@@ -858,7 +858,7 @@ public class App extends Application {
             if(biggerRowPiece == 'k'){
                 //king is lower than bishop
                 if(biggerColumnPiece == 'k'){
-                    //enemy bishop is northwest location
+                    //enemy bishop is northeast location
                     int currRow =  kingRow - 1;
                     int currColumn = kingColumn - 1;
                     
@@ -870,9 +870,9 @@ public class App extends Application {
                     }
                 }
                 else{
-                    //north east
+                    //north west
                     int currRow = kingRow - 1;
-                    int currColumn = kingRow + 1;
+                    int currColumn = kingColumn + 1;
                     
                     while(currRow > enemyRow && currColumn < enemyColumn){
                         String currPos = Piece.positions[currRow][currColumn];
@@ -1003,9 +1003,11 @@ public class App extends Application {
                     }
                 }
             }
-            else{
-                //perform bishop operation
-                int biggerRow = kingRow;
+            
+        }
+        else{
+            //Apparently our queen behaves like a bishop when checking the opponent's king
+            int biggerRow = kingRow;
             int biggerColumn = kingColumn;
             
             char biggerRowPiece = 'k';
@@ -1023,7 +1025,7 @@ public class App extends Application {
             if(biggerRowPiece == 'k'){
                 //king is lower than bishop
                 if(biggerColumnPiece == 'k'){
-                    //enemy bishop is northwest location
+                    //enemy bishop is northeast location
                     int currRow =  kingRow - 1;
                     int currColumn = kingColumn - 1;
                     
@@ -1035,9 +1037,9 @@ public class App extends Application {
                     }
                 }
                 else{
-                    //north east
+                    //north west
                     int currRow = kingRow - 1;
-                    int currColumn = kingRow + 1;
+                    int currColumn = kingColumn + 1;
                     
                     while(currRow > enemyRow && currColumn < enemyColumn){
                         String currPos = Piece.positions[currRow][currColumn];
@@ -1073,11 +1075,11 @@ public class App extends Application {
                     }
                 }
             }
-        
-            }
+            
         }
     }
     if(resultList.isEmpty()){
+        System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ RETURNING NULL FROM GET PATH");
         return null;
     }
         Object[] resultObjects = (resultList.toArray());
@@ -1085,6 +1087,7 @@ public class App extends Application {
         for(int i = 0; i < resultObjects.length; i++){
             result[i] = (String)(resultObjects[i]);
         }
+        System.out.println(result.toString());
         return result;
     }
     public static boolean  contains(Object[] arr, Object elt){

@@ -207,8 +207,8 @@ public class PiecePane extends StackPane{
                            System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\WE WILL RETRIEVE A PATH");
                            //we ensured that we have an enemy piece which is not the king, now we must check whether it checks our king
                            String[] path = App.getPath(friendlyKing, currPiece);
-                           System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\WE RETRIEVED A PATH OF LENGTH " + path.length);
                            if(path != null){
+                               System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\WE RETRIEVED A PATH OF LENGTH " + path.length);
                                checkingPieces.add(currPiece);
                            }
                        }
