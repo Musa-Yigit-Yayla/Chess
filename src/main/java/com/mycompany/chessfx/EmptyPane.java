@@ -237,7 +237,7 @@ public class EmptyPane extends StackPane{
                     }
                 }
                 else if(p instanceof Rook){
-                    //Object[] rookMoveables = p.showMoveables();
+                    Object[] rookMoveables = p.showMoveables();
                     //again set the close pos
                     String closePos = null;
                     int dx = Integer.MAX_VALUE;
@@ -267,15 +267,18 @@ public class EmptyPane extends StackPane{
                             closePos = Piece.positions[posRow + 1][posColumn];
                         }
                     }
-                    //check whether we have the closePos as one of our moveables
-                    /*if(closePos != null){
+                    //check whether we have the closePos as one of our moveables excluding the squares which are occuppied
+                    if(closePos != null){
                         for(Object o: rookMoveables){
-                            if(closePos.equals((String)(o))){
+                            String curr = (String)o;
+                            int currRow = Piece.getRow(curr);
+                            int currColumn = Piece.getColumn(curr);
+                            StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
+                            if(closePos.equals(curr) && !(currSquare instanceof PiecePane)){
                                 return true;
                             }
                         }
-                    }*/
-                    
+                    }
                 }
                 else if(p instanceof Queen){
                     //apply the same procedures with queen and rook based on the slope
@@ -308,7 +311,12 @@ public class EmptyPane extends StackPane{
                         }
                         //Iterate over bishop's moveables and check whether we have the closePos
                         for(Object o: bishopMoveables){
-                            if(closePos.equals((String)(o))){
+                            //we have to exclude the positions which are occupied by the enemy pieces of bishop
+                            String curr = (String)o;
+                            int currRow = Piece.getRow(curr);
+                            int currColumn = Piece.getColumn(curr);
+                            StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
+                            if(closePos.equals(curr) && !(currSquare instanceof PiecePane)){
                                 return true;
                             }
                         }
@@ -317,31 +325,41 @@ public class EmptyPane extends StackPane{
                         Object[] rookMoveables = p.showMoveables();
                         //again set the close pos
                         String closePos = null;
+                        int dx = Integer.MAX_VALUE;
+                        int dy = Integer.MAX_VALUE; //the direction of path along we will be checking for obstructions
                         if(pieceRow == posRow){
                             //check the columns
                             //rook is positioned at right
                             if(pieceColumn > posColumn){
+                                dx = -1;
                                 closePos = Piece.positions[posRow][posColumn + 1];
                             }
                             //the rook is positioned at left
                             else if(pieceColumn < posColumn){
+                                dx = 1;
                                 closePos = Piece.positions[posRow][posColumn - 1];
                             }
                         }
                         else if(pieceColumn == posColumn){
                             //rook is positioned at above
                             if(pieceRow < posRow){
+                                dy = 1;
                                 closePos = Piece.positions[posRow - 1][posColumn];
                             }
                             //rook is positioned at below
                             else if(pieceRow > posRow){
+                                dy = -1;
                                 closePos = Piece.positions[posRow + 1][posColumn];
                             }
                         }
-                        //check whether we have the closePos as one of our moveables
+                        //check whether we have the closePos as one of our moveables excluding the squares which are occuppied
                         if(closePos != null){
                             for(Object o: rookMoveables){
-                                if(closePos.equals((String)(o))){
+                                String curr = (String)o;
+                                int currRow = Piece.getRow(curr);
+                                int currColumn = Piece.getColumn(curr);
+                                StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
+                                if(closePos.equals(curr) && !(currSquare instanceof PiecePane)){
                                     return true;
                                 }
                             }
