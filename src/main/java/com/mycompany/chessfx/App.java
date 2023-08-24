@@ -60,7 +60,7 @@ public class App extends Application {
                     double[][] possibleState = App.retrieveGameState(App.selectedPiece.getPosition(), currMoveable);
                     String friendlyKingPos = App.getKingPosition(possibleState, App.selectedPiece.getColor());
                     System.out.println("We are displaying the following matrix from displayMoveables of App.java, currMoveable is: " + currMoveable);
-                    App.printMatrix(possibleState);
+                    //App.printMatrix(possibleState);
                     if(!App.isChecked(possibleState, App.selectedPiece.getColor(), friendlyKingPos)){
                         //you can simply display this square as a moveable square
                         System.out.println("Apparently displayed possible state satisfies our " + App.selectedPiece.getColor() + " king to be not checked");
@@ -626,7 +626,7 @@ public class App extends Application {
         ArrayList<Integer> enemyColumns = new ArrayList<>();
         
         //print the current given state for debugging purposes
-        App.printMatrix(state);
+        //App.printMatrix(state);
         
         String friendlyColor;
         String enemyColor;

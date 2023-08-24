@@ -162,6 +162,9 @@ public class Bishop extends Piece{
         return moveables.toArray();
     }
     public static String[] showMoveables(double[][] state, int row, int column){
+        System.out.println("About to print the game state passed to Bishop class' showMoveables");
+        App.printMatrix(state);
+        
         String friendlyColor = Piece.WHITE_COLOR;
         String enemyColor = Piece.BLACK_COLOR;
         
@@ -267,8 +270,8 @@ public class Bishop extends Piece{
                 PiecePane currPiecePane = (PiecePane)(currSquare);
                 Piece currPiece = currPiecePane.getPiece();
                 
-                //We add the square with enemy check aswell if possible
-                if(currPiece.getColor().equals(enemyColor)){
+                //We add the square without the enemy check aswell if possible
+                if(currPiece.getColor().equals(enemyColor) && !(currPiece instanceof King)){
                     moveables.add(Piece.positions[currRow][currColumn]);
                 }
                 //If we have a friendly piece, we don't add it
