@@ -59,11 +59,11 @@ public class App extends Application {
                     //for each moveable that we have check if the game state is valid after we make that move
                     double[][] possibleState = App.retrieveGameState(App.selectedPiece.getPosition(), currMoveable);
                     String friendlyKingPos = App.getKingPosition(possibleState, App.selectedPiece.getColor());
-                    System.out.println("We are displaying the following matrix from displayMoveables of App.java");
+                    System.out.println("We are displaying the following matrix from displayMoveables of App.java, currMoveable is: " + currMoveable);
                     App.printMatrix(possibleState);
                     if(!App.isChecked(possibleState, App.selectedPiece.getColor(), friendlyKingPos)){
                         //you can simply display this square as a moveable square
-
+                        System.out.println("Apparently displayed possible state satisfies our " + App.selectedPiece.getColor() + " king to be not checked");
                         //Retrieve the moveable square's pane
                         int[] currMoveablePositions = Piece.getNumericPosition(currMoveable);
                         int currMoveableRow = currMoveablePositions[0];
@@ -685,6 +685,7 @@ public class App extends Application {
                 String[] moveables = Bishop.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
+                        System.out.println("$$$$$$We can check the king with a bishop, king pos is and currMoveable are respectively " + kingPosition);
                         return true;
                     }
                 }
@@ -694,6 +695,7 @@ public class App extends Application {
                 String[] moveables = Rook.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
+                        System.out.println("$$$$$$We can check the king with a rook, king pos is and currMoveable are respectively " + kingPosition);
                         return true;
                     }
                 }
@@ -703,6 +705,7 @@ public class App extends Application {
                 String[] moveables = Queen.showMoveables(state, currRow, currColumn);
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
+                        System.out.println("$$$$$$We can check the king with a queen, king pos is and currMoveable are respectively " + kingPosition);
                         return true;
                     }
                 }
