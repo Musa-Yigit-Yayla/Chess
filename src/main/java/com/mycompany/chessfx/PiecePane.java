@@ -204,8 +204,10 @@ public class PiecePane extends StackPane{
                     for(int i = 0; i < App.currentPieces.size(); i++){
                        Piece currPiece = App.currentPieces.get(i);
                        if(!(currPiece.getColor().equals(friendlyColor)) && !(currPiece instanceof King )){
+                           System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\WE WILL RETRIEVE A PATH");
                            //we ensured that we have an enemy piece which is not the king, now we must check whether it checks our king
                            String[] path = App.getPath(friendlyKing, currPiece);
+                           System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\WE RETRIEVED A PATH OF LENGTH " + path.length);
                            if(path != null){
                                checkingPieces.add(currPiece);
                            }
@@ -220,13 +222,14 @@ public class PiecePane extends StackPane{
                     ArrayList<String> validMoveables = new ArrayList<>();
                     for(int i = 0; i < moveables.length; i++){
                         String currMoveable = (String)(moveables[i]);
-                        if(!App.evaluateStateForCheck(checkingPieces, currMoveable, kingPos)){
+                        if(App.evaluateStateForCheck(checkingPieces, currMoveable, kingPos)){
                             //this block implies that the currMoveable square covers our king from each checking piece
+                            System.out.println("????????Valid moveable to be added after state evaluation for check is " + currMoveable);
                             validMoveables.add(currMoveable);
                         }
                     }
                     System.out.println("xxxValid moveables are about to be displayed");
-                    App.displayValidMoveables(validMoveables);
+                    App.displayValidMoveables(validMoveables, this.piece.getColor());
                 }
                 else{
                     // simply display the moveables of the recently selected piece
@@ -237,6 +240,8 @@ public class PiecePane extends StackPane{
                 //We already have a selected piece, now the user might have clicked an enemy piece contained in this pane in which we can take
                 String selectedPieceColor = App.selectedPiece.getColor();
                 
+                double[][] currState = App.retrieveGameState(this.piece.getPosition(), this.piece.getPosition());
+                String kingPos = App.getKingPosition(currState, this.piece.getColor());
                 System.out.println("We are trying to take a clicked piece");
                 if(!selectedPieceColor.equals(this.piece.getColor()) && !(this.piece instanceof King)){ //colors do not match hence we have an enemy piece
                     //before performing the take operation make sure that we do have the selected piece in the reach of this piece
@@ -257,10 +262,16 @@ public class PiecePane extends StackPane{
                         this.piece.take(App.selectedPiece);
                     }
                 }
-                else{
-                    //display the moveables of the recently selected piece after having selecting the piece contained by this piece pane
-                    App.displayMoveables();
+                else if((App.isChecked(currState, this.piece.getColor(), kingPos))){
                     
+                    if(this.piece instanceof King){
+                        //display the moveables of the recently selected piece after having selecting the piece contained by this piece pane
+                        App.displayMoveables();
+                    }
+                    else{
+                        //display the validMoveables if any
+                        System.out.println("???????????????We are about to display valid moveables ");
+                    }
                 }
             }
         });

@@ -123,9 +123,16 @@ public class App extends Application {
     }
     //Invoke when we are able to cover our king from checking piece(s) by moving an alternative piece onto the path
     //Caller is responsible of ensuring that the validMoveables are valid positions which do not expose their friendly king
-    public static void displayValidMoveables(ArrayList<String> validMoveables){
+    public static void displayValidMoveables(ArrayList<String> validMoveables, String friendlyColor){
         eraseMoveablesFromPane();
-        
+        if(validMoveables.size() == 0){
+            //we have no valid moveables for currently selected piece to cover the king, hence draw its king as checked and return
+            double[][] currState = App.retrieveGameState(Piece.positions[0][0], Piece.positions[0][0]);
+            String friendlyKingPos = App.getKingPosition(currState, friendlyColor);
+            King king = (King)((PiecePane)(App.getPieceHolderNode(Piece.getRow(friendlyKingPos), Piece.getColumn(friendlyKingPos)))).getPiece();
+            king.setCheckedFrame();
+            return;
+        }
         for(String currPos: validMoveables){
             StackPane currPane = App.getPieceHolderNode(Piece.getRow(currPos), Piece.getColumn(currPos));
             if(currPane instanceof EmptyPane){
@@ -1122,10 +1129,12 @@ public class App extends Application {
         
         //iterate through all of the checkingEnemies' path's between the king and if all of the paths contain currMoveable then return false
         boolean result = false;
+        System.out.println("King Pos in evaluateState is " + kingPos);
         King friendlyKing = (King)((PiecePane)(App.getGridNode(pieceHolder, Piece.getRow(kingPos), Piece.getColumn(kingPos)))).getPiece();
         
         //retrieve the current state of the game
         double[][] state = App.retrieveGameState(kingPos, kingPos);
+        state[Piece.getRow(kingPos)][Piece.getRow(kingPos)] = friendlyKing.getPoints();
         for(Piece checkingEnemy: checkingEnemies){
             //String[] currPath = App.getPath(friendlyKing, checkingEnemy);
             String[] currPath = null;
@@ -1133,10 +1142,10 @@ public class App extends Application {
                 currPath = Bishop.showMoveables2(state, checkingEnemy.getRow(), checkingEnemy.getColumn());
             }
             else if(checkingEnemy instanceof Rook){
-                
+                currPath = Rook.showMoveables2(state, checkingEnemy.getRow(), checkingEnemy.getColumn());
             }
             else if(checkingEnemy instanceof Queen){
-                
+                currPath = Queen.showMoveables(state, checkingEnemy.getRow(), checkingEnemy.getColumn());
             }
             if(currPath != null){
                 boolean found = false;

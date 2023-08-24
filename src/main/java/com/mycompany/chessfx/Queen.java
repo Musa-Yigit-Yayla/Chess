@@ -127,6 +127,8 @@ public class Queen extends Piece{
         return result;
 
     }
+    //The only difference with the original showMoveables is that this version does not incorporate the enemy piece once it has encountered it
+    
     @Override
     public void take(Piece taker) {
         super.take(taker);

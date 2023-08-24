@@ -274,6 +274,124 @@ public class Rook extends Piece{
         }
         return returnArr;
     }
+    //The only difference with the original showMoveables is that this version does not incorporate the enemy piece once it has encountered it
+    public static String[] showMoveables2(double[][] state, int row, int column){
+        
+        String friendlyColor = Piece.WHITE_COLOR;
+        String enemyColor = Piece.BLACK_COLOR;
+        
+        if(state[row][column] < 0){
+            String temp = friendlyColor;
+            friendlyColor = enemyColor;
+            enemyColor = temp;
+        }
+        
+        ArrayList<String> moveables = new ArrayList<>();
+        
+        int currRow;
+        int currColumn;
+        //first calculate horizontal squares if any
+        //move towards left
+        currColumn = column - 1;
+        while(currColumn >= 0){
+            StackPane currSquare = App.getPieceHolderNode(row, currColumn);
+            if(currSquare instanceof EmptyPane){
+                moveables.add(Piece.positions[row][currColumn]); // since the curr pos is empty pane add the position string correspondance
+            }
+            //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
+            //the type of the currSquare instance
+            else if(currSquare instanceof PiecePane){
+                /*PiecePane currPiecePane = (PiecePane)(currSquare);
+                Piece currPiece = currPiecePane.getPiece();
+                
+                //We add the square with enemy check aswell if possible
+                if(currPiece.getColor().equals(enemyColor)){
+                    moveables.add(Piece.positions[row][currColumn]);
+                }*/
+                //If we have a friendly piece, we don't add it
+                break;
+            
+            }
+            currColumn--;
+        }
+        
+        //move towards right
+        currColumn = column + 1;
+        while(currColumn < 8){
+            StackPane currSquare = App.getPieceHolderNode(row, currColumn);
+            if(currSquare instanceof EmptyPane){
+                moveables.add(Piece.positions[row][currColumn]); // since the curr pos is empty pane add the position string correspondance
+            }
+            //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
+            //the type of the currSquare instance
+            else if(currSquare instanceof PiecePane){
+                /*PiecePane currPiecePane = (PiecePane)(currSquare);
+                Piece currPiece = currPiecePane.getPiece();
+                
+                //We add the square with enemy check aswell if possible
+                if(currPiece.getColor().equals(enemyColor)){
+                    moveables.add(Piece.positions[row][currColumn]);
+                }*/
+                //If we have a friendly piece, we don't add it
+                break;
+            
+            }
+            currColumn++;
+        }
+        
+        currColumn = column; // set the currColumn back to original position
+        currRow = row - 1; // first go up
+        while(currRow >= 0){
+            StackPane currSquare = App.getPieceHolderNode(currRow, column);
+            if(currSquare instanceof EmptyPane){
+                moveables.add(Piece.positions[currRow][column]); // since the curr pos is empty pane add the position string correspondance
+            }
+            //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
+            //the type of the currSquare instance
+            else if(currSquare instanceof PiecePane){
+                /*
+                PiecePane currPiecePane = (PiecePane)(currSquare);
+                Piece currPiece = currPiecePane.getPiece();
+                
+                //We add the square with enemy check aswell if possible
+                if(currPiece.getColor().equals(enemyColor)){
+                    moveables.add(Piece.positions[currRow][column]);
+                }*/
+                //If we have a friendly piece, we don't add it
+                break;
+            
+            }
+            currRow--;
+        }
+        currRow = row + 1;
+        while(currRow < 8){
+            StackPane currSquare = App.getPieceHolderNode(currRow, column);
+            if(currSquare instanceof EmptyPane){
+                moveables.add(Piece.positions[currRow][column]); // since the curr pos is empty pane add the position string correspondance
+            }
+            //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
+            //the type of the currSquare instance
+            else if(currSquare instanceof PiecePane){
+                /*
+                PiecePane currPiecePane = (PiecePane)(currSquare);
+                Piece currPiece = currPiecePane.getPiece();
+                
+                //We add the square with enemy check aswell if possible
+                if(currPiece.getColor().equals(enemyColor)){
+                    moveables.add(Piece.positions[currRow][column]);
+                }*/
+                //If we have a friendly piece, we don't add it
+                break;
+            
+            }
+            currRow++;
+        }
+        String[] returnArr = new String[moveables.size()];
+        for(int i = 0; i < returnArr.length; i++){
+            returnArr[i] = moveables.get(i);
+        }
+        return returnArr;
+    }
     @Override
     public void take(Piece taker) {
         super.take(taker);
