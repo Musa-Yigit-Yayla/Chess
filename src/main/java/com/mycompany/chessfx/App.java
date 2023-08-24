@@ -72,7 +72,11 @@ public class App extends Application {
                         StackPane moveableSquare = App.getPieceHolderNode(currMoveableRow, currMoveableColumn);
                         if(moveableSquare instanceof PiecePane){
                             PiecePane currMoveablePane = (PiecePane)(moveableSquare);
-                            currMoveablePane.setOuterFrame(true, false);
+                            //ensure that the selected pane to be moved is an enemy piece which is not a king instance
+                            Piece currMoveablePiece = currMoveablePane.getPiece();
+                            if(!(currMoveablePiece.getColor().equals(App.selectedPiece.getColor())) && !(currMoveablePiece instanceof King)){
+                                currMoveablePane.setOuterFrame(true, false);
+                            }
                         }
                         else if(moveableSquare instanceof EmptyPane){
                             EmptyPane currMoveablePane = (EmptyPane)(moveableSquare);
@@ -121,10 +125,20 @@ public class App extends Application {
     //Caller is responsible of ensuring that the validMoveables are valid positions which do not expose their friendly king
     public static void displayValidMoveables(ArrayList<String> validMoveables){
         eraseMoveablesFromPane();
-        //Each and every node that we will retrieve is guaranteed to be an empty pane instance since our king is already checked by a bishop, rook, or queen
+        
         for(String currPos: validMoveables){
-            EmptyPane currPane = (EmptyPane)App.getPieceHolderNode(Piece.getRow(currPos), Piece.getColumn(currPos));
-            currPane.setOuterFrame(true);
+            StackPane currPane = App.getPieceHolderNode(Piece.getRow(currPos), Piece.getColumn(currPos));
+            if(currPane instanceof EmptyPane){
+                ((EmptyPane)(currPane)).setOuterFrame(true);
+            }
+            else if(currPane instanceof PiecePane){
+                PiecePane currMoveablePane = (PiecePane)(currPane);
+                //ensure that the selected pane to be moved is an enemy piece which is not a king instance
+                Piece currMoveablePiece = currMoveablePane.getPiece();
+                if(!(currMoveablePiece.getColor().equals(App.selectedPiece.getColor())) && !(currMoveablePiece instanceof King)){
+                    currMoveablePane.setOuterFrame(true, false);
+                }
+            }
         }
         //If the friendly king is not currently checked then draw the outer frame of the selected piece as well
                 String kingPos = App.selectedPiece.getPosition();

@@ -225,6 +225,7 @@ public class PiecePane extends StackPane{
                             validMoveables.add(currMoveable);
                         }
                     }
+                    System.out.println("xxxValid moveables are about to be displayed");
                     App.displayValidMoveables(validMoveables);
                 }
                 else{
