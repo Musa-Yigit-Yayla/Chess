@@ -72,6 +72,37 @@ public class EmptyPane extends StackPane{
                         System.out.println("+++++++++++++++++++++++++++++++++++++ Curr pos is " + currPos + ", next pos is " + nextPos);
                         App.selectedPiece.move(nextPos);
                     }
+                    else{
+                        System.out.println("NEEEEEEEEEEEEEEEEED SOME HELPPP OVER HEREEEEEE DOC");
+                        //We should still check whether we can cover our king from all checking pieces by moving into this designated location
+                        //the selected piece, previous if condition is not adequate on its own to cover all cases
+                        //ArrayList<Piece> checkingEnemies = new ArrayList<>(); //a container for the pieces which check the selected piece's king
+                        //on the given state parameter
+                        
+                        //retrieve the checking pieces !!!THE FOLLOWING BLOCK IS TAKEN FROM PIECEPANE
+            
+                        
+                        String presentKingPos = App.getKingPosition(state, friendlyColor);
+                        King friendlyKing = (King)((PiecePane)(App.getGridNode(App.getPieceHolder(), Piece.getRow(presentKingPos), Piece.getColumn(presentKingPos)))).getPiece();
+                        //retrieve each and every piece that checks our king by using getPath function
+                        ArrayList<Piece> checkingEnemies = new ArrayList<>();
+                        for(int i = 0; i < App.currentPieces.size(); i++){
+                           Piece currPiece = App.currentPieces.get(i);
+                           if(!(currPiece.getColor().equals(friendlyColor)) && !(currPiece instanceof King )){
+                               //we ensured that we have an enemy piece which is not the king, now we must check whether it checks our king
+                               String[] path = App.getPath(friendlyKing, currPiece);
+                               if(path != null){
+                                   checkingEnemies.add(currPiece);
+                               }
+                           }
+
+                        }
+                        //we have managed to retrieve the checking enemies, now we need to check whether we can save our king by moving to this empty pane
+                        if(App.evaluateStateForCheck(checkingEnemies, currPos, kingPos)){
+                            //the state is not checked, we can move to this square successfully !!!
+                            App.selectedPiece.move(nextPos);
+                        }
+                    }
                 }
             }
         }

@@ -200,6 +200,10 @@ public class Bishop extends Piece{
                 //If we have a friendly piece, we don't add it
                 break;
             }
+            else{
+                System.out.println("CURRRRRRRRRRRRRRRRRRRRRRRRRRRRRRPOS IS " + Piece.positions[currRow][currColumn]);
+                break;
+            }
             currRow--;
             currColumn--;
         }
@@ -225,7 +229,9 @@ public class Bishop extends Piece{
                 //If we have a friendly piece, we don't add it
                 break;
             }
-            
+            else{
+                break;
+            }
             currRow--;
             currColumn++;
         }
@@ -255,6 +261,9 @@ public class Bishop extends Piece{
                 //If we have a friendly piece, we don't add it
                 break;
             }
+            else{
+                break;
+            }
             currRow++;
             currColumn++;
         }
@@ -278,6 +287,9 @@ public class Bishop extends Piece{
                     moveables.add(Piece.positions[currRow][currColumn]);
                 }
                 //If we have a friendly piece, we don't add it
+                break;
+            }
+            else{
                 break;
             }
             currRow++;
@@ -312,7 +324,7 @@ public class Bishop extends Piece{
         
         while(currRow >= 0 && currColumn >= 0){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -337,7 +349,7 @@ public class Bishop extends Piece{
         
         while(currRow >= 0 && currColumn < 8){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -364,7 +376,7 @@ public class Bishop extends Piece{
         
         while(currRow < 8 && currColumn < 8){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -389,7 +401,7 @@ public class Bishop extends Piece{
         
         while(currRow < 8 && currColumn >= 0){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
