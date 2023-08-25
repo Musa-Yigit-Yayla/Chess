@@ -53,7 +53,26 @@ public class EmptyPane extends StackPane{
                 else{
                     System.out.println("Next pos is " + nextPos);
                 }
-                App.selectedPiece.move(nextPos);
+                
+                if(App.selectedPiece instanceof King){
+                    App.selectedPiece.move(nextPos);
+                }
+                else{
+                    //before we make our move we must ensure here in-place that we do not expose our king after making this move
+                    String friendlyColor = App.selectedPiece.getColor();
+                    String currPos = App.selectedPiece.getPosition();
+                    double[][] state = App.retrieveGameState(currPos, nextPos);
+                    App.printMatrix(state);
+                    //Pass the enemy color as the friendly color otherwise there is logic error
+                    String enemyColor = App.selectedPiece.getEnemyColor();
+                    String kingPos = App.getKingPosition(state, friendlyColor);
+                    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX About that beer I owe ya, king pos is " + kingPos + ", king color is " + friendlyColor);
+                    if(!App.isChecked(state, friendlyColor, kingPos)){
+                        System.out.println("+++++++++++++++++++++++++++++++++++ NEXT STATE DOES NOT EXPOSE OUR KING APPARENTLY");
+                        System.out.println("+++++++++++++++++++++++++++++++++++++ Curr pos is " + currPos + ", next pos is " + nextPos);
+                        App.selectedPiece.move(nextPos);
+                    }
+                }
             }
         }
     }

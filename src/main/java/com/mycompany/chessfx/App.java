@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
@@ -666,6 +667,7 @@ public class App extends Application {
                 
             }
         }
+        System.out.println("+++++++++++++++++++ King Pos is: " + kingPosition + " enemy color is " + enemyColor);
         for(int i = 0; i < enemyRows.size(); i++){
             int currRow = enemyRows.get(i);
             int currColumn = enemyColumns.get(i);
@@ -683,6 +685,7 @@ public class App extends Application {
             if(currValueAbs == 1.0){
                 //currEnemy = new Pawn(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Pawn.showMoveables(state, currRow, currColumn);
+                System.out.println("Pawn moveables are: " + Arrays.toString(moveables));
                 for(int j = 0; j < moveables.length; j++){
                     int pawnRow = Piece.getRow(currPos);
                     int pawnColumn = Piece.getColumn(currPos);
@@ -713,6 +716,7 @@ public class App extends Application {
             else if(currValueAbs == 3.0){
                 //currEnemy = new Knight(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Knight.showMoveables(state, currRow, currColumn);
+                System.out.println("Knight moveables are: " + Arrays.toString(moveables));
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
                         return true;
@@ -722,6 +726,7 @@ public class App extends Application {
             else if(currValueAbs == 3.15){
                 //currEnemy = new Bishop(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Bishop.showMoveables(state, currRow, currColumn);
+                System.out.println("Bishop moveables are: " + Arrays.toString(moveables));
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
                         System.out.println("$$$$$$We can check the king with a bishop, king pos is and currMoveable are respectively " + kingPosition);
@@ -732,6 +737,7 @@ public class App extends Application {
             else if(currValueAbs == 5.0){
                 //currEnemy = new Rook(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Rook.showMoveables(state, currRow, currColumn);
+                System.out.println("Rook moveables are: " + Arrays.toString(moveables));
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
                         System.out.println("$$$$$$We can check the king with a rook, king pos is and currMoveable are respectively " + kingPosition);
@@ -742,6 +748,7 @@ public class App extends Application {
             else if(currValueAbs == 9.0){
                 //currEnemy = new Queen(enemyCharColor, currValue, currRow, currColumn);
                 String[] moveables = Queen.showMoveables(state, currRow, currColumn);
+                System.out.println("Queen moveables are: " + Arrays.toString(moveables));
                 for(int j = 0; j < moveables.length; j++){
                     if(moveables[j].equals(kingPosition)){
                         System.out.println("$$$$$$We can check the king with a queen, king pos is and currMoveable are respectively " + kingPosition);

@@ -184,7 +184,7 @@ public class Bishop extends Piece{
         
         while(currRow >= 0 && currColumn >= 0){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -209,7 +209,7 @@ public class Bishop extends Piece{
         
         while(currRow >= 0 && currColumn < 8){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -236,17 +236,20 @@ public class Bishop extends Piece{
         
         while(currRow < 8 && currColumn < 8){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAACurr position to be checked is " + Piece.positions[currRow][currColumn]);
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
             //the type of the currSquare instance
             else if(currSquare instanceof PiecePane){
+                System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" + Piece.positions[currRow][currColumn] + " is a piece pane instance");
                 PiecePane currPiecePane = (PiecePane)(currSquare);
                 Piece currPiece = currPiecePane.getPiece();
                 
                 //We add the square with enemy check aswell if possible
                 if(currPiece.getColor().equals(enemyColor)){
+                    System.out.println("ADDING THE SQUARE " + Piece.positions[currRow][currColumn]);
                     moveables.add(Piece.positions[currRow][currColumn]);
                 }
                 //If we have a friendly piece, we don't add it
@@ -261,7 +264,7 @@ public class Bishop extends Piece{
         
         while(currRow < 8 && currColumn >= 0){
             StackPane currSquare = App.getPieceHolderNode(currRow, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][currColumn]) == 0)){
                 moveables.add(Piece.positions[currRow][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
