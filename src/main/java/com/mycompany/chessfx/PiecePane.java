@@ -10,6 +10,7 @@ package com.mycompany.chessfx;
  */
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.scene.layout.StackPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -246,8 +247,10 @@ public class PiecePane extends StackPane{
                 if(!selectedPieceColor.equals(this.piece.getColor()) && !(this.piece instanceof King)){ //colors do not match hence we have an enemy piece
                     //before performing the take operation make sure that we do have the selected piece in the reach of this piece
                     //!!!!!!MIGHT NEED TO DO EXTRA WORK FOR KING'S SHOW MOVEABLES OR OTHER STUFF !!!!!!!
+                    System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
                     System.out.println("We are inside the first condition for take operation");
                     Object[] selectedPieceMoveables = App.selectedPiece.showMoveables();
+                    System.out.println(Arrays.toString(selectedPieceMoveables));
                     boolean isReachable = false;
                     String currPos = this.piece.getPosition();
                     for(int i = 0; i < selectedPieceMoveables.length; i++){

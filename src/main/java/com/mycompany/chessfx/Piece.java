@@ -292,7 +292,7 @@ public abstract class Piece {
             //check whether the enemy king can take this piece (Check whether this piece is guarded by any friendly piece)
             String kingColor = takerPiece.getColor();
             //Pass the enemy king color to the isSquareThreatened so as to see whether we have that square covered by a friendly piece
-            if(!EmptyPane.isSquareThreatened(currPosition, this.color)){
+            if(!EmptyPane.isSquareThreatened(currPosition, kingColor)){
                 //take current piece
                 System.out.println("£££We are about to take an enemy piece with a king");
                 this.takeHelper(takerPiece);

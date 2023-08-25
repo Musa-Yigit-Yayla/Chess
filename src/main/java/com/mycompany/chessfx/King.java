@@ -183,6 +183,7 @@ public class King extends Piece{
             if(currSquare instanceof EmptyPane){
                 if(!EmptyPane.isSquareThreatened( currPosition, friendlyColor)){
                     //moveable square
+                    System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY FREEMAN, Adding the " + currPosition + " as a moveable of the " + this.getColor() + " king");
                     moveables.add(currPosition);
                 }
             }
@@ -259,6 +260,7 @@ public class King extends Piece{
             counter--;
         }*/
         System.out.println("We are about to check whether our king can perform any castling");
+        System.out.println("Following is the king's moveables" + moveables.toString());
         //check whether we can castle
         //Initially retrieve rooks that haven't been moved
         if(!this.isMoved){
