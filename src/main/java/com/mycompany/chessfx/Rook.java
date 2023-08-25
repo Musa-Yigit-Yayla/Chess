@@ -179,7 +179,7 @@ public class Rook extends Piece{
         currColumn = column - 1;
         while(currColumn >= 0){
             StackPane currSquare = App.getPieceHolderNode(row, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[row][currColumn]) == 0)){
                 moveables.add(Piece.positions[row][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -203,7 +203,7 @@ public class Rook extends Piece{
         currColumn = column + 1;
         while(currColumn < 8){
             StackPane currSquare = App.getPieceHolderNode(row, currColumn);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[row][currColumn]) == 0)){
                 moveables.add(Piece.positions[row][currColumn]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -227,7 +227,7 @@ public class Rook extends Piece{
         currRow = row - 1; // first go up
         while(currRow >= 0){
             StackPane currSquare = App.getPieceHolderNode(currRow, column);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][column]) == 0)){
                 moveables.add(Piece.positions[currRow][column]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline
@@ -249,7 +249,7 @@ public class Rook extends Piece{
         currRow = row + 1;
         while(currRow < 8){
             StackPane currSquare = App.getPieceHolderNode(currRow, column);
-            if(currSquare instanceof EmptyPane){
+            if(currSquare instanceof EmptyPane || ((state[currRow][column]) == 0)){
                 moveables.add(Piece.positions[currRow][column]); // since the curr pos is empty pane add the position string correspondance
             }
             //There is no other possibility, a square can only be PiecePane or EmptyPane instance, however this is to underline

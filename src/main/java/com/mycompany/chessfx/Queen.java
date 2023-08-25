@@ -97,7 +97,7 @@ public class Queen extends Piece{
         else{
             color = 'b';
         }
-        Bishop b = new Bishop(color);
+        /*Bishop b = new Bishop(color);
         Rook r = new Rook(color);
         
         b.setPosition(row, column);
@@ -114,14 +114,17 @@ public class Queen extends Piece{
         String[] resultArr2 = new String[arr2.length];
         for(int i = 0; i < resultArr2.length; i++){
             resultArr2[i] = (String)(arr2[i]);
-        }
+        }*/
+        //use the static methods of bishop and rook instead of instance methods
+        String[] resultArr1 = Bishop.showMoveables(state, row, column);
+        String[] resultArr2 = Rook.showMoveables(state, row, column);
         //concatenate the two arrays
         String[] result = Arrays.copyOf(resultArr1, resultArr1.length + resultArr2.length);
         System.arraycopy(resultArr2, 0, result, resultArr1.length, resultArr2.length);
         
         //Explicitly assign null to instantiated helper objects
-        b = null;
-        r = null;
+        //b = null;
+        //r = null;
         
         
         return result;
