@@ -510,7 +510,7 @@ public abstract class Piece implements Comparable{
             }
         }
         else{
-            throw new IllegalArgumentException("Passed object " + o.toString() + " is not a piece instance");
+            throw new IllegalArgumentException("Passed object is not a piece instance");
         }
     }
 }

@@ -8,6 +8,7 @@ package com.mycompany.chessfx;
  *
  * @author yigit
  */
+import java.io.File;
 import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -33,6 +34,7 @@ public class TakenPiecePane extends ScrollPane {
         this.setPrefWidth(TAKEN_PIECE_PANE_WIDTH);
         this.setPrefHeight(TAKEN_PIECE_PANE_HEIGHT);
         this.isWhite = isWhite;
+        this.getChildren().add(this.pieceBox);
     }
     //This methods anticipates user to not to pass a King instance as a takenPiece parameter
     public void addPiece(Piece takenPiece){
@@ -67,7 +69,7 @@ public class TakenPiecePane extends ScrollPane {
                 case 9: filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-white.png"; break;
                 case -9: filePath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-black.png"; break;
             }
-            img = new Image(filePath);
+            img = new Image(new File(filePath).toURI().toString());
             imgView = new ImageView(img);
             //pieceBox.getChildren().add(imgView);
             this.insertImg(imgView, pieceValue);

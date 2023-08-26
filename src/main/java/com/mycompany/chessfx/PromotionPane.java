@@ -9,6 +9,8 @@ package com.mycompany.chessfx;
  * create a single pane to enable the user to promote when applicable
  * @author yigit
  */
+import java.io.File;
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.RadioButton;
@@ -19,6 +21,7 @@ import javafx.scene.control.ToggleGroup;
 public class PromotionPane extends VBox{
     public static final double PROMOTION_PIECE_LENGTH = 60.0; //60 pixels
     public static final double IMAGE_HOLDER_GAP = 10.0;
+    public static final double PROMOTION_PANE_SPACING = 20.0;
     public static final String QUEEN_SELECTION_STRING = "Queen";
     public static final String ROOK_SELECTION_STRING = "Rook";
     public static final String BISHOP_SELECTION_STRING = "Bishop";
@@ -28,6 +31,10 @@ public class PromotionPane extends VBox{
     private HBox imageHolder = new HBox();
     private HBox radioButtonBox = new HBox();
     private Button btPromote = new Button("Promote");
+    private RadioButton btQueen;
+    private RadioButton btRook;
+    private RadioButton btBishop;
+    private RadioButton btKnight;
     private ToggleGroup tg;
     
     public PromotionPane(boolean isWhite){
@@ -35,6 +42,10 @@ public class PromotionPane extends VBox{
         this.setImageHolder();
         this.setRadioButtonBox();
         this.setPromoteHandler();
+        
+        this.getChildren().addAll(this.imageHolder, this.radioButtonBox, this.btPromote);
+        this.setSpacing(PROMOTION_PANE_SPACING);
+        this.setAlignment(Pos.CENTER);
     }
     private void setImageHolder(){
         //left to right we go with Queen, Rook, Bishop, and Knight
@@ -47,31 +58,47 @@ public class PromotionPane extends VBox{
         Image bishopImg;
         Image knightImg;
         if(this.isWhite){
-           queenImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-white.png"); 
-           rookImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Rook-white.png");
-           bishopImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Bishop-white.png");
-           knightImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Knight-white.png");
+           String queenPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-white.png";
+           String rookPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Rook-white.png";
+           String bishopPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Bishop-white.png";
+           String knightPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Knight-white.png";
+           queenImg = new Image(new File(queenPath).toURI().toString()); 
+           rookImg = new Image(new File(rookPath).toURI().toString());
+           bishopImg = new Image(new File(bishopPath).toURI().toString());
+           knightImg = new Image(new File(knightPath).toURI().toString());
         }
         else{
-            queenImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-black.png");
-            rookImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Rook-black.png");
-            bishopImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Bishop-black.png");
-            knightImg = new Image("C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Knight-black.png");
+            String queenPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Queen-black.png";
+            String rookPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Rook-black.png";
+            String bishopPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Bishop-black.png";
+            String knightPath = "C:\\Users\\yigit\\Documents\\NetBeansProjects\\ChessFX\\src\\main\\java\\Chess Piece Images\\Knight-black.png";
+            queenImg = new Image(new File(queenPath).toURI().toString()); 
+            rookImg = new Image(new File(rookPath).toURI().toString());
+            bishopImg = new Image(new File(bishopPath).toURI().toString());
+            knightImg = new Image(new File(knightPath).toURI().toString());
         }
         queenImgView.setImage(queenImg);
         rookImgView.setImage(rookImg);
         bishopImgView.setImage(bishopImg);
         knightImgView.setImage(knightImg);
+        queenImgView.setFitHeight(PROMOTION_PIECE_LENGTH);
+        queenImgView.setFitWidth(PROMOTION_PIECE_LENGTH);
+        rookImgView.setFitHeight(PROMOTION_PIECE_LENGTH);
+        rookImgView.setFitWidth(PROMOTION_PIECE_LENGTH);
+        bishopImgView.setFitHeight(PROMOTION_PIECE_LENGTH);
+        bishopImgView.setFitWidth(PROMOTION_PIECE_LENGTH);
+        knightImgView.setFitHeight(PROMOTION_PIECE_LENGTH);
+        knightImgView.setFitWidth(PROMOTION_PIECE_LENGTH);
         imageHolder.getChildren().addAll(queenImgView, rookImgView, bishopImgView, knightImgView);
         imageHolder.setSpacing(IMAGE_HOLDER_GAP);
     }
     private void setRadioButtonBox(){
         this.tg = new ToggleGroup();
         
-        RadioButton btQueen = new RadioButton(PromotionPane.QUEEN_SELECTION_STRING);
-        RadioButton btRook = new RadioButton(PromotionPane.ROOK_SELECTION_STRING);
-        RadioButton btBishop = new RadioButton(PromotionPane.BISHOP_SELECTION_STRING);
-        RadioButton btKnight = new RadioButton(PromotionPane.KNIGHT_SELECTION_STRING);
+        this.btQueen = new RadioButton(PromotionPane.QUEEN_SELECTION_STRING);
+        this.btRook = new RadioButton(PromotionPane.ROOK_SELECTION_STRING);
+        this.btBishop = new RadioButton(PromotionPane.BISHOP_SELECTION_STRING);
+        this.btKnight = new RadioButton(PromotionPane.KNIGHT_SELECTION_STRING);
         
         btQueen.setToggleGroup(this.tg);
         btRook.setToggleGroup(this.tg);

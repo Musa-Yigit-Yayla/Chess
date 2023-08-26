@@ -22,7 +22,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Node;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
 /**
@@ -33,8 +35,14 @@ public class App extends Application {
     public static final double BP_WIDTH = 1000.0;
     public static final double BP_HEIGHT = 1000.0;
     public static final double SQUARE_LENGTH = 90.0; // 100 pixels
+    public static final double PROMOTION_BOX_SPACING = 800.0;
+    public static final double TURN_CIRCLE_RADIUS = 50.0;
+    public static final double TURN_CIRCLE_STROKE_WIDTH = 4.0;
     public static final Color WHITE_SQUARE = Color.BURLYWOOD;
     public static final Color BLACK_SQUARE = Color.SADDLEBROWN;
+    public static final Color TURN_CIRCLE_WHITE = Color.WHITESMOKE;
+    public static final Color TURN_CIRCLE_BLACK = Color.BLACK;
+    public static final Color TURN_CIRCLE_STROKE = Color.GREEN;
     
     public static ArrayList<Piece> currentPieces = new ArrayList<>(); // pieces that are alive and displayed
     public static ArrayList<Piece> takenPieces = new ArrayList<>(); // taken pieces
@@ -46,6 +54,8 @@ public class App extends Application {
     private double[][] gameGrid = new double[8][8]; // a grid for representing the current game status, - value for black pieces, + for white
     private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
     private static GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
+    private VBox promotionBox = new VBox(); //vbox for holding both of the promotion panes
+    private Circle turnCircle = new Circle();
     //1 point for pawn, 3 for knight, 3.15 for bishop, 5 for rook, 9 for queen, 90 for king
     private static double gamePoints = 0.0; //negative means black is winning based on taken pieces, positive implies white is winning
     
@@ -188,6 +198,8 @@ public class App extends Application {
         this.setPieceHolder();
         this.setStackPane();
         this.setBorderPane();
+        this.setPromotionBox();
+        this.setTurnCircle();
         //scene.setRoot(); 
         this.scene = new Scene(this.bp, 1000, 1000);// !!!CHANGE THIS LATER ON!!!
         stage.setScene(scene);
@@ -427,6 +439,34 @@ public class App extends Application {
     private void setBorderPane() {
         this.bp.setCenter(this.stackPane);
         this.bp.setPrefSize(BP_WIDTH, BP_HEIGHT);
+    }
+    private void setPromotionBox(){
+        PromotionPane whitePromotion = new PromotionPane(true);
+        PromotionPane blackPromotion = new PromotionPane(false);
+        this.promotionBox.getChildren().addAll(whitePromotion, blackPromotion);
+        this.promotionBox.setSpacing(App.PROMOTION_BOX_SPACING);
+        //add the promotion box to the right side of the bp
+        this.bp.setRight(this.promotionBox);
+    }
+    private void setTurnCircle(){
+        this.turnCircle.setRadius(TURN_CIRCLE_RADIUS);
+        this.turnCircle.setFill(App.TURN_CIRCLE_WHITE);
+        this.turnCircle.setStroke(App.TURN_CIRCLE_STROKE);
+        this.turnCircle.setStrokeWidth(TURN_CIRCLE_STROKE_WIDTH);
+        //add the turn circle to the left side of the bp
+        this.bp.setLeft(this.turnCircle);
+    }
+    //Switch the circle's color to the opposite on each invoke
+    public void switchCircleColor(){
+        Color currColor = (Color)this.turnCircle.getFill();
+        Color newColor;
+        if(currColor.equals(App.TURN_CIRCLE_WHITE)){
+            newColor = App.TURN_CIRCLE_BLACK;
+        }
+        else{
+            newColor = App.TURN_CIRCLE_WHITE;
+        }
+        this.turnCircle.setFill(newColor);
     }
     public static GridPane getPieceHolder(){
         return pieceHolder;
