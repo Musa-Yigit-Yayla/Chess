@@ -23,6 +23,7 @@ import javafx.scene.control.RadioButton;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -460,6 +461,7 @@ public class App extends Application {
         this.turnCircle.setStrokeWidth(TURN_CIRCLE_STROKE_WIDTH);
         //add the turn circle to the left side of the bp
         this.bp.setLeft(this.turnCircle);
+        BorderPane.setAlignment(turnCircle, Pos.CENTER);
     }
     //Switch the circle's color to the opposite on each invoke
     public static void switchCircleColor(){
