@@ -35,7 +35,7 @@ public class App extends Application {
     public static final double BP_WIDTH = 1000.0;
     public static final double BP_HEIGHT = 1000.0;
     public static final double SQUARE_LENGTH = 90.0; // 100 pixels
-    public static final double PROMOTION_BOX_SPACING = 500;
+    public static final double PROMOTION_BOX_SPACING = 100.0;
     public static final double TURN_CIRCLE_RADIUS = 50.0;
     public static final double TURN_CIRCLE_STROKE_WIDTH = 4.0;
     public static final Color WHITE_SQUARE = Color.BURLYWOOD;
@@ -54,7 +54,9 @@ public class App extends Application {
     private double[][] gameGrid = new double[8][8]; // a grid for representing the current game status, - value for black pieces, + for white
     private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
     private static GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
-    private VBox promotionBox = new VBox(); //vbox for holding both of the promotion panes
+    private VBox promotionBox = new VBox(); //vbox for holding both of the promotion panes and the taken pieces
+    private static TakenPiecePane tppWhite;
+    private static TakenPiecePane tppBlack;
     private static Circle turnCircle = new Circle();
     //1 point for pawn, 3 for knight, 3.15 for bishop, 5 for rook, 9 for queen, 90 for king
     private static double gamePoints = 0.0; //negative means black is winning based on taken pieces, positive implies white is winning
@@ -443,7 +445,10 @@ public class App extends Application {
     private void setPromotionBox(){
         PromotionPane whitePromotion = new PromotionPane(true);
         PromotionPane blackPromotion = new PromotionPane(false);
-        this.promotionBox.getChildren().addAll(whitePromotion, blackPromotion);
+        //Apart from adding the promotion panes we should also add the takenpiecepanes
+        tppWhite = new TakenPiecePane(true);
+        tppBlack = new TakenPiecePane(false);
+        this.promotionBox.getChildren().addAll(whitePromotion, tppWhite, tppBlack, blackPromotion);
         this.promotionBox.setSpacing(App.PROMOTION_BOX_SPACING);
         //add the promotion box to the right side of the bp
         this.bp.setRight(this.promotionBox);
@@ -467,6 +472,15 @@ public class App extends Application {
             newColor = App.TURN_CIRCLE_WHITE;
         }
         turnCircle.setFill(newColor);
+    }
+    //Invoke from the take function of a piece instance excluding king
+    public static void addTakenPiece(Piece takenPiece){
+        if(takenPiece.getColor().equals(Piece.WHITE_COLOR)){
+            App.tppWhite.addPiece(takenPiece);
+        }
+        else{
+            App.tppBlack.addPiece(takenPiece);
+        }
     }
     public static GridPane getPieceHolder(){
         return pieceHolder;

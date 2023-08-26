@@ -299,6 +299,8 @@ public abstract class Piece implements Comparable{
                 //take current piece
                 System.out.println("£££We are about to take an enemy piece with a king");
                 this.takeHelper(takerPiece);
+                //After having taken the piece we must add it to the corresponding takenPiecePane
+                App.addTakenPiece(this);
             }
         }
         //calculate moveables of takerPiece and see whether enemy king is checked after having taken this piece
@@ -319,6 +321,8 @@ public abstract class Piece implements Comparable{
                     String enemyKingPosition = App.getKingPosition(nextState, takerPiece.getColor());
                     if(!App.isChecked(nextState, takerPiece.getColor(), enemyKingPosition)){
                         this.takeHelper(takerPiece);
+                        //After having taken the piece we must add it to the corresponding takenPiecePane
+                        App.addTakenPiece(this);
                     }
                     break;
                 }

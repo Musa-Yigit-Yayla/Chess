@@ -34,11 +34,15 @@ public class TakenPiecePane extends ScrollPane {
         this.setPrefWidth(TAKEN_PIECE_PANE_WIDTH);
         this.setPrefHeight(TAKEN_PIECE_PANE_HEIGHT);
         this.isWhite = isWhite;
-        this.getChildren().add(this.pieceBox);
+        //this.getChildren().add(this.pieceBox);
+        this.setContent(this.pieceBox);
+        this.setVbarPolicy(ScrollBarPolicy.NEVER);
+        this.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
     }
     //This methods anticipates user to not to pass a King instance as a takenPiece parameter
     public void addPiece(Piece takenPiece){
         //add a newly taken piece if its color matches this object's isWhite property
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>We are in the addPiece method of the TakenPiecePane");
         String takenPieceColor = takenPiece.getColor();
         if((takenPieceColor.equals(Piece.WHITE_COLOR) && this.isWhite) || (takenPieceColor.equals(Piece.BLACK_COLOR) && !this.isWhite)){
             //We will manually create a new image based on the given piece so as to avoid any prospective errors
@@ -71,9 +75,11 @@ public class TakenPiecePane extends ScrollPane {
             }
             img = new Image(new File(filePath).toURI().toString());
             imgView = new ImageView(img);
+            imgView.setFitHeight(TakenPiecePane.TAKEN_PIECE_IMAGE_LENGTH);
+            imgView.setFitWidth(TakenPiecePane.TAKEN_PIECE_IMAGE_LENGTH);
             //pieceBox.getChildren().add(imgView);
             this.insertImg(imgView, pieceValue);
-            
+              
         }
     }
     //Insert a recently added image so that we can preserve the property that our hbox dispalys the images in a descending manner
