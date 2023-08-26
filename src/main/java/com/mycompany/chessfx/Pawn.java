@@ -27,8 +27,67 @@ public class Pawn extends Piece {
         super(color, value, row, column);
    }
    //pieceSelection regulates the selected piece type for promotion
+   //Caller is responsible of determining whether it's a valid promotion or not in terms of the pawn's position
    public void promote(String pieceSelection){
-       
+       String friendlyColor = this.getColor();
+       int row = this.getRow();
+       int column = this.getColumn();
+       Piece replacement = null;
+       double replacementValue;
+       char chColor = 'w';
+       if(pieceSelection.equals(PromotionPane.QUEEN_SELECTION_STRING)){
+           replacementValue = Piece.WHITE_QUEEN_POINTS;
+           if(friendlyColor.equals(Piece.BLACK_COLOR)){
+               //replacementValue *= -1;
+               chColor = 'b';
+           }
+           replacement = new Queen(chColor, replacementValue, row, column);
+       }
+       else if(pieceSelection.equals(PromotionPane.ROOK_SELECTION_STRING)){
+           replacementValue = Piece.WHITE_ROOK_POINTS;
+           if(friendlyColor.equals(Piece.BLACK_COLOR)){
+               //replacementValue *= -1;
+               chColor = 'b';
+           }
+           replacement = new Queen(chColor, replacementValue, row, column);
+       }
+       else if(pieceSelection.equals(PromotionPane.BISHOP_SELECTION_STRING)){
+           replacementValue = Piece.WHITE_BISHOP_POINTS;
+           if(friendlyColor.equals(Piece.BLACK_COLOR)){
+               //replacementValue *= -1;
+               chColor = 'b';
+           }
+           replacement = new Queen(chColor, replacementValue, row, column);
+       }
+       else if(pieceSelection.equals(PromotionPane.KNIGHT_SELECTION_STRING)){
+           replacementValue = Piece.WHITE_KNIGHT_POINTS;
+           if(friendlyColor.equals(Piece.BLACK_COLOR)){
+               //replacementValue *= -1;
+               chColor = 'b';
+           }
+           replacement = new Queen(chColor, replacementValue, row, column);
+       }
+       //we must not neglect removing this pawn instance from the currPieces arraylist and add the newly created piece to currPieces
+       GridPane pieceHolder = App.getPieceHolder();
+       pieceHolder.getChildren().remove(this.getPiecePane());
+       pieceHolder.add(replacement.getPiecePane(), column, row);
+       //The following block is taken from piece's move function and will be used to update the checked status of the enemy king if applicable
+       //Last but not least if the enemy king is checked after this successfull move simply set it's outer frame to red
+                    double[][] currState = App.retrieveGameState(this.getPosition(), this.getPosition());
+                    String enemyKingPos = App.getKingPosition(currState , this.getEnemyColor());
+                    int enemyKingRow = Piece.getRow(enemyKingPos);
+                    int enemyKingColumn = Piece.getColumn(enemyKingPos);
+                    
+                    if(App.isChecked(currState, this.getEnemyColor(), enemyKingPos)){
+                        //set the outer frame of the enemy king
+                        King enemyKing = ((King)((PiecePane)(App.getPieceHolderNode(enemyKingRow, enemyKingColumn))).getPiece());
+                        enemyKing.setCheckedFrame();
+                    }
+        //Finally we remove this pawn instance from the currPieces and it will be garbage collected, then we will add the replacement
+        App.currentPieces.remove(this);
+        App.currentPieces.add(replacement);
+        //don't forget to create a new move instance so we cannot change our promotion
+        //Move move = new Move();
    }
    @Override
    public void move(String nextPos){

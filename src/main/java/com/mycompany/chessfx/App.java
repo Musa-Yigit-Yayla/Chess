@@ -35,7 +35,7 @@ public class App extends Application {
     public static final double BP_WIDTH = 1000.0;
     public static final double BP_HEIGHT = 1000.0;
     public static final double SQUARE_LENGTH = 90.0; // 100 pixels
-    public static final double PROMOTION_BOX_SPACING = 800.0;
+    public static final double PROMOTION_BOX_SPACING = 500;
     public static final double TURN_CIRCLE_RADIUS = 50.0;
     public static final double TURN_CIRCLE_STROKE_WIDTH = 4.0;
     public static final Color WHITE_SQUARE = Color.BURLYWOOD;
@@ -55,7 +55,7 @@ public class App extends Application {
     private GridPane checkerBoard = new GridPane(); // gridPane for holding the squares
     private static GridPane pieceHolder = new GridPane(); // gridPane for holding the individual PiecePanes
     private VBox promotionBox = new VBox(); //vbox for holding both of the promotion panes
-    private Circle turnCircle = new Circle();
+    private static Circle turnCircle = new Circle();
     //1 point for pawn, 3 for knight, 3.15 for bishop, 5 for rook, 9 for queen, 90 for king
     private static double gamePoints = 0.0; //negative means black is winning based on taken pieces, positive implies white is winning
     
@@ -206,7 +206,7 @@ public class App extends Application {
         stage.show();
         
         //Debugging stage
-        Stage stage2 = new Stage();
+        /*Stage stage2 = new Stage();
         StackPane pane = new StackPane();
         Scene scene2 = new Scene(pane);
         
@@ -221,7 +221,7 @@ public class App extends Application {
         scene2.setRoot(pane);
         
         stage2.setScene(scene2);
-        stage2.show();
+        stage2.show();*/
         
     }
     //For setting the gameGrid data field, called only during initialization process
@@ -457,8 +457,8 @@ public class App extends Application {
         this.bp.setLeft(this.turnCircle);
     }
     //Switch the circle's color to the opposite on each invoke
-    public void switchCircleColor(){
-        Color currColor = (Color)this.turnCircle.getFill();
+    public static void switchCircleColor(){
+        Color currColor = (Color)turnCircle.getFill();
         Color newColor;
         if(currColor.equals(App.TURN_CIRCLE_WHITE)){
             newColor = App.TURN_CIRCLE_BLACK;
@@ -466,7 +466,7 @@ public class App extends Application {
         else{
             newColor = App.TURN_CIRCLE_WHITE;
         }
-        this.turnCircle.setFill(newColor);
+        turnCircle.setFill(newColor);
     }
     public static GridPane getPieceHolder(){
         return pieceHolder;

@@ -64,13 +64,15 @@ public abstract class Piece implements Comparable{
         color = Character.toUpperCase(color);
         if(color == 'W'){
             this.color = WHITE_COLOR;
-            points *= -1; //passed points is assumed to be positive
+            //passed points is assumed to be positive
         }
         else{
             this.color = BLACK_COLOR;
+            points *= -1; 
         }
         this.points = points;
         this.setPosition(row, column);
+        this.piecePane = new PiecePane(this); //IMPORTANT, THIS LINE COULD BE PROBLEMATIC DUE TO EARLIER USE OF PIECE INSTANCES
     }
     public String getColor(){
         return this.color;

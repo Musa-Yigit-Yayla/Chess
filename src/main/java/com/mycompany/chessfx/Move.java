@@ -30,6 +30,7 @@ public class Move {
         turn = !turn;
         //set the lastMove to this object
         lastMove = this;
+        App.switchCircleColor();
     }
     public static Move getLastMove(){
         return lastMove;

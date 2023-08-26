@@ -22,6 +22,7 @@ public class PromotionPane extends VBox{
     public static final double PROMOTION_PIECE_LENGTH = 60.0; //60 pixels
     public static final double IMAGE_HOLDER_GAP = 10.0;
     public static final double PROMOTION_PANE_SPACING = 20.0;
+    public static final double RADIO_BUTTON_BOX_SPACING = 20.0;
     public static final String QUEEN_SELECTION_STRING = "Queen";
     public static final String ROOK_SELECTION_STRING = "Rook";
     public static final String BISHOP_SELECTION_STRING = "Bishop";
@@ -104,20 +105,26 @@ public class PromotionPane extends VBox{
         btRook.setToggleGroup(this.tg);
         btBishop.setToggleGroup(this.tg);
         btKnight.setToggleGroup(this.tg);
+        
+        this.radioButtonBox.getChildren().addAll(btQueen, btRook, btBishop, btKnight);
+        this.radioButtonBox.setSpacing(PromotionPane.RADIO_BUTTON_BOX_SPACING);
     }
     private void setPromoteHandler(){
         this.btPromote.setOnAction( e-> {
             //retrieve the last move and if it was a friendly pawn moving into its designated promotion row then proceed
             Move lastMove = Move.getLastMove();
+            if(lastMove != null){
             Piece movedPiece = lastMove.getPiece();
-            if(movedPiece instanceof Pawn && ((this.isWhite && movedPiece.getColor().equals(Piece.WHITE_COLOR)) || (!this.isWhite && movedPiece.getColor().equals(Piece.BLACK_COLOR)))){
-                //Apparently the last move was made by a pawn and its color matches this PromotionPane instance
-                int newRow = Piece.getRow(lastMove.getNewPos());
-                if(newRow == 0 || newRow == 7){
-                    //We need to promote this piece with respect to promotion selection in the radio buttons
-                    RadioButton selectedBt = (RadioButton)this.tg.getSelectedToggle();
-                    String selectedString = selectedBt.getText();
-                    ((Pawn)(movedPiece)).promote(selectedString);
+                if(movedPiece instanceof Pawn && ((this.isWhite && movedPiece.getColor().equals(Piece.WHITE_COLOR)) || (!this.isWhite && movedPiece.getColor().equals(Piece.BLACK_COLOR)))){
+                    //Apparently the last move was made by a pawn and its color matches this PromotionPane instance
+                    int newRow = Piece.getRow(lastMove.getNewPos());
+                    if(newRow == 0 || newRow == 7){
+                        //We need to promote this piece with respect to promotion selection in the radio buttons
+                        RadioButton selectedBt = (RadioButton)this.tg.getSelectedToggle();
+                        String selectedString = selectedBt.getText();
+                        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5Selected Promotion String is " + selectedString);
+                        ((Pawn)(movedPiece)).promote(selectedString);
+                    }
                 }
             }
         });
