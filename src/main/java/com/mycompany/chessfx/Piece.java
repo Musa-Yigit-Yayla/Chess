@@ -7,12 +7,13 @@ package com.mycompany.chessfx;
 import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import java.lang.Comparable;
 
 /**
  *
  * @author yigit
  */
-public abstract class Piece {
+public abstract class Piece implements Comparable{
     private String color;
     private PiecePane piecePane;
     private double points; //value of the piece
@@ -489,5 +490,27 @@ public abstract class Piece {
         resultArr[1] = result; 
          
         return resultArr;
+    }
+
+    @Override
+    //We favor comparing pieces with respect to their absolute points value, regardless of their color
+    //We expect the client to pass a Piece sub instance
+    //We throw a illegal argument exception if the passed object is not a piece sub instance
+    public int compareTo(Object o) throws IllegalArgumentException{
+        if(o instanceof Piece){
+            double diff = Math.abs(this.points) - Math.abs(((Piece)(o)).points);
+            if(diff > 0){
+                return 1;
+            }
+            else if(diff == 0){
+                return 0;
+            }
+            else{
+                return -1;
+            }
+        }
+        else{
+            throw new IllegalArgumentException("Passed object " + o.toString() + " is not a piece instance");
+        }
     }
 }

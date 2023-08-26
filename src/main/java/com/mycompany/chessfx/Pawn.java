@@ -25,9 +25,10 @@ public class Pawn extends Piece {
    }
    public Pawn(char color, double value, int row, int column){
         super(color, value, row, column);
-    }
-   public void promote(){
-           
+   }
+   //pieceSelection regulates the selected piece type for promotion
+   public void promote(String pieceSelection){
+       
    }
    @Override
    public void move(String nextPos){
