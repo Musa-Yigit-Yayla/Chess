@@ -1195,7 +1195,7 @@ public class App extends Application {
                 currPath = Rook.showMoveables2(state, checkingEnemy.getRow(), checkingEnemy.getColumn());
             }
             else if(checkingEnemy instanceof Queen){
-                currPath = Queen.showMoveables(state, checkingEnemy.getRow(), checkingEnemy.getColumn());
+                currPath = Queen.showMoveables2(state, checkingEnemy.getRow(), checkingEnemy.getColumn());
             }
             if(currPath != null){
                 boolean found = false;

@@ -131,6 +131,57 @@ public class Queen extends Piece{
 
     }
     //The only difference with the original showMoveables is that this version does not incorporate the enemy piece once it has encountered it
+    public static String[] showMoveables2(double[][] state, int row, int column){
+        String friendlyColor = Piece.WHITE_COLOR;
+        String enemyColor = Piece.BLACK_COLOR;
+        
+        if(state[row][column] < 0){
+            String temp = friendlyColor;
+            friendlyColor = enemyColor;
+            enemyColor = temp;
+        }
+        
+        char color;
+        //instantiate a bishop and a rook of the same color independent from our game
+        if(friendlyColor.equals(Piece.WHITE_COLOR)){
+            color = 'w';
+        }
+        else{
+            color = 'b';
+        }
+        /*Bishop b = new Bishop(color);
+        Rook r = new Rook(color);
+        
+        b.setPosition(row, column);
+        r.setPosition(row, column);
+        
+        Object[] arr1 = b.showMoveables();
+        Object[] arr2 = r.showMoveables();
+        
+        String[] resultArr1 = new String[arr1.length];
+        for(int i = 0; i < resultArr1.length; i++){
+            resultArr1[i] = (String)(arr1[i]);
+        }
+        
+        String[] resultArr2 = new String[arr2.length];
+        for(int i = 0; i < resultArr2.length; i++){
+            resultArr2[i] = (String)(arr2[i]);
+        }*/
+        //use the static methods of bishop and rook instead of instance methods
+        String[] resultArr1 = Bishop.showMoveables2(state, row, column);
+        String[] resultArr2 = Rook.showMoveables2(state, row, column);
+        //concatenate the two arrays
+        String[] result = Arrays.copyOf(resultArr1, resultArr1.length + resultArr2.length);
+        System.arraycopy(resultArr2, 0, result, resultArr1.length, resultArr2.length);
+        
+        //Explicitly assign null to instantiated helper objects
+        //b = null;
+        //r = null;
+        
+        
+        return result;
+
+    }
     
     @Override
     public void take(Piece taker) {
